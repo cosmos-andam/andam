@@ -37,6 +37,7 @@ pub mod cmb;
 pub mod structure;
 pub mod perturbations;
 pub mod advanced;
+pub mod early_universe;
 pub mod visualization;
 
 // Re-export commonly used items
@@ -52,3 +53,4 @@ pub use cmb::recombination::{ionization_fraction, recombination_redshift};
 pub use cmb::fluctuations::{angular_power_spectrum, dimensionless_power_spectrum};
 pub use structure::power_spectrum::matter_power_spectrum;
 pub use perturbations::growth::{growth_factor, growth_rate};
+pub use early_universe::nucleosynthesis::{run_bbn, helium_abundance, BBNParameters};

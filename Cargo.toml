@@ -23,8 +23,11 @@ ode_solvers = "0.4"
 
 # Plotting
 plotly = { version = "0.8", features = ["kaleido"] }
-plotters = "0.3"
+plotters = { version = "0.3", features = ["all_series", "bitmap_encoder"] }
 plotters-backend = "0.3"
+
+# Image processing
+image = "0.24"
 
 # Utilities
 thiserror = "1.0"
