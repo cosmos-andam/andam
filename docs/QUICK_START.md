@@ -14,7 +14,7 @@ andam = "0.1.0"
 Or clone from source:
 
 ```bash
-git clone https://github.com/yourusername/andam
+git clone https://github.com/cosmos-andam/andam
 cd andam
 cargo build --release
 cargo test
@@ -418,7 +418,7 @@ Always compile with --release for production code.
 - Documentation: `cargo doc --open`
 - Examples: `cargo run --example`
 - Tests: `cargo test`
-- GitHub: https://github.com/yourusername/andam
+- GitHub: https://github.com/cosmos-andam/andam
 
 ## Complete Example
 

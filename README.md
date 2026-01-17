@@ -2,7 +2,7 @@
 
 A comprehensive Rust library for cosmological calculations and visualizations, implementing concepts from modern cosmology textbooks.
 
-**Andam** (అండం) means "universe" or "cosmos" in Telugu.
+**Andam** (அண்டம்) means "universe" in தமிழ் (Tamil).
 
 ## Features
 
@@ -68,7 +68,7 @@ cargo doc --open
 ### From Source
 
 ```bash
-git clone https://github.com/yourusername/andam
+git clone https://github.com/cosmos-andam/andam
 cd andam
 cargo build --release
 cargo test
@@ -355,9 +355,9 @@ If you use this library in academic work:
 ```bibtex
 @software{andam,
   title = {Andam: Cosmological Calculations in Rust},
-  author = {Your Name},
+  author = {Cosmos Andam Contributors},
   year = {2025},
-  url = {https://github.com/yourusername/andam},
+  url = {https://github.com/cosmos-andam/andam},
   note = {Based on Ryden (2016) and Dodelson (2003)}
 }
 ```
@@ -413,8 +413,8 @@ This project implements numerical methods and calculations from:
 
 ## Contact
 
-- GitHub Issues: https://github.com/yourusername/andam/issues
-- Discussions: https://github.com/yourusername/andam/discussions
+- GitHub Issues: https://github.com/cosmos-andam/andam/issues
+- Discussions: https://github.com/cosmos-andam/andam/discussions
 - Documentation: https://docs.rs/andam
 
 ## Status

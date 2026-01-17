@@ -5,7 +5,9 @@ edition = "2021"
 authors = ["Andam Contributors"]
 license = "MIT OR Apache-2.0"
 description = "A comprehensive Rust library for cosmological calculations and visualizations"
-repository = "https://github.com/yourusername/andam"
+repository = "https://github.com/cosmos-andam/andam"
+homepage = "https://github.com/cosmos-andam/andam"
+documentation = "https://docs.rs/andam"
 keywords = ["cosmology", "astrophysics", "physics", "simulation"]
 categories = ["science", "simulation"]
 

@@ -168,7 +168,7 @@ If you use this library in academic work, please cite:
   title = {andam: Cosmological calculations in Rust},
   author = {Your Name},
   year = {2025},
-  url = {https://github.com/yourusername/andam}
+  url = {https://github.com/cosmos-andam/andam}
 }
 ```
 ```
@@ -199,7 +199,7 @@ cargo add andam
 
 ### From source
 ```bash
-git clone https://github.com/yourusername/andam
+git clone https://github.com/cosmos-andam/andam
 cd andam
 cargo build --release
 ```
@@ -437,8 +437,8 @@ let (gamma1, gamma2) = convergence_to_shear(&convergence.kappa);
 ## Getting Help
 
 - 📚 Read the [API Documentation](https://docs.rs/andam)
-- 💬 Open an issue on [GitHub](https://github.com/yourusername/andam/issues)
-- 📧 Contact: your.email@example.com
+- 💬 Open an issue on [GitHub](https://github.com/cosmos-andam/andam/issues)
+- 📧 Contact: https://github.com/cosmos-andam/andam/discussions
 ```
 
 ### Step 1.3: Add Module Documentation
@@ -1039,12 +1039,12 @@ jobs:
 name = "andam"
 version = "0.1.0"
 edition = "2021"
-authors = ["Your Name <your.email@example.com>"]
+authors = ["Andam Contributors"]
 license = "MIT OR Apache-2.0"
 description = "Comprehensive cosmological calculations and visualizations"
-repository = "https://github.com/yourusername/andam"
+repository = "https://github.com/cosmos-andam/andam"
 documentation = "https://docs.rs/andam"
-homepage = "https://github.com/yourusername/andam"
+homepage = "https://github.com/cosmos-andam/andam"
 keywords = ["cosmology", "astrophysics", "physics", "simulation", "astronomy"]
 categories = ["science", "simulation", "visualization"]
 readme = "README.md"

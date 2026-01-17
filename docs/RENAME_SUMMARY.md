@@ -6,7 +6,7 @@ All implementation documents have been updated to reflect the new project name *
 
 ### Project Name
 - **Old**: cosmology-rs / cosmology_rs
-- **New**: andam (అండం - "universe" or "cosmos" in Telugu)
+- **New**: andam (அண்டம் - "universe" in தமிழ் (Tamil))
 
 ## Updated Elements
 
@@ -40,14 +40,14 @@ andam/
 ```
 
 ### 4. URLs and Links
-- **GitHub**: `github.com/yourusername/andam`
+- **GitHub**: `github.com/cosmos-andam/andam`
 - **Docs**: `docs.rs/andam`
 - **Crates.io**: `crates.io/crates/andam`
 
 ### 5. Documentation Headers
 - Updated all markdown file titles
 - Updated project descriptions
-- Added Telugu etymology note
+- Added Tamil etymology note
 
 ## Files Updated
 
@@ -62,7 +62,7 @@ All 5 implementation documents have been updated:
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/andam
+git clone https://github.com/cosmos-andam/andam
 cd andam
 
 # Build

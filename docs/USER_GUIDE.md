@@ -28,7 +28,7 @@ andam = "0.1.0"
 ### From Source
 
 ```bash
-git clone https://github.com/yourusername/andam
+git clone https://github.com/cosmos-andam/andam
 cd andam
 cargo build --release
 ```

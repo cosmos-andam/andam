@@ -42,10 +42,10 @@ Create the main `Cargo.toml` with initial dependencies:
 name = "andam"
 version = "0.1.0"
 edition = "2021"
-authors = ["Your Name <your.email@example.com>"]
+authors = ["Andam Contributors"]
 license = "MIT OR Apache-2.0"
 description = "A comprehensive Rust library for cosmological calculations and visualizations"
-repository = "https://github.com/yourusername/andam"
+repository = "https://github.com/cosmos-andam/andam"
 keywords = ["cosmology", "astrophysics", "physics", "simulation"]
 categories = ["science", "simulation"]
 
