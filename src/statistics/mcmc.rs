@@ -86,6 +86,7 @@ where
     }
 
     /// Run MCMC
+    #[allow(deprecated)]
     pub fn run(&self, burn_in: usize) -> Chain {
         let mut rng = rand::thread_rng();
 

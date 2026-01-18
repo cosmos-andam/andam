@@ -21,6 +21,7 @@ impl DensityField {
     }
 
     /// Generate Gaussian random field (simplified)
+    #[allow(deprecated)]
     pub fn generate_gaussian(&mut self, _omega_m: f64, _z: f64) {
         let mut rng = rand::thread_rng();
 
