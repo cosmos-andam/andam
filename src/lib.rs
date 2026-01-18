@@ -38,9 +38,11 @@ pub mod structure;
 pub mod perturbations;
 pub mod advanced;
 pub mod early_universe;
-pub mod visualization;
 pub mod statistics;
 pub mod beyond_lcdm;
+
+#[cfg(feature = "plotting")]
+pub mod visualization;
 
 #[cfg(feature = "hdf5-storage")]
 pub mod storage;
