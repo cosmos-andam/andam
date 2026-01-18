@@ -68,6 +68,67 @@ plotting-kaleido = ["plotting", "plotly/kaleido"]
 hdf5-storage = ["hdf5", "flate2", "chrono"]
 full = ["plotting-kaleido", "hdf5-storage"]
 
+# Examples that require plotting feature
+[[example]]
+name = "bbn_evolution"
+required-features = ["plotting"]
+
+[[example]]
+name = "cmb_power_spectrum"
+required-features = ["plotting"]
+
+[[example]]
+name = "corner_plot"
+required-features = ["plotting"]
+
+[[example]]
+name = "density_slice"
+required-features = ["plotting"]
+
+[[example]]
+name = "distance_measures"
+required-features = ["plotting"]
+
+[[example]]
+name = "halo_mass_function"
+required-features = ["plotting"]
+
+[[example]]
+name = "hubble_diagram"
+required-features = ["plotting"]
+
+[[example]]
+name = "hubble_parameter"
+required-features = ["plotting"]
+
+[[example]]
+name = "matter_power_spectrum"
+required-features = ["plotting"]
+
+[[example]]
+name = "model_comparison"
+required-features = ["plotting"]
+
+[[example]]
+name = "polarization_spectrum"
+required-features = ["plotting"]
+
+[[example]]
+name = "power_spectrum_comparison"
+required-features = ["plotting"]
+
+[[example]]
+name = "recombination"
+required-features = ["plotting"]
+
+[[example]]
+name = "structure_growth"
+required-features = ["plotting"]
+
+[[example]]
+name = "universe_evolution"
+required-features = ["plotting"]
+
 # [[bench]]
 # name = "friedmann_bench"
 # harness = false
