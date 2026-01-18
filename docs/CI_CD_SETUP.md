@@ -68,6 +68,7 @@ This document describes the CI/CD pipeline for the Andam project.
 
 **Jobs**:
 - **Build and Deploy**: Builds documentation and deploys to GitHub Pages
+  - Requires `contents: write` permission for gh-pages deployment
   - Creates index.html redirect
   - Deploys to gh-pages branch (main branch only)
 
@@ -299,6 +300,14 @@ If you see "unexpected-value" or "deprecated" errors from cargo-deny:
 - Remove deprecated keys like `unlicensed`, `copyleft`, `default`, `allow-osi-fsf-free`
 - Security workflow uses EmbarkStudios/cargo-deny-action@v1 for better compatibility
 - See deny.toml for the correct modern configuration format
+
+### GitHub Pages Deployment Failures
+
+If you see "Permission denied to github-actions[bot]" or 403 errors when deploying to GitHub Pages:
+- Ensure the workflow has `permissions: contents: write` in the job configuration
+- Check that GitHub Pages is enabled in repository Settings → Pages
+- Verify the source is set to "Deploy from a branch" with gh-pages branch
+- The workflow only deploys on push to main branch, not on pull requests
 
 ### Security Advisory Ignores
 
