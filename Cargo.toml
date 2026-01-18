@@ -20,7 +20,7 @@ rustdoc-args = ["--cfg", "docsrs"]
 
 [dependencies]
 # Numerical computation
-ndarray = "0.15"
+ndarray = "0.15.6"
 nalgebra = "0.32"
 num-complex = "0.4"
 num-traits = "0.2"
