@@ -22,6 +22,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          DEBIAN_FRONTEND=noninteractive sudo apt-get install -y fontconfig libfontconfig1-dev pkg-config
+          pkg-config --exists fontconfig && echo "fontconfig found" || echo "fontconfig NOT found"
+
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
 

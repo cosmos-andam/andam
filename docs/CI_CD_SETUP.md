@@ -60,7 +60,10 @@ This document describes the CI/CD pipeline for the Andam project.
 
 **Jobs**:
 - **Audit**: Runs cargo-audit for known vulnerabilities
+  - Configured to ignore known transitive dependency issues (see Security Advisory Ignores)
 - **Deny**: Runs cargo-deny for dependency licensing and security
+  - Uses EmbarkStudios/cargo-deny-action@v1
+  - Ignores configured in deny.toml
 
 ### 4. Documentation Workflow (docs.yml)
 
