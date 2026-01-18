@@ -1,8 +1,7 @@
 //! Big Bang Nucleosynthesis (BBN) calculations
 
-use super::network::{NetworkSolver, AbundanceState};
+use super::network::AbundanceState;
 use super::reactions::Nuclide;
-use crate::constants::*;
 
 /// BBN simulation parameters
 #[derive(Debug, Clone)]
@@ -71,7 +70,7 @@ impl BBNResult {
 /// Run BBN simulation (simplified analytical approach)
 pub fn run_bbn(params: &BBNParameters) -> BBNResult {
     use crate::constants::T_CMB;
-    use super::freeze_out::{freezeout_np_ratio, freezeout_temperature};
+    use super::freeze_out::freezeout_np_ratio;
 
     // Calculate photon number density
     // At T_CMB = 2.7255 K, n_γ ≈ 411 cm⁻³

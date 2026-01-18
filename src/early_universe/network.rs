@@ -164,9 +164,9 @@ impl NetworkSolver {
         let mut t = t_start;
 
         // Adaptive time stepping
-        let mut dt = 0.001; // Start with very small time step (0.001 s)
         let dt_max = 10.0; // Maximum step size (10 seconds)
         let dt_min = 1e-6; // Minimum step (1 microsecond)
+        let mut dt: f64; // Will be calculated adaptively each step
 
         let mut step_count = 0;
         const MAX_STEPS: usize = 1000000; // Safety limit (increased)

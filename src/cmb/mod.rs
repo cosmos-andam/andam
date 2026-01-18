@@ -2,6 +2,7 @@
 
 pub mod recombination;
 pub mod fluctuations;
+pub mod polarization;
 
 pub use recombination::{
     saha_equation,
@@ -13,4 +14,9 @@ pub use fluctuations::{
     angular_power_spectrum,
     dimensionless_power_spectrum,
     acoustic_peak_positions,
+};
+pub use polarization::{
+    StokesParameters,
+    PolarizationSpectrum,
+    decompose_eb,
 };
