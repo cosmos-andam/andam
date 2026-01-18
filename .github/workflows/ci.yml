@@ -58,17 +58,17 @@ jobs:
           path: target
           key: ${{ runner.os }}-cargo-build-target-v2-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Run tests (default features)
+      - name: Run tests (default features - no plotting)
         run: cargo test --verbose
 
       - name: Run tests (no default features)
         run: cargo test --no-default-features --verbose
 
-      - name: Run tests (plotting only)
-        run: cargo test --features plotting --verbose
+      - name: Run tests (plotting feature)
+        run: cargo test --no-default-features --features plotting --verbose
 
       - name: Run doc tests
-        run: cargo test --doc --features plotting
+        run: cargo test --doc --no-default-features --features plotting
 
   test-hdf5:
     name: Test with HDF5
@@ -104,8 +104,8 @@ jobs:
           DEBIAN_FRONTEND=noninteractive sudo apt-get install -y fontconfig libfontconfig1-dev pkg-config
           pkg-config --exists fontconfig && echo "fontconfig found" || echo "fontconfig NOT found"
 
-      - name: Run clippy (default features)
-        run: cargo clippy --all-targets --features plotting -- -D warnings
+      - name: Run clippy (plotting feature)
+        run: cargo clippy --all-targets --no-default-features --features plotting -- -D warnings
 
       - name: Run clippy (no default features - lib only)
         run: cargo clippy --lib --no-default-features -- -D warnings
@@ -140,7 +140,7 @@ jobs:
           pkg-config --exists fontconfig && echo "fontconfig found" || echo "fontconfig NOT found"
 
       - name: Check documentation
-        run: cargo doc --no-deps --features plotting --verbose
+        run: cargo doc --no-deps --no-default-features --features plotting --verbose
         env:
           RUSTDOCFLAGS: -D warnings
 
@@ -163,7 +163,7 @@ jobs:
         run: cargo install cargo-tarpaulin
 
       - name: Generate coverage
-        run: cargo tarpaulin --features plotting --out xml --verbose
+        run: cargo tarpaulin --no-default-features --features plotting --out xml --verbose
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
@@ -189,4 +189,4 @@ jobs:
           pkg-config --exists fontconfig && echo "fontconfig found" || echo "fontconfig NOT found"
 
       - name: Check MSRV
-        run: cargo check --features plotting --verbose
+        run: cargo check --no-default-features --features plotting --verbose

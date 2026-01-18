@@ -29,7 +29,6 @@ num-traits = "0.2"
 ode_solvers = "0.4"
 
 # Plotting (optional)
-plotly = { version = "=0.8.4", default-features = false, optional = true }
 plotters = { version = "0.3", features = ["all_series", "bitmap_encoder"], optional = true }
 plotters-backend = { version = "0.3", optional = true }
 
@@ -61,20 +60,14 @@ approx = "0.5"
 tempfile = "3.0"
 
 [features]
-default = ["plotting"]
-plotting = ["plotly", "plotters", "plotters-backend"]
-# Note: kaleido requires network access during build, not suitable for docs.rs
-plotting-kaleido = ["plotting", "plotly/kaleido"]
+default = []
+plotting = ["plotters", "plotters-backend"]
 hdf5-storage = ["hdf5", "flate2", "chrono"]
-full = ["plotting-kaleido", "hdf5-storage"]
+full = ["plotting", "hdf5-storage"]
 
 # Examples that require plotting feature
 [[example]]
 name = "bbn_evolution"
-required-features = ["plotting"]
-
-[[example]]
-name = "cmb_power_spectrum"
 required-features = ["plotting"]
 
 [[example]]
@@ -83,10 +76,6 @@ required-features = ["plotting"]
 
 [[example]]
 name = "density_slice"
-required-features = ["plotting"]
-
-[[example]]
-name = "distance_measures"
 required-features = ["plotting"]
 
 [[example]]
@@ -99,10 +88,6 @@ required-features = ["plotting"]
 
 [[example]]
 name = "hubble_parameter"
-required-features = ["plotting"]
-
-[[example]]
-name = "matter_power_spectrum"
 required-features = ["plotting"]
 
 [[example]]
