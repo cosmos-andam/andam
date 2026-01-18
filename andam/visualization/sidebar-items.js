@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["colors","equation_plots","plots_2d"]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["convergence_to_shear","lensing_power_spectrum"],"struct":["ConvergenceField","Shear"]};

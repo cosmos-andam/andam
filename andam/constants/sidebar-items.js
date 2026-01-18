@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["ALPHA","AMU","AU","C","EV_TO_J","E_CHARGE","G","GYR","H0_PLANCK","HBAR","H_PLANCK","J_TO_EV","K_B","L_SUN","M_E","M_N","M_P","M_SUN","N_GAMMA","PARSEC","RHO_CRIT_COEFF","R_SUN","SIGMA_SB","SIGMA_T","T_CMB","T_NU","YEAR"],"fn":["critical_density","hubble_time"]};

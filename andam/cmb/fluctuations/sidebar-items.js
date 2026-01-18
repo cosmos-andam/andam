@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["acoustic_peak_positions","angular_power_spectrum","dimensionless_power_spectrum"]};

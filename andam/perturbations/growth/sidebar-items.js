@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["growth_factor","growth_rate"]};

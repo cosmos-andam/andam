@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["create_plot_with_equation","plot_abundance_evolution"],"struct":["PublicationConfig"]};

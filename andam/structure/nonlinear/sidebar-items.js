@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["nonlinear_dimensionless_power"],"struct":["HalofitSpectrum"]};

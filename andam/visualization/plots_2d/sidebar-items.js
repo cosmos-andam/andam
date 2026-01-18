@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["create_line_plot","create_loglog_plot","create_multiline_plot"],"struct":["PlotConfig"]};

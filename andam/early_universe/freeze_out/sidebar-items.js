@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["estimate_yp_from_freezeout","freezeout_np_ratio","freezeout_temperature","hubble_rate_radiation","weak_interaction_rate"]};

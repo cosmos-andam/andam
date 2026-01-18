@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["correlation","cosmic_web","halos","nonlinear","power_spectrum"]};
