@@ -300,6 +300,26 @@ If you see "unexpected-value" or "deprecated" errors from cargo-deny:
 - Security workflow uses EmbarkStudios/cargo-deny-action@v1 for better compatibility
 - See deny.toml for the correct modern configuration format
 
+### Security Advisory Ignores
+
+The project currently ignores three security advisories due to dependency constraints:
+
+**RUSTSEC-2020-0071** (time 0.1.45 vulnerability):
+- Transitive dependency from plotly 0.8
+- Updating plotly to 0.14+ requires Rust 1.88 (not yet stable)
+- Will be fixed when Rust 1.88 is released
+
+**RUSTSEC-2024-0384** (instant unmaintained):
+- Transitive from hdf5 0.8 via parking_lot
+- Latest hdf5 version still uses this dependency
+- Monitoring for hdf5 updates
+
+**RUSTSEC-2024-0436** (paste unmaintained):
+- Transitive from simba/hdf5 used by nalgebra/ode_solvers
+- Monitoring for upstream migrations
+
+These are documented in deny.toml with TODOs and will be addressed when updates become available.
+
 ## Adding Benchmarks
 
 Currently no benchmarks are configured. To add benchmarks:
