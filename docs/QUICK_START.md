@@ -23,16 +23,16 @@ andam = "0.1.0"
 use andam::prelude::*;
 
 fn main() {
-    // Create standard ΛCDM universe
-    let universe = Universe::benchmark();
+ // Create standard ΛCDM universe
+ let universe = Universe::benchmark();
 
-    // Calculate universe age
-    let age = universe.age_today();
-    println!("Universe age: {:.2} Gyr", age);
+ // Calculate universe age
+ let age = universe.age_today();
+ println!("Universe age: {:.2} Gyr", age);
 
-    // Calculate distance to redshift z=1
-    let distance = luminosity_distance(1.0, &universe);
-    println!("Distance to z=1: {:.0} Mpc", distance);
+ // Calculate distance to redshift z=1
+ let distance = luminosity_distance(1.0, &universe);
+ println!("Distance to z=1: {:.0} Mpc", distance);
 }
 ```
 
@@ -50,16 +50,16 @@ Distance to z=1: 6602 Mpc
 use andam::prelude::*;
 
 fn main() {
-    let universe = Universe::benchmark();
-    let z = 1.0;
+ let universe = Universe::benchmark();
+ let z = 1.0;
 
-    let d_c = comoving_distance(z, &universe);
-    let d_l = luminosity_distance(z, &universe);
-    let d_a = angular_diameter_distance(z, &universe);
+ let d_c = comoving_distance(z, &universe);
+ let d_l = luminosity_distance(z, &universe);
+ let d_a = angular_diameter_distance(z, &universe);
 
-    println!("Comoving distance: {:.0} Mpc", d_c);
-    println!("Luminosity distance: {:.0} Mpc", d_l);
-    println!("Angular diameter distance: {:.0} Mpc", d_a);
+ println!("Comoving distance: {:.0} Mpc", d_c);
+ println!("Luminosity distance: {:.0} Mpc", d_l);
+ println!("Angular diameter distance: {:.0} Mpc", d_a);
 }
 ```
 
@@ -70,24 +70,24 @@ use andam::prelude::*;
 use andam::visualization::plots_2d::*;
 
 fn main() {
-    let universe = Universe::benchmark();
+ let universe = Universe::benchmark();
 
-    // Generate data
-    let data: Vec<(f64, f64)> = (10..=100)
-        .map(|i| {
-            let a = i as f64 / 100.0;
-            (a, universe.hubble(a))
-        })
-        .collect();
+ // Generate data
+ let data: Vec<(f64, f64)> = (10..=100)
+ .map(|i| {
+ let a = i as f64 / 100.0;
+ (a, universe.hubble(a))
+ })
+ .collect();
 
-    // Create plot
-    create_line_plot(
-        &data,
-        "hubble.png",
-        "Hubble Parameter",
-        "Scale Factor a",
-        "H(a) [km/s/Mpc]"
-    ).unwrap();
+ // Create plot
+ create_line_plot(
+ &data,
+ "hubble.png",
+ "Hubble Parameter",
+ "Scale Factor a",
+ "H(a) [km/s/Mpc]"
+ ).unwrap();
 }
 ```
 
@@ -97,13 +97,13 @@ fn main() {
 use andam::prelude::*;
 
 fn main() {
-    let universe = Universe::benchmark();
+ let universe = Universe::benchmark();
 
-    let z_rec = recombination_redshift(&universe);
-    println!("Recombination at z = {:.0}", z_rec);
+ let z_rec = recombination_redshift(&universe);
+ println!("Recombination at z = {:.0}", z_rec);
 
-    let x_e = ionization_fraction(1100.0, &universe);
-    println!("Ionization fraction at z=1100: {:.4}", x_e);
+ let x_e = ionization_fraction(1100.0, &universe);
+ println!("Ionization fraction at z=1100: {:.4}", x_e);
 }
 ```
 
@@ -141,7 +141,7 @@ custom.add_component(Component::lambda(0.7));
 ```rust
 // Related by: a = 1/(1+z)
 let z = 1.0;
-let a = 1.0 / (1.0 + z);  // a = 0.5
+let a = 1.0 / (1.0 + z); // a = 0.5
 ```
 
 ### Prelude Module

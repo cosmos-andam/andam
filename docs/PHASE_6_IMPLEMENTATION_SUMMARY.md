@@ -11,70 +11,70 @@ January 17, 2026
 ### Core Modules (src/structure/)
 
 1. **nonlinear.rs** (164 lines)
-   - HALOFIT non-linear power spectrum implementation
-   - k_nonlinear calculation using sigma_8 normalization
-   - Effective spectral index n_eff and curvature n_curv
-   - Boost factor B(k) = P_nl(k) / P_lin(k)
-   - Tests: k_nonlinear, boost_factor, nonlinear_power
+ - HALOFIT non-linear power spectrum implementation
+ - k_nonlinear calculation using sigma_8 normalization
+ - Effective spectral index n_eff and curvature n_curv
+ - Boost factor B(k) = P_nl(k) / P_lin(k)
+ - Tests: k_nonlinear, boost_factor, nonlinear_power
 
 2. **halos.rs** (196 lines)
-   - Three halo mass function models:
-     - Press-Schechter (1974)
-     - Sheth-Tormen (1999)
-     - Tinker et al. (2008)
-   - RMS mass fluctuation sigma(M)
-   - Peak height nu = delta_c / sigma(M)
-   - Halo bias b(M) calculations
-   - Tests: mass_function, sigma_mass, bias
+ - Three halo mass function models:
+ - Press-Schechter (1974)
+ - Sheth-Tormen (1999)
+ - Tinker et al. (2008)
+ - RMS mass fluctuation sigma(M)
+ - Peak height nu = delta_c / sigma(M)
+ - Halo bias b(M) calculations
+ - Tests: mass_function, sigma_mass, bias
 
 3. **correlation.rs** (115 lines)
-   - Real-space correlation function xi(r)
-   - Fourier transform of matter power spectrum
-   - Redshift-space distortions (RSD)
-   - Kaiser formula for anisotropic clustering
-   - Monopole and quadrupole moments
-   - Beta parameter calculation (f/b)
-   - Tests: correlation_function, RSD parameter
+ - Real-space correlation function xi(r)
+ - Fourier transform of matter power spectrum
+ - Redshift-space distortions (RSD)
+ - Kaiser formula for anisotropic clustering
+ - Monopole and quadrupole moments
+ - Beta parameter calculation (f/b)
+ - Tests: correlation_function, RSD parameter
 
 4. **cosmic_web.rs** (165 lines)
-   - 3D density field generation (Array3)
-   - Gaussian random field with smoothing kernel
-   - Particle extraction above density threshold
-   - 2D slice extraction for visualization
-   - Tests: field creation, Gaussian generation, particle extraction
+ - 3D density field generation (Array3)
+ - Gaussian random field with smoothing kernel
+ - Particle extraction above density threshold
+ - 2D slice extraction for visualization
+ - Tests: field creation, Gaussian generation, particle extraction
 
 5. **mod.rs** (Updated)
-   - Exported all new Phase 6 modules
-   - Public API for HalofitSpectrum, HaloMassFunction, DensityField
+ - Exported all new Phase 6 modules
+ - Public API for HalofitSpectrum, HaloMassFunction, DensityField
 
 ### Example Programs (examples/)
 
 1. **power_spectrum_comparison.rs** (200 lines)
-   - Compares linear vs non-linear power spectra
-   - Plots P(k) for multiple redshifts (z = 0, 0.5, 1.0, 2.0)
-   - Boost factor visualization
-   - Outputs:
-     - power_spectrum_comparison.png
-     - boost_factor.png
+ - Compares linear vs non-linear power spectra
+ - Plots P(k) for multiple redshifts (z = 0, 0.5, 1.0, 2.0)
+ - Boost factor visualization
+ - Outputs:
+ - power_spectrum_comparison.png
+ - boost_factor.png
 
 2. **halo_mass_function.rs** (295 lines)
-   - Demonstrates three mass function models
-   - Halo bias comparison
-   - Sigma(M) evolution with redshift
-   - Outputs:
-     - halo_mass_function.png
-     - halo_bias.png
-     - sigma_mass.png
+ - Demonstrates three mass function models
+ - Halo bias comparison
+ - Sigma(M) evolution with redshift
+ - Outputs:
+ - halo_mass_function.png
+ - halo_bias.png
+ - sigma_mass.png
 
 3. **density_slice.rs** (144 lines)
-   - Generates 64^3 Gaussian random field
-   - Extracts 2D slices (xy, xz, yz planes)
-   - Color-coded density maps
-   - Identifies overdense regions
-   - Outputs:
-     - density_xy.png
-     - density_xz.png
-     - density_yz.png
+ - Generates 64^3 Gaussian random field
+ - Extracts 2D slices (xy, xz, yz planes)
+ - Color-coded density maps
+ - Identifies overdense regions
+ - Outputs:
+ - density_xy.png
+ - density_xz.png
+ - density_yz.png
 
 ### Dependencies Added
 - rand = "0.8" (for random number generation in cosmic web)

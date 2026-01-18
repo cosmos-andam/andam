@@ -23,31 +23,31 @@ Complete API documentation for the Andam cosmology library.
 
 ```
 andam
-├── constants        Physical and cosmological constants
-├── units            Unit conversion utilities
-├── dynamics         Universe models and evolution
-│   ├── components   Cosmological components (matter, radiation, Λ)
-│   └── friedmann    Friedmann equations and solvers
-├── observations     Observable quantities
-│   ├── distances    Distance measures (d_L, d_A, d_c)
-│   └── dark_matter  Dark matter physics (future)
-├── cmb              Cosmic Microwave Background
-│   ├── recombination   Ionization history
-│   └── fluctuations    Angular power spectrum
-├── structure        Large-scale structure
-│   ├── power_spectrum      Matter power spectrum P(k)
-│   └── transfer_function   Transfer function T(k)
-├── perturbations    Perturbation theory
-│   ├── growth       Linear growth factor
-│   └── boltzmann    Boltzmann equations
-├── advanced         Advanced features
-│   ├── weak_lensing     Convergence and shear
-│   └── polarization     CMB polarization (future)
-└── visualization    Plotting and visualization
-    ├── plots_2d         Static PNG plots
-    ├── plotly_plots     Interactive HTML plots
-    ├── three_d          3D visualization (future)
-    └── colors           Color schemes
+ constants Physical and cosmological constants
+ units Unit conversion utilities
+ dynamics Universe models and evolution
+ components Cosmological components (matter, radiation, Λ)
+ friedmann Friedmann equations and solvers
+ observations Observable quantities
+ distances Distance measures (d_L, d_A, d_c)
+ dark_matter Dark matter physics (future)
+ cmb Cosmic Microwave Background
+ recombination Ionization history
+ fluctuations Angular power spectrum
+ structure Large-scale structure
+ power_spectrum Matter power spectrum P(k)
+ transfer_function Transfer function T(k)
+ perturbations Perturbation theory
+ growth Linear growth factor
+ boltzmann Boltzmann equations
+ advanced Advanced features
+ weak_lensing Convergence and shear
+ polarization CMB polarization (future)
+ visualization Plotting and visualization
+ plots_2d Static PNG plots
+ plotly_plots Interactive HTML plots
+ three_d 3D visualization (future)
+ colors Color schemes
 ```
 
 ---
@@ -61,32 +61,32 @@ Physical and cosmological constants in SI units.
 #### Physical Constants
 
 ```rust
-pub const C: f64 = 299792458.0;              // Speed of light [m/s]
-pub const G: f64 = 6.67430e-11;              // Gravitational constant [m³/kg/s²]
-pub const H_PLANCK: f64 = 6.62607015e-34;    // Planck constant [J⋅s]
-pub const K_B: f64 = 1.380649e-23;           // Boltzmann constant [J/K]
-pub const SIGMA_SB: f64 = 5.670374419e-8;    // Stefan-Boltzmann [W/m²/K⁴]
-pub const M_P: f64 = 1.22089e19;             // Planck mass [GeV/c²]
-pub const M_SUN: f64 = 1.98847e30;           // Solar mass [kg]
+pub const C: f64 = 299792458.0; // Speed of light [m/s]
+pub const G: f64 = 6.67430e-11; // Gravitational constant [m³/kg/s²]
+pub const H_PLANCK: f64 = 6.62607015e-34; // Planck constant [J⋅s]
+pub const K_B: f64 = 1.380649e-23; // Boltzmann constant [J/K]
+pub const SIGMA_SB: f64 = 5.670374419e-8; // Stefan-Boltzmann [W/m²/K⁴]
+pub const M_P: f64 = 1.22089e19; // Planck mass [GeV/c²]
+pub const M_SUN: f64 = 1.98847e30; // Solar mass [kg]
 ```
 
 #### Cosmological Constants
 
 ```rust
-pub const H0_PLANCK: f64 = 67.66;            // Hubble constant [km/s/Mpc]
-pub const OMEGA_M_PLANCK: f64 = 0.3111;      // Matter density parameter
+pub const H0_PLANCK: f64 = 67.66; // Hubble constant [km/s/Mpc]
+pub const OMEGA_M_PLANCK: f64 = 0.3111; // Matter density parameter
 pub const OMEGA_LAMBDA_PLANCK: f64 = 0.6889; // Dark energy density
-pub const OMEGA_B_PLANCK: f64 = 0.0490;      // Baryon density
-pub const T_CMB: f64 = 2.7255;               // CMB temperature [K]
-pub const RHO_CRIT_0: f64 = 1.8788e-26;      // Critical density [kg/m³]
+pub const OMEGA_B_PLANCK: f64 = 0.0490; // Baryon density
+pub const T_CMB: f64 = 2.7255; // CMB temperature [K]
+pub const RHO_CRIT_0: f64 = 1.8788e-26; // Critical density [kg/m³]
 ```
 
 #### Unit Conversion Constants
 
 ```rust
-pub const MPC_TO_M: f64 = 3.085677581e22;    // Megaparsec to meters
-pub const GYR_TO_S: f64 = 3.15576e16;        // Gigayear to seconds
-pub const EV_TO_J: f64 = 1.602176634e-19;    // Electronvolt to joules
+pub const MPC_TO_M: f64 = 3.085677581e22; // Megaparsec to meters
+pub const GYR_TO_S: f64 = 3.15576e16; // Gigayear to seconds
+pub const EV_TO_J: f64 = 1.602176634e-19; // Electronvolt to joules
 ```
 
 #### Functions
@@ -131,10 +131,10 @@ Unit conversion utilities for length, mass, time, and energy.
 
 ```rust
 pub enum Length {
-    Meter,
-    Kilometer,
-    Megaparsec,
-    Lightyear,
+ Meter,
+ Kilometer,
+ Megaparsec,
+ Lightyear,
 }
 ```
 
@@ -159,10 +159,10 @@ let ly = Length::Mpc.to_lightyears(mpc);
 
 ```rust
 pub enum Time {
-    Second,
-    Year,
-    Megayear,
-    Gigayear,
+ Second,
+ Year,
+ Megayear,
+ Gigayear,
 }
 ```
 
@@ -234,8 +234,8 @@ Represents a cosmological component with equation of state.
 
 ```rust
 pub struct Component {
-    pub omega_0: f64,  // Density parameter today
-    pub w: f64,        // Equation of state parameter
+ pub omega_0: f64, // Density parameter today
+ pub w: f64, // Equation of state parameter
 }
 ```
 
@@ -304,8 +304,8 @@ Complete cosmological model with multiple components.
 
 ```rust
 pub struct Universe {
-    pub h0: f64,                    // Hubble constant [km/s/Mpc]
-    pub components: Vec<Component>, // List of components
+ pub h0: f64, // Hubble constant [km/s/Mpc]
+ pub components: Vec<Component>, // List of components
 }
 ```
 
@@ -660,7 +660,7 @@ let c_l = angular_power_spectrum(2000, &universe);
 let d_l = dimensionless_power_spectrum(&c_l);
 
 for (l, d) in d_l.iter().skip(2).take(5) {
-    println!("l = {}: D_l = {:.2e}", l, d);
+ println!("l = {}: D_l = {:.2e}", l, d);
 }
 ```
 
@@ -760,13 +760,13 @@ Calculate matter power spectrum P(k,z).
 use andam::structure::power_spectrum::matter_power_spectrum;
 
 let p_k = matter_power_spectrum(
-    0.1,      // k in h/Mpc
-    0.0,      // z
-    0.3111,   // omega_m
-    0.049,    // omega_b
-    0.6766,   // h
-    2.1e-9,   // A_s
-    0.9665    // n_s
+ 0.1, // k in h/Mpc
+ 0.0, // z
+ 0.3111, // omega_m
+ 0.049, // omega_b
+ 0.6766, // h
+ 2.1e-9, // A_s
+ 0.9665 // n_s
 );
 println!("P(k=0.1) = {:.2e} (Mpc/h)³", p_k);
 ```
@@ -786,7 +786,7 @@ Calculate dimensionless power Δ²(k) = k³P(k)/(2π²).
 use andam::structure::power_spectrum::dimensionless_power;
 
 let delta_sq = dimensionless_power(
-    0.1, 0.0, 0.3111, 0.049, 0.6766, 2.1e-9, 0.9665
+ 0.1, 0.0, 0.3111, 0.049, 0.6766, 2.1e-9, 0.9665
 );
 println!("Δ²(k=0.1) = {:.4}", delta_sq);
 ```
@@ -853,10 +853,10 @@ Simplified Boltzmann equation solver for photon perturbations.
 
 ```rust
 pub struct BoltzmannSolver {
-    pub universe: Universe,
-    pub k: f64,
-    pub mode: PerturbationMode,
-    pub l_max: usize,
+ pub universe: Universe,
+ pub k: f64,
+ pub mode: PerturbationMode,
+ pub l_max: usize,
 }
 ```
 
@@ -879,10 +879,10 @@ use andam::dynamics::Universe;
 
 let universe = Universe::benchmark();
 let solver = BoltzmannSolver::new(
-    universe,
-    0.1,
-    PerturbationMode::Scalar,
-    10
+ universe,
+ 0.1,
+ PerturbationMode::Scalar,
+ 10
 );
 ```
 
@@ -901,7 +901,7 @@ Evolve perturbations from a_initial to a_final.
 **Example**:
 ```rust
 let mut solver = BoltzmannSolver::new(
-    universe, 0.1, PerturbationMode::Scalar, 10
+ universe, 0.1, PerturbationMode::Scalar, 10
 );
 let results = solver.evolve(1e-5, 1e-2);
 println!("Evolved {} steps", results.len());
@@ -923,8 +923,8 @@ Advanced features including weak lensing.
 
 ```rust
 pub struct ConvergenceField {
-    pub kappa: Array2<f64>,
-    pub size: usize,
+ pub kappa: Array2<f64>,
+ pub size: usize,
 }
 ```
 
@@ -966,10 +966,10 @@ use andam::dynamics::Universe;
 
 let universe = Universe::benchmark();
 let field = ConvergenceField::from_power_spectrum(
-    &universe,
-    1.0,    // source at z=1
-    128,    // 128x128 grid
-    1.0     // 1 degree field
+ &universe,
+ 1.0, // source at z=1
+ 128, // 128x128 grid
+ 1.0 // 1 degree field
 );
 ```
 
@@ -979,8 +979,8 @@ Shear components (γ₁, γ₂).
 
 ```rust
 pub struct Shear {
-    pub gamma1: f64,
-    pub gamma2: f64,
+ pub gamma1: f64,
+ pub gamma2: f64,
 }
 ```
 
@@ -1071,11 +1071,11 @@ use andam::visualization::plots_2d::create_line_plot;
 
 let data = vec![(0.0, 0.0), (1.0, 1.0), (2.0, 4.0)];
 create_line_plot(
-    &data,
-    "plot.png",
-    "Quadratic Function",
-    "x",
-    "y = x²"
+ &data,
+ "plot.png",
+ "Quadratic Function",
+ "x",
+ "y = x²"
 )?;
 ```
 
@@ -1116,12 +1116,12 @@ use andam::visualization::plots_2d::create_multiline_plot;
 let s1 = vec![(0.0, 0.0), (1.0, 1.0)];
 let s2 = vec![(0.0, 0.0), (1.0, 2.0)];
 create_multiline_plot(
-    &[s1, s2],
-    &["Linear", "Double"],
-    "multiline.png",
-    "Comparison",
-    "x",
-    "y"
+ &[s1, s2],
+ &["Linear", "Double"],
+ "multiline.png",
+ "Comparison",
+ "x",
+ "y"
 )?;
 ```
 
@@ -1145,11 +1145,11 @@ use andam::visualization::plotly_plots::create_interactive_plot;
 
 let data = vec![(0.0, 0.0), (1.0, 1.0), (2.0, 4.0)];
 create_interactive_plot(
-    &data,
-    "interactive.html",
-    "Interactive Plot",
-    "x",
-    "y"
+ &data,
+ "interactive.html",
+ "Interactive Plot",
+ "x",
+ "y"
 )?;
 ```
 
@@ -1167,11 +1167,11 @@ use andam::visualization::plotly_plots::create_loglog_interactive;
 
 let data = vec![(1.0, 1.0), (10.0, 100.0)];
 create_loglog_interactive(
-    &data,
-    "interactive_log.html",
-    "Log Plot",
-    "x",
-    "y"
+ &data,
+ "interactive_log.html",
+ "Log Plot",
+ "x",
+ "y"
 )?;
 ```
 
@@ -1183,9 +1183,9 @@ create_loglog_interactive(
 
 ```rust
 pub enum PerturbationMode {
-    Scalar,
-    Vector,
-    Tensor,
+ Scalar,
+ Vector,
+ Tensor,
 }
 ```
 
@@ -1198,9 +1198,9 @@ Modes of cosmological perturbations:
 
 ```rust
 pub struct PerturbationState {
-    pub a: f64,
-    pub delta: f64,
-    pub theta: Vec<f64>,
+ pub a: f64,
+ pub delta: f64,
+ pub theta: Vec<f64>,
 }
 ```
 

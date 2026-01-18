@@ -13,10 +13,10 @@ Three visualization examples demonstrating the advanced features from Phases 7, 
 - Two-parameter fit (Omega_m, sigma_8)
 - 50 walkers, 1000 steps, 200 burn-in
 - 2×2 corner plot layout:
-  - Top-left: Omega_m 1D histogram
-  - Bottom-left: 2D scatter plot with confidence ellipses (1σ, 2σ, 3σ)
-  - Bottom-right: sigma_8 1D histogram
-  - Top-right: Empty (standard corner plot convention)
+ - Top-left: Omega_m 1D histogram
+ - Bottom-left: 2D scatter plot with confidence ellipses (1σ, 2σ, 3σ)
+ - Bottom-right: sigma_8 1D histogram
+ - Top-right: Empty (standard corner plot convention)
 - Statistical output: mean ± std, percentiles
 
 **Output**: `corner_plot.png` (1600×1600)
@@ -65,8 +65,8 @@ cargo run --example polarization_spectrum
 ```
 === Polarization Spectrum Statistics ===
 E-mode power at l=200: 45.23 μK²
-B-mode power at l=80:  0.000123 μK²
-TE power at l=200:     -12.34 μK²
+B-mode power at l=80: 0.000123 μK²
+TE power at l=200: -12.34 μK²
 
 Note: B-modes are tiny because r << 1 (no primordial GW detection yet)
 ```
@@ -91,13 +91,13 @@ Note: B-modes are tiny because r << 1 (no primordial GW detection yet)
 
 **Features**:
 - Four dark energy models:
-  1. ΛCDM (w = -1)
-  2. Constant w = -0.9
-  3. CPL: w(a) = w_0 + w_a(1-a) with w_0=-0.9, w_a=-0.1
-  4. Early DE with w_0=-0.8
+ 1. ΛCDM (w = -1)
+ 2. Constant w = -0.9
+ 3. CPL: w(a) = w_0 + w_a(1-a) with w_0=-0.9, w_a=-0.1
+ 4. Early DE with w_0=-0.8
 - Two-panel vertical layout:
-  - Top: Hubble parameter H(a)/H_0
-  - Bottom: Equation of state w(a)
+ - Top: Hubble parameter H(a)/H_0
+ - Bottom: Equation of state w(a)
 - Scale factor range: a = 0.1 to 1.0
 
 **Output**: `model_comparison.png` (2400×1800)
@@ -112,14 +112,14 @@ cargo run --example model_comparison
 === Model Details ===
 
 ΛCDM (w = -1)
-  w(a=0.5) = -1.000
-  w(a=1.0) = -1.000
-  ρ_DE(a=0.5)/ρ_DE(a=1.0) = 1.000
+ w(a=0.5) = -1.000
+ w(a=1.0) = -1.000
+ ρ_DE(a=0.5)/ρ_DE(a=1.0) = 1.000
 
 CPL (w_0=-0.9, w_a=-0.1)
-  w(a=0.5) = -0.950
-  w(a=1.0) = -0.900
-  ρ_DE(a=0.5)/ρ_DE(a=1.0) = 1.147
+ w(a=0.5) = -0.950
+ w(a=1.0) = -0.900
+ ρ_DE(a=0.5)/ρ_DE(a=1.0) = 1.147
 ```
 
 **Key Physics**:
@@ -168,19 +168,19 @@ cargo build --examples
 All examples generate high-resolution PNG images:
 
 1. **corner_plot.png** (1600×1600)
-   - MCMC posterior distributions
-   - 1D histograms and 2D scatter
-   - Confidence contours
+ - MCMC posterior distributions
+ - 1D histograms and 2D scatter
+ - Confidence contours
 
 2. **cmb_polarization.png** (2400×1800)
-   - Three polarization power spectra
-   - Vertical 3-panel layout
-   - Publication-quality formatting
+ - Three polarization power spectra
+ - Vertical 3-panel layout
+ - Publication-quality formatting
 
 3. **model_comparison.png** (2400×1800)
-   - H(a) and w(a) evolution
-   - Four dark energy models
-   - Vertical 2-panel layout
+ - H(a) and w(a) evolution
+ - Four dark energy models
+ - Vertical 2-panel layout
 
 ---
 
@@ -202,8 +202,8 @@ All examples generate high-resolution PNG images:
 ```rust
 // Change MCMC parameters
 let sampler = MCMCSampler::new(params, log_likelihood,
-                                50,    // n_walkers
-                                1000); // n_steps
+ 50, // n_walkers
+ 1000); // n_steps
 let chain = sampler.run(200); // burn_in
 ```
 
@@ -218,9 +218,9 @@ let pol_spectrum = PolarizationSpectrum::from_boltzmann(&universe, l_max);
 ```rust
 // Add more models
 let models = vec![
-    ("ΛCDM", DarkEnergyModel::Lambda),
-    ("w=-0.95", DarkEnergyModel::ConstantW(-0.95)),
-    // Add custom CPL parameters
+ ("ΛCDM", DarkEnergyModel::Lambda),
+ ("w=-0.95", DarkEnergyModel::ConstantW(-0.95)),
+ // Add custom CPL parameters
 ];
 ```
 
@@ -316,8 +316,8 @@ These plots are suitable for:
 
 The three Phase 7-9 examples complete the visualization suite for the Andam library. Combined with the 12 earlier examples, users have comprehensive demonstrations of:
 
-✅ Statistical inference (MCMC)
-✅ CMB polarization (E/B modes)
-✅ Beyond-ΛCDM cosmology (dark energy models)
+[DONE] Statistical inference (MCMC)
+[DONE] CMB polarization (E/B modes)
+[DONE] Beyond-ΛCDM cosmology (dark energy models)
 
 All examples are **production-ready** and demonstrate the library's capabilities for modern cosmological analysis.

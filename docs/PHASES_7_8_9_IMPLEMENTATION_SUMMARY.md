@@ -11,23 +11,23 @@ January 17, 2026
 ### Core Modules Created (src/statistics/)
 
 1. **mcmc.rs** (218 lines)
-   - Markov Chain Monte Carlo sampler
-   - Parameter class with bounds and proposal widths
-   - Chain class with statistical methods (mean, std, percentiles)
-   - Metropolis-Hastings algorithm
-   - Multiple walkers support
-   - Burn-in handling
-   - Tests: Gaussian likelihood, chain statistics
+ - Markov Chain Monte Carlo sampler
+ - Parameter class with bounds and proposal widths
+ - Chain class with statistical methods (mean, std, percentiles)
+ - Metropolis-Hastings algorithm
+ - Multiple walkers support
+ - Burn-in handling
+ - Tests: Gaussian likelihood, chain statistics
 
 2. **fisher.rs** (127 lines)
-   - Fisher information matrix calculations
-   - Numerical derivatives for observables
-   - Marginalized error forecasts
-   - Covariance and correlation matrices
-   - Tests: Linear model fitting
+ - Fisher information matrix calculations
+ - Numerical derivatives for observables
+ - Marginalized error forecasts
+ - Covariance and correlation matrices
+ - Tests: Linear model fitting
 
 3. **mod.rs**
-   - Exports: MCMCSampler, Chain, Parameter, FisherMatrix
+ - Exports: MCMCSampler, Chain, Parameter, FisherMatrix
 
 ### Key Features
 - **MCMC Sampling**: Multi-walker ensemble sampler with adaptive boundaries
@@ -40,17 +40,17 @@ January 17, 2026
 ### Core Modules Created (src/cmb/)
 
 1. **polarization.rs** (143 lines)
-   - Stokes parameters (Q, U)
-   - Polarization fraction and angle calculations
-   - E/B mode decomposition (simplified)
-   - PolarizationSpectrum class
-   - Three power spectra: C_l^EE, C_l^BB, C_l^TE
-   - Tensor-to-scalar ratio from B-modes
-   - Tests: Stokes parameters, spectrum generation, EB decomposition
+ - Stokes parameters (Q, U)
+ - Polarization fraction and angle calculations
+ - E/B mode decomposition (simplified)
+ - PolarizationSpectrum class
+ - Three power spectra: C_l^EE, C_l^BB, C_l^TE
+ - Tensor-to-scalar ratio from B-modes
+ - Tests: Stokes parameters, spectrum generation, EB decomposition
 
 2. **mod.rs** (Updated)
-   - Added polarization module exports
-   - Exports: StokesParameters, PolarizationSpectrum, decompose_eb
+ - Added polarization module exports
+ - Exports: StokesParameters, PolarizationSpectrum, decompose_eb
 
 ### Key Features
 - **E-mode Power**: Scalar perturbation polarization
@@ -63,27 +63,27 @@ January 17, 2026
 ### Core Modules Created (src/beyond_lcdm/)
 
 1. **dark_energy.rs** (121 lines)
-   - Four dark energy models:
-     - ΛCDM (w = -1)
-     - Constant w
-     - CPL parametrization: w(a) = w_0 + w_a(1-a)
-     - Early dark energy
-   - Equation of state w(a)
-   - Density evolution ρ_DE(a)
-   - Modified Hubble parameter H(a)
-   - Model comparison utility
-   - Tests: All four models
+ - Four dark energy models:
+ - ΛCDM (w = -1)
+ - Constant w
+ - CPL parametrization: w(a) = w_0 + w_a(1-a)
+ - Early dark energy
+ - Equation of state w(a)
+ - Density evolution ρ_DE(a)
+ - Modified Hubble parameter H(a)
+ - Model comparison utility
+ - Tests: All four models
 
 2. **neutrinos.rs** (71 lines)
-   - MassiveNeutrinos class
-   - Three mass hierarchies: Normal, Inverted, Degenerate
-   - Ω_ν calculation from Σm_ν
-   - Power spectrum suppression on small scales
-   - Free-streaming scale k_fs
-   - Tests: Omega_nu, power suppression
+ - MassiveNeutrinos class
+ - Three mass hierarchies: Normal, Inverted, Degenerate
+ - Ω_ν calculation from Σm_ν
+ - Power spectrum suppression on small scales
+ - Free-streaming scale k_fs
+ - Tests: Omega_nu, power suppression
 
 3. **mod.rs**
-   - Exports dark_energy and neutrinos modules
+ - Exports dark_energy and neutrinos modules
 
 ### Key Features
 - **Dark Energy Models**: Multiple w(z) parametrizations
@@ -99,12 +99,12 @@ January 17, 2026
 ### Test Summary
 - **Total tests**: 60 (up from 49)
 - **New tests**: 11
-  - MCMC: 2 tests
-  - Fisher: 1 test
-  - Polarization: 3 tests
-  - Dark energy: 3 tests
-  - Neutrinos: 2 tests
-- **Status**: All 60 tests passing ✓
+ - MCMC: 2 tests
+ - Fisher: 1 test
+ - Polarization: 3 tests
+ - Dark energy: 3 tests
+ - Neutrinos: 2 tests
+- **Status**: All 60 tests passing 
 
 ### Test Coverage
 - Phase 7: MCMC convergence, chain statistics, Fisher matrix
@@ -115,17 +115,17 @@ January 17, 2026
 
 ```
 src/
-├── statistics/
-│   ├── mod.rs
-│   ├── mcmc.rs          (MCMC sampler)
-│   └── fisher.rs        (Fisher matrix)
-├── cmb/
-│   ├── polarization.rs  (NEW: E/B modes)
-│   └── mod.rs           (Updated)
-└── beyond_lcdm/
-    ├── mod.rs
-    ├── dark_energy.rs   (w(z) models)
-    └── neutrinos.rs     (Massive ν)
+ statistics/
+ mod.rs
+ mcmc.rs (MCMC sampler)
+ fisher.rs (Fisher matrix)
+ cmb/
+ polarization.rs (NEW: E/B modes)
+ mod.rs (Updated)
+ beyond_lcdm/
+ mod.rs
+ dark_energy.rs (w(z) models)
+ neutrinos.rs (Massive ν)
 ```
 
 ## Key Algorithms
@@ -133,11 +133,11 @@ src/
 ### MCMC Sampler
 ```
 For each step:
-  For each walker:
-    Propose new position with Gaussian step
-    Reflect at parameter boundaries
-    Accept with Metropolis-Hastings:
-      if log(u) < log(L_new) - log(L_old): accept
+ For each walker:
+ Propose new position with Gaussian step
+ Reflect at parameter boundaries
+ Accept with Metropolis-Hastings:
+ if log(u) < log(L_new) - log(L_old): accept
 Store samples after burn-in
 ```
 
@@ -170,18 +170,18 @@ k_fs ∝ m_ν (free-streaming scale)
 use andam::statistics::mcmc::*;
 
 let params = vec![
-    Parameter {
-        name: "Omega_m".to_string(),
-        initial: 0.3,
-        min: 0.2,
-        max: 0.4,
-        proposal_width: 0.01,
-    },
+ Parameter {
+ name: "Omega_m".to_string(),
+ initial: 0.3,
+ min: 0.2,
+ max: 0.4,
+ proposal_width: 0.01,
+ },
 ];
 
 let log_likelihood = |theta: &[f64]| {
-    let omega_m = theta[0];
-    -0.5 * (omega_m - 0.315).powi(2) / 0.01_f64.powi(2)
+ let omega_m = theta[0];
+ -0.5 * (omega_m - 0.315).powi(2) / 0.01_f64.powi(2)
 };
 
 let sampler = MCMCSampler::new(params, log_likelihood, 50, 1000);
@@ -201,17 +201,17 @@ let params_fiducial = vec![0.3, 0.8]; // omega_m, sigma_8
 let param_names = vec!["Omega_m".to_string(), "sigma_8".to_string()];
 
 let observables_fn = |params: &[f64]| {
-    // Return mock observables as DVector
-    DVector::from_vec(vec![params[0], params[1]])
+ // Return mock observables as DVector
+ DVector::from_vec(vec![params[0], params[1]])
 };
 
 let covariance = DMatrix::from_diagonal(&DVector::from_vec(vec![0.01, 0.02]));
 
 let fisher = FisherMatrix::from_derivatives(
-    &params_fiducial,
-    param_names,
-    observables_fn,
-    &covariance,
+ &params_fiducial,
+ param_names,
+ observables_fn,
+ &covariance,
 );
 
 let error_om = fisher.marginalized_error(0);
@@ -264,24 +264,24 @@ println!("Power suppression at k=0.1: {:.3}", suppression);
 ## Library Completeness
 
 ### Implemented (Phases 1-9)
-✅ Friedmann equations and cosmic evolution
-✅ Cosmological distances and ages
-✅ CMB recombination and power spectrum
-✅ CMB polarization (E/B modes)
-✅ Matter power spectrum (linear and non-linear)
-✅ Structure formation (halos, cosmic web)
-✅ Big Bang Nucleosynthesis
-✅ MCMC parameter estimation
-✅ Fisher matrix forecasts
-✅ Dark energy models beyond ΛCDM
-✅ Massive neutrino cosmology
-✅ Weak gravitational lensing
-✅ Growth factors and perturbations
+[DONE] Friedmann equations and cosmic evolution
+[DONE] Cosmological distances and ages
+[DONE] CMB recombination and power spectrum
+[DONE] CMB polarization (E/B modes)
+[DONE] Matter power spectrum (linear and non-linear)
+[DONE] Structure formation (halos, cosmic web)
+[DONE] Big Bang Nucleosynthesis
+[DONE] MCMC parameter estimation
+[DONE] Fisher matrix forecasts
+[DONE] Dark energy models beyond ΛCDM
+[DONE] Massive neutrino cosmology
+[DONE] Weak gravitational lensing
+[DONE] Growth factors and perturbations
 
 ### Comparison with Original Plan
-- Phase 7: ✅ MCMC, ✅ Fisher, ⚠ Corner plots (core done, examples optional)
-- Phase 8: ✅ Polarization, ⚠ Full Boltzmann (simplified), ⚠ Reionization (future)
-- Phase 9: ✅ Dark energy, ✅ Neutrinos, ⚠ Modified gravity (basic framework)
+- Phase 7: [DONE] MCMC, [DONE] Fisher, [PARTIAL] Corner plots (core done, examples optional)
+- Phase 8: [DONE] Polarization, [PARTIAL] Full Boltzmann (simplified), [PARTIAL] Reionization (future)
+- Phase 9: [DONE] Dark energy, [DONE] Neutrinos, [PARTIAL] Modified gravity (basic framework)
 
 ## Next Steps (Optional Enhancements)
 

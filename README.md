@@ -59,34 +59,34 @@ use andam::observations::luminosity_distance;
 use andam::statistics::mcmc::*;
 
 fn main() {
-    // Basic cosmology
-    let universe = Universe::benchmark();
-    println!("Universe age: {:.2} Gyr", universe.age_today());
+ // Basic cosmology
+ let universe = Universe::benchmark();
+ println!("Universe age: {:.2} Gyr", universe.age_today());
 
-    let distance = luminosity_distance(1.0, &universe);
-    println!("Distance to z=1: {:.0} Mpc", distance);
+ let distance = luminosity_distance(1.0, &universe);
+ println!("Distance to z=1: {:.0} Mpc", distance);
 
-    // MCMC parameter estimation
-    let params = vec![
-        Parameter {
-            name: "Omega_m".to_string(),
-            initial: 0.3,
-            min: 0.2,
-            max: 0.4,
-            proposal_width: 0.01,
-        },
-    ];
+ // MCMC parameter estimation
+ let params = vec![
+ Parameter {
+ name: "Omega_m".to_string(),
+ initial: 0.3,
+ min: 0.2,
+ max: 0.4,
+ proposal_width: 0.01,
+ },
+ ];
 
-    let log_likelihood = |theta: &[f64]| {
-        -0.5 * (theta[0] - 0.315).powi(2) / 0.01_f64.powi(2)
-    };
+ let log_likelihood = |theta: &[f64]| {
+ -0.5 * (theta[0] - 0.315).powi(2) / 0.01_f64.powi(2)
+ };
 
-    let sampler = MCMCSampler::new(params, log_likelihood, 50, 1000);
-    let chain = sampler.run(200);
+ let sampler = MCMCSampler::new(params, log_likelihood, 50, 1000);
+ let chain = sampler.run(200);
 
-    println!("Omega_m = {:.4} ± {:.4}",
-             chain.mean("Omega_m").unwrap(),
-             chain.std("Omega_m").unwrap());
+ println!("Omega_m = {:.4} ± {:.4}",
+ chain.mean("Omega_m").unwrap(),
+ chain.std("Omega_m").unwrap());
 }
 ```
 
@@ -169,33 +169,33 @@ See `examples/` directory for complete demonstration programs.
 ## Testing
 
 ```bash
-cargo test                  # Run all tests (60 tests)
-cargo test --lib           # Unit tests only
-cargo check --examples     # Verify examples compile
+cargo test # Run all tests (60 tests)
+cargo test --lib # Unit tests only
+cargo check --examples # Verify examples compile
 ```
 
-**Status**: All 60 tests passing ✓
+**Status**: All 60 tests passing
 
 ## Project Structure
 
 ```
 andam/
-├── src/
-│   ├── constants.rs       # Physical constants
-│   ├── units.rs           # Unit conversions
-│   ├── dynamics/          # Universe evolution (Friedmann)
-│   ├── observations/      # Distance measures
-│   ├── cmb/               # CMB physics & polarization
-│   ├── structure/         # Power spectra, halos, cosmic web
-│   ├── perturbations/     # Growth theory
-│   ├── advanced/          # Weak lensing
-│   ├── early_universe/    # BBN, freeze-out
-│   ├── statistics/        # MCMC, Fisher matrices (NEW)
-│   ├── beyond_lcdm/       # Dark energy, neutrinos (NEW)
-│   └── visualization/     # Plotting tools
-├── examples/              # 15 demo programs
-├── tests/                 # Integration tests
-└── docs/                  # Documentation
+ src/
+ constants.rs # Physical constants
+ units.rs # Unit conversions
+ dynamics/ # Universe evolution (Friedmann)
+ observations/ # Distance measures
+ cmb/ # CMB physics & polarization
+ structure/ # Power spectra, halos, cosmic web
+ perturbations/ # Growth theory
+ advanced/ # Weak lensing
+ early_universe/ # BBN, freeze-out
+ statistics/ # MCMC, Fisher matrices (NEW)
+ beyond_lcdm/ # Dark energy, neutrinos (NEW)
+ visualization/ # Plotting tools
+ examples/ # 15 demo programs
+ tests/ # Integration tests
+ docs/ # Documentation
 ```
 
 ## Scientific Validation
@@ -218,19 +218,19 @@ Key results:
 ## Library Coverage
 
 **Implemented (Phases 1-9):**
-- ✅ Friedmann equations and cosmic evolution
-- ✅ Cosmological distances and ages
-- ✅ CMB recombination and power spectrum
-- ✅ CMB polarization (E/B modes)
-- ✅ Matter power spectrum (linear and non-linear)
-- ✅ Structure formation (halos, cosmic web)
-- ✅ Big Bang Nucleosynthesis
-- ✅ MCMC parameter estimation
-- ✅ Fisher matrix forecasts
-- ✅ Dark energy models beyond ΛCDM
-- ✅ Massive neutrino cosmology
-- ✅ Weak gravitational lensing
-- ✅ Growth factors and perturbations
+- Friedmann equations and cosmic evolution
+- Cosmological distances and ages
+- CMB recombination and power spectrum
+- CMB polarization (E/B modes)
+- Matter power spectrum (linear and non-linear)
+- Structure formation (halos, cosmic web)
+- Big Bang Nucleosynthesis
+- MCMC parameter estimation
+- Fisher matrix forecasts
+- Dark energy models beyond ΛCDM
+- Massive neutrino cosmology
+- Weak gravitational lensing
+- Growth factors and perturbations
 
 **Coverage: ~90-95% of graduate-level cosmology textbooks**
 
@@ -275,12 +275,12 @@ Areas of interest:
 ## Roadmap
 
 **Completed:**
-- ✅ Phase 1-4: Core cosmology, CMB, structure
-- ✅ Phase 5: Big Bang Nucleosynthesis
-- ✅ Phase 6: Advanced structure formation
-- ✅ Phase 7: Statistical methods (MCMC, Fisher)
-- ✅ Phase 8: CMB polarization
-- ✅ Phase 9: Beyond-ΛCDM cosmology
+- Phase 1-4: Core cosmology, CMB, structure
+- Phase 5: Big Bang Nucleosynthesis
+- Phase 6: Advanced structure formation
+- Phase 7: Statistical methods (MCMC, Fisher)
+- Phase 8: CMB polarization
+- Phase 9: Beyond-ΛCDM cosmology
 
 **Future (Optional Enhancements):**
 - Full Boltzmann solver for CMB
@@ -301,12 +301,12 @@ at your option.
 
 ```bibtex
 @software{andam,
-  title = {Andam: A Comprehensive Cosmology Library in Rust},
-  author = {Cosmos Andam Contributors},
-  year = {2026},
-  url = {https://github.com/cosmos-andam/andam},
-  note = {Phases 1-9 complete: Core cosmology, BBN, structure formation,
-          statistical inference, CMB polarization, and beyond-ΛCDM models}
+ title = {Andam: A Comprehensive Cosmology Library in Rust},
+ author = {Cosmos Andam Contributors},
+ year = {2026},
+ url = {https://github.com/cosmos-andam/andam},
+ note = {Phases 1-9 complete: Core cosmology, BBN, structure formation,
+ statistical inference, CMB polarization, and beyond-ΛCDM models}
 }
 ```
 
@@ -332,4 +332,4 @@ at your option.
 
 ---
 
-**Status**: Version 0.1.0 | 60 tests passing ✓ | 15 examples | Phases 1-9 complete | Production-ready
+**Status**: Version 0.1.0 | 60 tests passing | 15 examples | Phases 1-9 complete | Production-ready

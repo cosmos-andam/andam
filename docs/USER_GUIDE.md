@@ -51,10 +51,10 @@ custom.add_component(Component::lambda(0.7));
 Components are characterized by w where p = wρc²:
 
 ```rust
-Component::matter(0.3)      // w = 0,  ρ ∝ a^-3
-Component::radiation(9e-5)  // w = 1/3, ρ ∝ a^-4
-Component::lambda(0.7)      // w = -1,  ρ = constant
-Component::new(0.1, -0.8)   // Custom w
+Component::matter(0.3) // w = 0, ρ ∝ a^-3
+Component::radiation(9e-5) // w = 1/3, ρ ∝ a^-4
+Component::lambda(0.7) // w = -1, ρ = constant
+Component::new(0.1, -0.8) // Custom w
 ```
 
 ### Scale Factor and Redshift
@@ -65,7 +65,7 @@ Component::new(0.1, -0.8)   // Custom w
 // General: a = 1/(1+z)
 
 let a = 0.5;
-let z = (1.0 / a) - 1.0;  // z = 1.0
+let z = (1.0 / a) - 1.0; // z = 1.0
 ```
 
 ## Module Guide
@@ -78,20 +78,20 @@ Physical and cosmological constants in SI units:
 use andam::constants::*;
 
 // Physical constants
-C            // Speed of light: 2.998e8 m/s
-G            // Gravitational constant
-K_B          // Boltzmann constant
-M_SUN        // Solar mass
+C // Speed of light: 2.998e8 m/s
+G // Gravitational constant
+K_B // Boltzmann constant
+M_SUN // Solar mass
 
 // Cosmological constants (Planck 2018)
-H0_PLANCK        // 67.66 km/s/Mpc
-OMEGA_M_PLANCK   // 0.3111
-OMEGA_B_PLANCK   // 0.0490
-T_CMB            // 2.7255 K
+H0_PLANCK // 67.66 km/s/Mpc
+OMEGA_M_PLANCK // 0.3111
+OMEGA_B_PLANCK // 0.0490
+T_CMB // 2.7255 K
 
 // Derived quantities
-let t_h = hubble_time();         // Hubble time
-let rho_c = critical_density();  // Critical density
+let t_h = hubble_time(); // Hubble time
+let rho_c = critical_density(); // Critical density
 ```
 
 ### 2. Units
@@ -102,16 +102,16 @@ Conversion between cosmological units:
 use andam::units::*;
 
 // Length
-let meters = Length::Mpc.to_meters(1.0);      // Mpc to m
-let ly = Length::Mpc.to_lightyears(1.0);      // Mpc to ly
+let meters = Length::Mpc.to_meters(1.0); // Mpc to m
+let ly = Length::Mpc.to_lightyears(1.0); // Mpc to ly
 
 // Time
-let seconds = Time::Gyr.to_seconds(13.8);     // Gyr to s
-let years = Time::Gyr.to_years(13.8);         // Gyr to yr
+let seconds = Time::Gyr.to_seconds(13.8); // Gyr to s
+let years = Time::Gyr.to_years(13.8); // Gyr to yr
 
 // Temperature-energy
-let e_ev = temperature_to_ev(2.7255);         // K to eV
-let t_k = ev_to_temperature(13.6);            // eV to K
+let e_ev = temperature_to_ev(2.7255); // K to eV
+let t_k = ev_to_temperature(13.6); // eV to K
 ```
 
 ### 3. Dynamics
@@ -124,18 +124,18 @@ use andam::dynamics::Universe;
 let universe = Universe::benchmark();
 
 // Hubble parameter
-let h_today = universe.hubble(1.0);           // km/s/Mpc
+let h_today = universe.hubble(1.0); // km/s/Mpc
 let h_half = universe.hubble(0.5);
 
 // Age calculation
-let age = universe.age(1.0);                  // Gyr
+let age = universe.age(1.0); // Gyr
 let age_rec = universe.age(1.0/1091.0);
 
 // Deceleration parameter
 let q = universe.deceleration(1.0);
 
 // Total density
-let omega = universe.omega_total();           // Should ≈ 1.0
+let omega = universe.omega_total(); // Should ≈ 1.0
 ```
 
 ### 4. Observations - Distance Measures
@@ -153,11 +153,11 @@ let d_c = comoving_distance(z, &universe);
 
 // Luminosity distance (standard candles)
 let d_l = luminosity_distance(z, &universe);
-let mu = 5.0 * (d_l * 1e6 / 10.0).log10();    // Distance modulus
+let mu = 5.0 * (d_l * 1e6 / 10.0).log10(); // Distance modulus
 
 // Angular diameter distance (standard rulers)
 let d_a = angular_diameter_distance(z, &universe);
-let theta = 1.0 / d_a;                        // Angular size of 1 Mpc
+let theta = 1.0 / d_a; // Angular size of 1 Mpc
 
 // Etherington relation: d_L = (1+z)² d_A
 assert!((d_l / ((1.0 + z).powi(2) * d_a) - 1.0).abs() < 1e-10);
@@ -173,12 +173,12 @@ use andam::cmb::*;
 let universe = Universe::benchmark();
 
 // Find recombination redshift (x_e = 0.5)
-let z_rec = recombination_redshift(&universe);  // ~1091
+let z_rec = recombination_redshift(&universe); // ~1091
 
 // Ionization fraction vs redshift
 for z in [500.0, 800.0, 1000.0, 1200.0] {
-    let x_e = ionization_fraction(z, &universe);
-    println!("z={}: x_e={:.4}", z, x_e);
+ let x_e = ionization_fraction(z, &universe);
+ println!("z={}: x_e={:.4}", z, x_e);
 }
 ```
 
@@ -197,7 +197,7 @@ let d_l = dimensionless_power_spectrum(&c_l);
 
 // Peak positions
 let peaks = acoustic_peak_positions(&universe);
-println!("First acoustic peak: l = {}", peaks[0]);  // ~219
+println!("First acoustic peak: l = {}", peaks[0]); // ~219
 ```
 
 ### 6. Structure Formation
@@ -215,7 +215,7 @@ let a_s = 2.1e-9;
 let n_s = 0.9665;
 
 // Power at wavenumber k
-let k = 0.1;  // h/Mpc
+let k = 0.1; // h/Mpc
 let p_k = matter_power_spectrum(k, 0.0, omega_m, omega_b, h, a_s, n_s);
 
 // Dimensionless power
@@ -245,7 +245,7 @@ let universe = Universe::benchmark();
 
 // Growth factor normalized to D(1) = 1
 let d_half = growth_factor(0.5, &universe);
-let d_today = growth_factor(1.0, &universe);  // = 1.0
+let d_today = growth_factor(1.0, &universe); // = 1.0
 
 // Growth rate f = d ln D / d ln a
 let f = growth_rate(1.0, &universe);
@@ -261,10 +261,10 @@ let universe = Universe::benchmark();
 
 // Create solver for mode k
 let mut solver = BoltzmannSolver::new(
-    universe,
-    0.1,                          // k in h/Mpc
-    PerturbationMode::Scalar,
-    10                            // l_max
+ universe,
+ 0.1, // k in h/Mpc
+ PerturbationMode::Scalar,
+ 10 // l_max
 );
 
 // Evolve from radiation to matter era
@@ -282,10 +282,10 @@ let universe = Universe::benchmark();
 
 // Generate convergence field
 let field = ConvergenceField::from_power_spectrum(
-    &universe,
-    1.0,      // source redshift
-    128,      // grid size
-    1.0       // field size in degrees
+ &universe,
+ 1.0, // source redshift
+ 128, // grid size
+ 1.0 // field size in degrees
 );
 ```
 
@@ -314,8 +314,8 @@ let universe = Universe::benchmark();
 
 // Convergence power spectrum
 for l in [100, 500, 1000] {
-    let c_l = lensing_power_spectrum(l, 1.0, &universe);
-    println!("l={}: C_l^κκ = {:.4e}", l, c_l);
+ let c_l = lensing_power_spectrum(l, 1.0, &universe);
+ println!("l={}: C_l^κκ = {:.4e}", l, c_l);
 }
 ```
 
@@ -334,12 +334,12 @@ create_loglog_plot(&data, "loglog.png", "Title", "X", "Y")?;
 
 // Multiple series
 create_multiline_plot(
-    &[series1, series2],
-    &["Label 1", "Label 2"],
-    "multi.png",
-    "Title",
-    "X",
-    "Y"
+ &[series1, series2],
+ &["Label 1", "Label 2"],
+ "multi.png",
+ "Title",
+ "X",
+ "Y"
 )?;
 ```
 
@@ -380,9 +380,9 @@ let redshifts: Vec<f64> = (1..=1000).map(|i| i as f64 / 100.0).collect();
 
 // Parallel distance calculation
 let distances: Vec<f64> = redshifts
-    .par_iter()
-    .map(|&z| luminosity_distance(z, &universe))
-    .collect();
+ .par_iter()
+ .map(|&z| luminosity_distance(z, &universe))
+ .collect();
 ```
 
 ### Error Handling
@@ -391,9 +391,9 @@ let distances: Vec<f64> = redshifts
 use std::error::Error;
 
 fn create_plot() -> Result<(), Box<dyn Error>> {
-    let data = vec![(0.0, 0.0), (1.0, 1.0)];
-    create_line_plot(&data, "plot.png", "Title", "X", "Y")?;
-    Ok(())
+ let data = vec![(0.0, 0.0), (1.0, 1.0)];
+ create_line_plot(&data, "plot.png", "Title", "X", "Y")?;
+ Ok(())
 }
 ```
 
@@ -405,13 +405,13 @@ fn create_plot() -> Result<(), Box<dyn Error>> {
 // Good: create once
 let universe = Universe::benchmark();
 for z in redshifts {
-    let d = luminosity_distance(z, &universe);
+ let d = luminosity_distance(z, &universe);
 }
 
 // Bad: creating multiple times
 for z in redshifts {
-    let universe = Universe::benchmark();  // Inefficient!
-    let d = luminosity_distance(z, &universe);
+ let universe = Universe::benchmark(); // Inefficient!
+ let d = luminosity_distance(z, &universe);
 }
 ```
 
@@ -426,7 +426,7 @@ assert!((omega_total - 1.0).abs() < 0.01);
 
 // Verify age
 let age = universe.age_today();
-assert!((age - 13.8).abs() < 0.2);  // Within 200 Myr
+assert!((age - 13.8).abs() < 0.2); // Within 200 Myr
 ```
 
 ### 3. Use Appropriate Precision
@@ -434,14 +434,14 @@ assert!((age - 13.8).abs() < 0.2);  // Within 200 Myr
 ```rust
 // For plots: 100 points is sufficient
 let data: Vec<(f64, f64)> = (1..=100)
-    .map(|i| calculate(i as f64 / 100.0))
-    .collect();
+ .map(|i| calculate(i as f64 / 100.0))
+ .collect();
 
 // For science: verify convergence
 let n_points = vec![100, 1000, 10000];
 for n in n_points {
-    let result = calculate_with_n_points(n);
-    println!("n={}: result={:.6}", n, result);
+ let result = calculate_with_n_points(n);
+ println!("n={}: result={:.6}", n, result);
 }
 ```
 
@@ -464,9 +464,9 @@ let universe = Universe::benchmark();
 **Solution**: Check input ranges:
 ```rust
 // Valid ranges
-assert!(a > 0.0 && a <= 1.0);  // Scale factor
-assert!(z >= 0.0);              // Redshift
-assert!(omega > 0.0);           // Density parameters
+assert!(a > 0.0 && a <= 1.0); // Scale factor
+assert!(z >= 0.0); // Redshift
+assert!(omega > 0.0); // Density parameters
 ```
 
 ### Plot Files Not Created

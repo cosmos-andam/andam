@@ -9,37 +9,37 @@ Phase 5 implements Big Bang Nucleosynthesis (BBN) calculations for the Andam cos
 ### Completed Components
 
 1. **Nuclear Reaction Framework** (`src/early_universe/reactions.rs`)
-   - `Nuclide` enum with 8 nuclear species (n, p, ²H, ³H, ³He, ⁴He, ⁷Li, ⁷Be)
-   - Binding energies for all species
-   - Reaction rate coefficients from literature (Coc et al., Cyburt et al.)
-   - 8 key BBN reactions implemented
+ - `Nuclide` enum with 8 nuclear species (n, p, ²H, ³H, ³He, ⁴He, ⁷Li, ⁷Be)
+ - Binding energies for all species
+ - Reaction rate coefficients from literature (Coc et al., Cyburt et al.)
+ - 8 key BBN reactions implemented
 
 2. **Reaction Network Solver** (`src/early_universe/network.rs`)
-   - `AbundanceState` structure for tracking number densities
-   - `NetworkSolver` with adaptive RK2 time stepping
-   - Baryon number conservation tracking
-   - Mass fraction calculations
+ - `AbundanceState` structure for tracking number densities
+ - `NetworkSolver` with adaptive RK2 time stepping
+ - Baryon number conservation tracking
+ - Mass fraction calculations
 
 3. **Freeze-Out Physics** (`src/early_universe/freeze_out.rs`)
-   - Weak interaction rate calculations
-   - Hubble rate in radiation-dominated era
-   - Freeze-out temperature determination (T_freeze ≈ 0.7 MeV)
-   - Neutron-to-proton ratio at freeze-out (n/p ≈ 1/7)
-   - Analytical Y_p estimation
+ - Weak interaction rate calculations
+ - Hubble rate in radiation-dominated era
+ - Freeze-out temperature determination (T_freeze ≈ 0.7 MeV)
+ - Neutron-to-proton ratio at freeze-out (n/p ≈ 1/7)
+ - Analytical Y_p estimation
 
 4. **BBN Simulation** (`src/early_universe/nucleosynthesis.rs`)
-   - `BBNParameters` structure for simulation config
-   - `BBNResult` with evolution history and final abundances
-   - **Analytical approach using freeze-out physics** (current implementation)
-   - Accessors for Y_p, D/H, ³He/H, ⁷Li/H ratios
+ - `BBNParameters` structure for simulation config
+ - `BBNResult` with evolution history and final abundances
+ - **Analytical approach using freeze-out physics** (current implementation)
+ - Accessors for Y_p, D/H, ³He/H, ⁷Li/H ratios
 
 5. **Visualization** (`src/visualization/equation_plots.rs`)
-   - `PublicationConfig` for high-resolution plots (up to 300 DPI)
-   - Equation overlay support
-   - `plot_abundance_evolution()` function
+ - `PublicationConfig` for high-resolution plots (up to 300 DPI)
+ - Equation overlay support
+ - `plot_abundance_evolution()` function
 
 6. **Example Programs**
-   - `examples/bbn_evolution.rs` - Demonstrates BBN calculation and visualization
+ - `examples/bbn_evolution.rs` - Demonstrates BBN calculation and visualization
 
 ## Results
 
@@ -47,10 +47,10 @@ Phase 5 implements Big Bang Nucleosynthesis (BBN) calculations for the Andam cos
 
 | Element | Predicted Value | Expected Range | Status |
 |---------|-----------------|----------------|--------|
-| Y_p (⁴He) | 0.2397 | 0.24-0.25 | ✓ Excellent |
-| D/H | 2.5×10⁻⁵ | 2-3×10⁻⁵ | ✓ Good |
-| ³He/H | 3.8×10⁻⁵ | ~10⁻⁵ | ✓ Reasonable |
-| ⁷Li/H | 8.8×10⁻¹⁰ | ~10⁻¹⁰ | ✓ Good |
+| Y_p (⁴He) | 0.2397 | 0.24-0.25 | Excellent |
+| D/H | 2.5×10⁻⁵ | 2-3×10⁻⁵ | Good |
+| ³He/H | 3.8×10⁻⁵ | ~10⁻⁵ | Reasonable |
+| ⁷Li/H | 8.8×10⁻¹⁰ | ~10⁻¹⁰ | Good |
 
 ### Test Coverage
 
@@ -144,24 +144,24 @@ The implementation has been validated against:
 Potential improvements for future phases:
 
 1. **Enhanced Network Solver**
-   - Implement stiff ODE solver
-   - Add more nuclear species
-   - Include neutrino decoupling effects
+ - Implement stiff ODE solver
+ - Add more nuclear species
+ - Include neutrino decoupling effects
 
 2. **Additional Visualizations**
-   - Y_p vs η parameter space
-   - 3D abundance evolution
-   - Comparison with observational data
+ - Y_p vs η parameter space
+ - 3D abundance evolution
+ - Comparison with observational data
 
 3. **Uncertainty Quantification**
-   - Monte Carlo parameter variations
-   - Reaction rate uncertainties
-   - Temperature sensitivity analysis
+ - Monte Carlo parameter variations
+ - Reaction rate uncertainties
+ - Temperature sensitivity analysis
 
 4. **Extended Physics**
-   - Non-equilibrium effects
-   - Baryon inhomogeneities
-   - Beyond standard model scenarios
+ - Non-equilibrium effects
+ - Baryon inhomogeneities
+ - Beyond standard model scenarios
 
 ## References
 
