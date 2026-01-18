@@ -36,7 +36,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libfontconfig1-dev
+          sudo apt-get install -y libfontconfig1-dev pkg-config
 
       - name: Cache cargo registry
         uses: actions/cache@v4
@@ -99,7 +99,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libfontconfig1-dev
+          sudo apt-get install -y libfontconfig1-dev pkg-config
 
       - name: Run clippy (default features)
         run: cargo clippy --all-targets --features plotting -- -D warnings
@@ -133,7 +133,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libfontconfig1-dev
+          sudo apt-get install -y libfontconfig1-dev pkg-config
 
       - name: Check documentation
         run: cargo doc --no-deps --features plotting --verbose
@@ -152,7 +152,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libfontconfig1-dev
+          sudo apt-get install -y libfontconfig1-dev pkg-config
 
       - name: Install tarpaulin
         run: cargo install cargo-tarpaulin
@@ -180,7 +180,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libfontconfig1-dev
+          sudo apt-get install -y libfontconfig1-dev pkg-config
 
       - name: Check MSRV
         run: cargo check --features plotting --verbose

@@ -236,10 +236,12 @@ The CI requires system libraries to be installed:
 
 ### Linux (Ubuntu)
 - **libfontconfig1-dev**: Required by plotters for font rendering
+- **pkg-config**: Required for library detection (CRITICAL - must be installed)
 - **libhdf5-dev**: Required for HDF5 storage tests (test-hdf5 job only)
-- **pkg-config**: Required for library detection
 
 These are automatically installed in GitHub Actions workflows.
+
+IMPORTANT: Both libfontconfig1-dev AND pkg-config must be installed together. Missing pkg-config will cause build failures even if libfontconfig1-dev is installed.
 
 ### Local Development
 
@@ -281,11 +283,14 @@ HDF5 tests only run on Ubuntu with libhdf5-dev installed. If failing:
 
 ### Fontconfig Build Failures
 
-If you see "fontconfig required by yeslogic-fontconfig-sys was not found":
-- Install libfontconfig1-dev on Linux
-- Ensure pkg-config is installed
-- Check PKG_CONFIG_PATH environment variable
+If you see "fontconfig required by yeslogic-fontconfig-sys was not found" or "The file `fontconfig.pc` needs to be installed":
+- CRITICAL: Install BOTH libfontconfig1-dev AND pkg-config together:
+  ```bash
+  sudo apt-get install -y libfontconfig1-dev pkg-config
+  ```
 - Verify the job includes system dependency installation step
+- Check PKG_CONFIG_PATH environment variable if still failing
+- Common cause: Installing libfontconfig1-dev without pkg-config
 
 ### Cargo-Deny Configuration Errors
 
