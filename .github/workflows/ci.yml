@@ -36,7 +36,8 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libfontconfig1-dev pkg-config
+          DEBIAN_FRONTEND=noninteractive sudo apt-get install -y fontconfig libfontconfig1-dev pkg-config
+          pkg-config --exists fontconfig && echo "fontconfig found" || echo "fontconfig NOT found"
 
       - name: Cache cargo registry
         uses: actions/cache@v4
@@ -99,7 +100,8 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libfontconfig1-dev pkg-config
+          DEBIAN_FRONTEND=noninteractive sudo apt-get install -y fontconfig libfontconfig1-dev pkg-config
+          pkg-config --exists fontconfig && echo "fontconfig found" || echo "fontconfig NOT found"
 
       - name: Run clippy (default features)
         run: cargo clippy --all-targets --features plotting -- -D warnings
@@ -133,7 +135,8 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libfontconfig1-dev pkg-config
+          DEBIAN_FRONTEND=noninteractive sudo apt-get install -y fontconfig libfontconfig1-dev pkg-config
+          pkg-config --exists fontconfig && echo "fontconfig found" || echo "fontconfig NOT found"
 
       - name: Check documentation
         run: cargo doc --no-deps --features plotting --verbose
@@ -152,7 +155,8 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libfontconfig1-dev pkg-config
+          DEBIAN_FRONTEND=noninteractive sudo apt-get install -y fontconfig libfontconfig1-dev pkg-config
+          pkg-config --exists fontconfig && echo "fontconfig found" || echo "fontconfig NOT found"
 
       - name: Install tarpaulin
         run: cargo install cargo-tarpaulin
@@ -180,7 +184,8 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libfontconfig1-dev pkg-config
+          DEBIAN_FRONTEND=noninteractive sudo apt-get install -y fontconfig libfontconfig1-dev pkg-config
+          pkg-config --exists fontconfig && echo "fontconfig found" || echo "fontconfig NOT found"
 
       - name: Check MSRV
         run: cargo check --features plotting --verbose
