@@ -98,13 +98,16 @@ fn main() {
 # Default installation (includes plotting)
 cargo add andam
 
+# With static image export (requires network during build)
+cargo add andam --features plotting-kaleido
+
 # With HDF5 storage support (requires HDF5 1.12 or earlier)
 cargo add andam --features hdf5-storage
 
 # Minimal installation (no plotting or HDF5)
 cargo add andam --no-default-features
 
-# Everything
+# Everything (includes kaleido)
 cargo add andam --features full
 ```
 
@@ -113,16 +116,16 @@ cargo add andam --features full
 ```toml
 [dependencies]
 # Default (with plotting)
-andam = "0.1.0"
+andam = "0.1.1"
 
 # With HDF5 storage
-andam = { version = "0.1.0", features = ["hdf5-storage"] }
+andam = { version = "0.1.1", features = ["hdf5-storage"] }
 
 # Minimal
-andam = { version = "0.1.0", default-features = false }
+andam = { version = "0.1.1", default-features = false }
 
 # All features
-andam = { version = "0.1.0", features = ["full"] }
+andam = { version = "0.1.1", features = ["full"] }
 ```
 
 ### From source
@@ -139,17 +142,24 @@ cargo test
 | Feature | Description | Default | Dependencies |
 |---------|-------------|---------|--------------|
 | `plotting` | Visualization with plotly and plotters | Yes | plotly, plotters |
+| `plotting-kaleido` | Add static image export (requires network during build) | No | plotly/kaleido |
 | `hdf5-storage` | HDF5 data storage and retrieval | No | hdf5, flate2, chrono |
 | `full` | All features enabled | No | All of the above |
 
-### Notes on HDF5 Storage
+### Notes on Optional Features
 
-The HDF5 storage feature is optional because:
+**HDF5 Storage:**
 - Requires HDF5 system library (1.12 or earlier for crates.io version)
 - Not needed for most users (core functionality works without it)
 - Can be enabled with `--features hdf5-storage`
+- For HDF5 1.14+ support, see [HDF5 Publishing Notes](docs/HDF5_PUBLISHING_NOTE.md)
 
-For HDF5 1.14+ support, see [HDF5 Publishing Notes](docs/HDF5_PUBLISHING_NOTE.md).
+**Kaleido (Static Image Export):**
+- Required only for exporting plots as PNG/SVG/PDF
+- Requires network access during build (downloads binaries)
+- Not compatible with offline builds (e.g., docs.rs)
+- Interactive HTML plots work without kaleido
+- Enable with `--features plotting-kaleido`
 
 ## Documentation
 
@@ -379,4 +389,4 @@ at your option.
 
 ---
 
-**Status**: Version 0.1.0 | 60 tests passing | 15 examples | Phases 1-9 complete | Production-ready
+**Status**: Version 0.1.1 | 60 tests passing | 15 examples | Phases 1-9 complete | Production-ready
