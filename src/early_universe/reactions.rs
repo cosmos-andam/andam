@@ -30,7 +30,7 @@ impl Nuclide {
         }
     }
 
-    /// Binding energy [MeV]
+    /// Binding energy \[MeV\]
     pub fn binding_energy(&self) -> f64 {
         match self {
             Nuclide::Neutron => 0.0,
@@ -78,7 +78,7 @@ impl Nuclide {
 pub struct Reaction {
     pub reactants: Vec<Nuclide>,
     pub products: Vec<Nuclide>,
-    pub q_value: f64, // Energy release [MeV]
+    pub q_value: f64, // Energy release \[MeV\]
     pub label: String,
 }
 
@@ -98,7 +98,7 @@ impl Reaction {
         }
     }
 
-    /// Reaction rate coefficient [cm³/s] at temperature T [K]
+    /// Reaction rate coefficient [cm³/s] at temperature T \[K\]
     /// These rates are from Coc et al. and similar BBN codes
     /// Units: cm³/s (for use with number densities in cm⁻³)
     pub fn rate_coefficient(&self, temp_k: f64) -> f64 {

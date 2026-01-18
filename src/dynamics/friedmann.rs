@@ -81,7 +81,7 @@ impl Universe {
         0.5 * sum_rho_1_w / sum_rho
     }
 
-    /// Age of universe at scale factor a [Gyr]
+    /// Age of universe at scale factor a \[Gyr\]
     pub fn age(&self, a: f64) -> f64 {
         // Integrate t = ∫ da / (a·H(a))
         let n_steps = 1000;
@@ -99,7 +99,7 @@ impl Universe {
         age / GYR // Convert to Gyr
     }
 
-    /// Age of universe today [Gyr]
+    /// Age of universe today \[Gyr\]
     pub fn age_today(&self) -> f64 {
         self.age(1.0)
     }

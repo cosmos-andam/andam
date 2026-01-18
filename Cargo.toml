@@ -4,12 +4,19 @@ version = "0.1.0"
 edition = "2021"
 authors = ["Praba Siva"]
 license = "MIT OR Apache-2.0"
-description = "A comprehensive Rust library for cosmological calculations,visualizations and simulations"
+description = "A comprehensive Rust library for cosmological calculations, visualizations and simulations"
 repository = "https://github.com/cosmos-andam/andam"
 homepage = "https://github.com/cosmos-andam/andam"
 documentation = "https://docs.rs/andam"
+readme = "README.md"
 keywords = ["cosmology", "astrophysics", "physics", "simulation"]
 categories = ["science", "simulation"]
+
+[package.metadata.docs.rs]
+# Document with plotting feature (HDF5 requires system library)
+features = ["plotting"]
+# Use nightly rustdoc features for better docs
+rustdoc-args = ["--cfg", "docsrs"]
 
 [dependencies]
 # Numerical computation

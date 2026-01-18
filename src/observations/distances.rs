@@ -14,7 +14,7 @@ fn comoving_integrand(z: f64, universe: &Universe) -> f64 {
     1.0 / universe.hubble_z(z)
 }
 
-/// Comoving distance to redshift z [Mpc]
+/// Comoving distance to redshift z \[Mpc\]
 ///
 /// d_c = (c/H_0) ∫₀^z dz'/H(z')
 pub fn comoving_distance(z: f64, universe: &Universe) -> f64 {
@@ -34,7 +34,7 @@ pub fn comoving_distance(z: f64, universe: &Universe) -> f64 {
     c_over_h0 * sum * dz / 3.0
 }
 
-/// Transverse comoving distance [Mpc]
+/// Transverse comoving distance \[Mpc\]
 ///
 /// Accounts for curvature:
 /// - Flat: d_M = d_c
@@ -59,14 +59,14 @@ pub fn transverse_comoving_distance(z: f64, universe: &Universe) -> f64 {
     }
 }
 
-/// Luminosity distance [Mpc]
+/// Luminosity distance \[Mpc\]
 ///
 /// d_L = (1+z) d_M
 pub fn luminosity_distance(z: f64, universe: &Universe) -> f64 {
     (1.0 + z) * transverse_comoving_distance(z, universe)
 }
 
-/// Angular diameter distance [Mpc]
+/// Angular diameter distance \[Mpc\]
 ///
 /// d_A = d_M / (1+z)
 pub fn angular_diameter_distance(z: f64, universe: &Universe) -> f64 {
@@ -84,7 +84,7 @@ pub fn distance_modulus(z: f64, universe: &Universe) -> f64 {
 
 /// Comoving volume element dV_c/dz/dΩ [Mpc³/sr]
 pub fn comoving_volume_element(z: f64, universe: &Universe) -> f64 {
-    let d_h = C / (universe.h0 * 1e3) * PARSEC * 1e-6; // Hubble distance [Mpc]
+    let d_h = C / (universe.h0 * 1e3) * PARSEC * 1e-6; // Hubble distance \[Mpc\]
     let d_m = transverse_comoving_distance(z, universe);
     let e_z = universe.hubble_z(z) / universe.h0;
 

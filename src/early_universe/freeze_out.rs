@@ -2,7 +2,7 @@
 
 use crate::constants::*;
 
-/// Weak interaction rate [s^-1] at temperature T [K]
+/// Weak interaction rate [s^-1] at temperature T \[K\]
 pub fn weak_interaction_rate(temp_k: f64) -> f64 {
     // Simplified formula for n <-> p + e + ν_e weak interaction rate
     let t_mev = K_B * temp_k * J_TO_EV * 1e-6; // Temperature in MeV
@@ -13,7 +13,7 @@ pub fn weak_interaction_rate(temp_k: f64) -> f64 {
     rate
 }
 
-/// Hubble parameter [s^-1] at temperature T [K] in radiation-dominated era
+/// Hubble parameter [s^-1] at temperature T \[K\] in radiation-dominated era
 pub fn hubble_rate_radiation(temp_k: f64) -> f64 {
     // H = sqrt(8πGρ/3) where ρ is radiation density
     // ρ = (π^2/30) g_* k_B^4 T^4 / (ℏ^3 c^5)
@@ -28,7 +28,7 @@ pub fn hubble_rate_radiation(temp_k: f64) -> f64 {
     hubble
 }
 
-/// Freeze-out temperature [K] where weak rate equals Hubble rate
+/// Freeze-out temperature \[K\] where weak rate equals Hubble rate
 pub fn freezeout_temperature() -> f64 {
     // Solve Γ_weak(T) = H(T)
     // This occurs at T ~ 0.7 MeV
@@ -44,7 +44,7 @@ pub fn freezeout_np_ratio() -> f64 {
 
     // n/p = exp(-Δm/kT)
     let delta_m = (M_N - M_P) * C * C; // Mass difference [J]
-    let delta_m_mev = delta_m * J_TO_EV * 1e-6; // [MeV]
+    let delta_m_mev = delta_m * J_TO_EV * 1e-6; // \[MeV\]
     let t_mev = K_B * t_freeze * J_TO_EV * 1e-6;
 
     (-delta_m_mev / t_mev).exp()

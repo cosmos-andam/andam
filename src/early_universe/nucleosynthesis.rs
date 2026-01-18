@@ -8,11 +8,11 @@ use super::reactions::Nuclide;
 pub struct BBNParameters {
     /// Baryon-to-photon ratio η
     pub eta: f64,
-    /// Initial temperature [K]
+    /// Initial temperature \[K\]
     pub temp_initial: f64,
-    /// Start time [s]
+    /// Start time \[s\]
     pub t_start: f64,
-    /// End time [s]
+    /// End time \[s\]
     pub t_end: f64,
     /// Number of time steps
     pub n_steps: usize,

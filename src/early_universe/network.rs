@@ -7,8 +7,8 @@ use std::collections::HashMap;
 /// Abundance evolution state
 #[derive(Debug, Clone)]
 pub struct AbundanceState {
-    pub time: f64,           // Time [s]
-    pub temperature: f64,    // Temperature [K]
+    pub time: f64,           // Time \[s\]
+    pub temperature: f64,    // Temperature \[K\]
     pub abundances: HashMap<Nuclide, f64>, // Number densities [cm⁻³]
 }
 
@@ -72,8 +72,8 @@ impl AbundanceState {
 /// Neutron-to-proton ratio from weak equilibrium
 fn neutron_proton_equilibrium(temp_k: f64) -> f64 {
     let delta_m = (M_N - M_P) * C * C; // Mass difference [J]
-    let delta_m_mev = delta_m * J_TO_EV * 1e-6; // [MeV]
-    let t_mev = K_B * temp_k * J_TO_EV * 1e-6; // Temperature [MeV]
+    let delta_m_mev = delta_m * J_TO_EV * 1e-6; // \[MeV\]
+    let t_mev = K_B * temp_k * J_TO_EV * 1e-6; // Temperature \[MeV\]
 
     (-delta_m_mev / t_mev).exp()
 }
