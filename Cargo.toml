@@ -20,13 +20,13 @@ rustdoc-args = ["--cfg", "docsrs"]
 
 [dependencies]
 # Numerical computation
-ndarray = "0.15.6"
-nalgebra = "0.32"
+ndarray = "0.17.2"
+nalgebra = "0.34"
 num-complex = "0.4"
 num-traits = "0.2"
 
 # ODE solvers
-ode_solvers = "0.4"
+ode_solvers = "0.6"
 
 # Plotting (optional)
 plotly = { version = "0.14", default-features = false, optional = true }
@@ -34,10 +34,10 @@ plotters = { version = "0.3", features = ["all_series", "bitmap_encoder"], optio
 plotters-backend = { version = "0.3", optional = true }
 
 # Image processing
-image = "0.24"
+image = "0.25"
 
 # Utilities
-thiserror = "1.0"
+thiserror = "2.0"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 
@@ -45,8 +45,8 @@ serde_json = "1.0"
 rayon = "1.7"
 
 # Random number generation
-rand = "0.8"
-rand_distr = "0.4"
+rand = "0.9"
+rand_distr = "0.5"
 
 # HDF5 support (optional)
 hdf5 = { version = "0.8", optional = true }
@@ -56,7 +56,7 @@ flate2 = { version = "1.0", optional = true }
 chrono = { version = "0.4", optional = true }
 
 [dev-dependencies]
-criterion = "0.5"
+criterion = "0.8"
 approx = "0.5"
 tempfile = "3.0"
 
