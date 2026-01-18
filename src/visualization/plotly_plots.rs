@@ -1,7 +1,7 @@
 //! Interactive plotting using Plotly
 
 use plotly::{
-    common::Mode,
+    common::{Mode, Title},
     layout::{Axis, Layout},
     Plot, Scatter,
 };
@@ -27,9 +27,9 @@ pub fn create_interactive_plot(
     }
 
     let layout = Layout::new()
-        .title(title)
-        .x_axis(Axis::new().title(x_label))
-        .y_axis(Axis::new().title(y_label));
+        .title(Title::new(title))
+        .x_axis(Axis::new().title(Title::new(x_label)))
+        .y_axis(Axis::new().title(Title::new(y_label)));
 
     plot.set_layout(layout);
     plot.write_html(filename);
@@ -57,15 +57,15 @@ pub fn create_loglog_interactive(
     }
 
     let layout = Layout::new()
-        .title(title)
+        .title(Title::new(title))
         .x_axis(
             Axis::new()
-                .title(x_label)
+                .title(Title::new(x_label))
                 .type_(plotly::layout::AxisType::Log),
         )
         .y_axis(
             Axis::new()
-                .title(y_label)
+                .title(Title::new(y_label))
                 .type_(plotly::layout::AxisType::Log),
         );
 
