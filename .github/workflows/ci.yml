@@ -32,6 +32,12 @@ jobs:
         with:
           toolchain: ${{ matrix.rust }}
 
+      - name: Install system dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libfontconfig1-dev
+
       - name: Cache cargo registry
         uses: actions/cache@v4
         with:
@@ -90,6 +96,11 @@ jobs:
         with:
           components: clippy
 
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libfontconfig1-dev
+
       - name: Run clippy (default features)
         run: cargo clippy --all-targets --features plotting -- -D warnings
 
@@ -119,6 +130,11 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
 
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libfontconfig1-dev
+
       - name: Check documentation
         run: cargo doc --no-deps --features plotting --verbose
         env:
@@ -132,6 +148,11 @@ jobs:
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libfontconfig1-dev
 
       - name: Install tarpaulin
         run: cargo install cargo-tarpaulin
@@ -155,6 +176,11 @@ jobs:
         uses: dtolnay/rust-toolchain@master
         with:
           toolchain: "1.70"
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libfontconfig1-dev
 
       - name: Check MSRV
         run: cargo check --features plotting --verbose

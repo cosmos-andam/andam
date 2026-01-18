@@ -76,9 +76,12 @@ This document describes the CI/CD pipeline for the Andam project.
 **Triggers**: Push to main, Pull requests
 
 **Jobs**:
-- **Benchmark**: Runs cargo bench if benchmarks configured
-  - Stores results for comparison
+- **Benchmark**: Conditionally runs benchmarks
+  - Checks if `[[bench]]` exists in Cargo.toml
+  - Only runs if benchmarks are configured
+  - Stores results for comparison (on main branch only)
   - Auto-pushes to benchmark branch
+  - Shows friendly message if no benchmarks exist
 
 ## Configuration Files
 
@@ -92,11 +95,13 @@ Automated dependency updates:
 
 ### deny.toml
 
-Cargo-deny configuration:
-- **Advisories**: Denies known vulnerabilities
-- **Licenses**: Allows common open-source licenses
-- **Bans**: Warns on multiple versions
+Cargo-deny configuration (v2 format):
+- **Advisories**: Checks for known vulnerabilities in dependencies
+- **Licenses**: Allows common open-source licenses (MIT, Apache-2.0, BSD, etc.)
+- **Bans**: Warns on multiple versions of the same crate
 - **Sources**: Allows crates.io only
+
+Note: Configuration uses cargo-deny v2 format with `version = 2` in each section.
 
 ## GitHub Templates
 
@@ -225,6 +230,31 @@ Typical CI run times:
 - Documentation: ~2-3 minutes
 - Full pipeline: ~15-20 minutes
 
+## System Dependencies
+
+The CI requires system libraries to be installed:
+
+### Linux (Ubuntu)
+- **libfontconfig1-dev**: Required by plotters for font rendering
+- **libhdf5-dev**: Required for HDF5 storage tests (test-hdf5 job only)
+- **pkg-config**: Required for library detection
+
+These are automatically installed in GitHub Actions workflows.
+
+### Local Development
+
+On Ubuntu/Debian:
+```bash
+sudo apt-get install libfontconfig1-dev pkg-config
+```
+
+On macOS:
+```bash
+# fontconfig usually comes with the system
+# or install via Homebrew if needed
+brew install fontconfig
+```
+
 ## Troubleshooting
 
 ### CI Failing on Feature Tests
@@ -249,10 +279,45 @@ HDF5 tests only run on Ubuntu with libhdf5-dev installed. If failing:
 - Verify pkg-config setup
 - Check feature flag configuration
 
+### Fontconfig Build Failures
+
+If you see "fontconfig required by yeslogic-fontconfig-sys was not found":
+- Install libfontconfig1-dev on Linux
+- Ensure pkg-config is installed
+- Check PKG_CONFIG_PATH environment variable
+- Verify the job includes system dependency installation step
+
+### Cargo-Deny Configuration Errors
+
+If you see "unexpected-value" or "deprecated" errors from cargo-deny:
+- Ensure deny.toml uses v2 format with `version = 2` in each section
+- Remove deprecated keys like `unlicensed`, `copyleft`, `default`, `allow-osi-fsf-free`
+- Security workflow uses EmbarkStudios/cargo-deny-action@v1 for better compatibility
+- See deny.toml for the correct modern configuration format
+
+## Adding Benchmarks
+
+Currently no benchmarks are configured. To add benchmarks:
+
+1. Uncomment the benchmark section in `Cargo.toml`:
+```toml
+[[bench]]
+name = "friedmann_bench"
+harness = false
+```
+
+2. Create benchmark file in `benches/`:
+```bash
+mkdir benches
+# Create benchmark files
+```
+
+3. The benchmark workflow will automatically run them on the next push
+
 ## Future Enhancements
 
 Potential additions to CI/CD:
-- [ ] Performance regression testing
+- [ ] Performance regression testing (when benchmarks added)
 - [ ] Automated benchmark comparisons
 - [ ] Multi-architecture testing (ARM, etc.)
 - [ ] Container image publishing

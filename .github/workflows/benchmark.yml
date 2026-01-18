@@ -16,20 +16,34 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Run benchmarks (if any)
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libfontconfig1-dev
+
+      - name: Check if benchmarks exist
+        id: check-bench
         run: |
           if grep -q "^\[\[bench\]\]" Cargo.toml; then
-            cargo bench --features plotting
+            echo "has_benchmarks=true" >> $GITHUB_OUTPUT
           else
-            echo "No benchmarks configured"
+            echo "has_benchmarks=false" >> $GITHUB_OUTPUT
           fi
+
+      - name: Run benchmarks
+        if: steps.check-bench.outputs.has_benchmarks == 'true'
+        run: cargo bench --features plotting
 
       - name: Store benchmark result
         uses: benchmark-action/github-action-benchmark@v1
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: steps.check-bench.outputs.has_benchmarks == 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main'
         with:
           tool: 'cargo'
           output-file-path: target/criterion/output.txt
           fail-on-alert: false
           github-token: ${{ secrets.GITHUB_TOKEN }}
           auto-push: true
+
+      - name: No benchmarks message
+        if: steps.check-bench.outputs.has_benchmarks == 'false'
+        run: echo "No benchmarks configured in Cargo.toml - skipping benchmark run"
