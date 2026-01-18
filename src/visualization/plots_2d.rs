@@ -35,15 +35,20 @@ pub fn create_line_plot(
     data: &[(f64, f64)],
     config: &PlotConfig,
 ) -> Result<(), Box<dyn Error>> {
-    let root = BitMapBackend::new(filename, (config.width, config.height))
-        .into_drawing_area();
+    let root = BitMapBackend::new(filename, (config.width, config.height)).into_drawing_area();
     root.fill(&WHITE)?;
 
     // Find data ranges
     let x_min = data.iter().map(|(x, _)| *x).fold(f64::INFINITY, f64::min);
-    let x_max = data.iter().map(|(x, _)| *x).fold(f64::NEG_INFINITY, f64::max);
+    let x_max = data
+        .iter()
+        .map(|(x, _)| *x)
+        .fold(f64::NEG_INFINITY, f64::max);
     let y_min = data.iter().map(|(_, y)| *y).fold(f64::INFINITY, f64::min);
-    let y_max = data.iter().map(|(_, y)| *y).fold(f64::NEG_INFINITY, f64::max);
+    let y_max = data
+        .iter()
+        .map(|(_, y)| *y)
+        .fold(f64::NEG_INFINITY, f64::max);
 
     let mut chart = ChartBuilder::on(&root)
         .caption(&config.title, ("sans-serif", 40).into_font())
@@ -52,15 +57,13 @@ pub fn create_line_plot(
         .y_label_area_size(50)
         .build_cartesian_2d(x_min..x_max, y_min..y_max)?;
 
-    chart.configure_mesh()
+    chart
+        .configure_mesh()
         .x_desc(&config.x_label)
         .y_desc(&config.y_label)
         .draw()?;
 
-    chart.draw_series(LineSeries::new(
-        data.iter().map(|(x, y)| (*x, *y)),
-        &BLUE,
-    ))?;
+    chart.draw_series(LineSeries::new(data.iter().map(|(x, y)| (*x, *y)), &BLUE))?;
 
     root.present()?;
     Ok(())
@@ -72,24 +75,27 @@ pub fn create_loglog_plot(
     data: &[(f64, f64)],
     config: &PlotConfig,
 ) -> Result<(), Box<dyn Error>> {
-    let root = BitMapBackend::new(filename, (config.width, config.height))
-        .into_drawing_area();
+    let root = BitMapBackend::new(filename, (config.width, config.height)).into_drawing_area();
     root.fill(&WHITE)?;
 
     // Find data ranges (positive values only for log)
-    let x_min = data.iter()
+    let x_min = data
+        .iter()
         .map(|(x, _)| *x)
         .filter(|x| *x > 0.0)
         .fold(f64::INFINITY, f64::min);
-    let x_max = data.iter()
+    let x_max = data
+        .iter()
         .map(|(x, _)| *x)
         .filter(|x| *x > 0.0)
         .fold(f64::NEG_INFINITY, f64::max);
-    let y_min = data.iter()
+    let y_min = data
+        .iter()
         .map(|(_, y)| *y)
         .filter(|y| *y > 0.0)
         .fold(f64::INFINITY, f64::min);
-    let y_max = data.iter()
+    let y_max = data
+        .iter()
         .map(|(_, y)| *y)
         .filter(|y| *y > 0.0)
         .fold(f64::NEG_INFINITY, f64::max);
@@ -99,12 +105,10 @@ pub fn create_loglog_plot(
         .margin(10)
         .x_label_area_size(40)
         .y_label_area_size(50)
-        .build_cartesian_2d(
-            (x_min..x_max).log_scale(),
-            (y_min..y_max).log_scale()
-        )?;
+        .build_cartesian_2d((x_min..x_max).log_scale(), (y_min..y_max).log_scale())?;
 
-    chart.configure_mesh()
+    chart
+        .configure_mesh()
         .x_desc(&config.x_label)
         .y_desc(&config.y_label)
         .draw()?;
@@ -126,8 +130,7 @@ pub fn create_multiline_plot(
     datasets: &[(&[(f64, f64)], &str)],
     config: &PlotConfig,
 ) -> Result<(), Box<dyn Error>> {
-    let root = BitMapBackend::new(filename, (config.width, config.height))
-        .into_drawing_area();
+    let root = BitMapBackend::new(filename, (config.width, config.height)).into_drawing_area();
     root.fill(&WHITE)?;
 
     // Find global data ranges
@@ -152,7 +155,8 @@ pub fn create_multiline_plot(
         .y_label_area_size(50)
         .build_cartesian_2d(x_min..x_max, y_min..y_max)?;
 
-    chart.configure_mesh()
+    chart
+        .configure_mesh()
         .x_desc(&config.x_label)
         .y_desc(&config.y_label)
         .draw()?;
@@ -161,17 +165,13 @@ pub fn create_multiline_plot(
 
     for (i, (data, label)) in datasets.iter().enumerate() {
         let color = colors[i % colors.len()];
-        chart.draw_series(LineSeries::new(
-            data.iter().map(|(x, y)| (*x, *y)),
-            color,
-        ))?
-        .label(*label)
-        .legend(move |(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], color));
+        chart
+            .draw_series(LineSeries::new(data.iter().map(|(x, y)| (*x, *y)), color))?
+            .label(*label)
+            .legend(move |(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], color));
     }
 
-    chart.configure_series_labels()
-        .border_style(&BLACK)
-        .draw()?;
+    chart.configure_series_labels().border_style(BLACK).draw()?;
 
     root.present()?;
     Ok(())

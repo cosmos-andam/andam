@@ -21,11 +21,11 @@ pub struct BBNParameters {
 impl Default for BBNParameters {
     fn default() -> Self {
         BBNParameters {
-            eta: 6.1e-10,           // From Planck 2018
-            temp_initial: 3e9,      // 3 GK (below deuterium bottleneck)
-            t_start: 1.0,           // 1 s
-            t_end: 1000.0,          // 1000 s (longer to allow completion)
-            n_steps: 500,           // Output resolution
+            eta: 6.1e-10,      // From Planck 2018
+            temp_initial: 3e9, // 3 GK (below deuterium bottleneck)
+            t_start: 1.0,      // 1 s
+            t_end: 1000.0,     // 1000 s (longer to allow completion)
+            n_steps: 500,      // Output resolution
         }
     }
 }
@@ -42,35 +42,56 @@ pub struct BBNResult {
 impl BBNResult {
     /// Helium-4 mass fraction (Y_p)
     pub fn yp(&self) -> f64 {
-        *self.final_mass_fractions.get(&Nuclide::Helium4).unwrap_or(&0.0)
+        *self
+            .final_mass_fractions
+            .get(&Nuclide::Helium4)
+            .unwrap_or(&0.0)
     }
 
     /// Deuterium-to-hydrogen ratio
     pub fn dh_ratio(&self) -> f64 {
-        let d = self.final_mass_fractions.get(&Nuclide::Deuterium).unwrap_or(&0.0);
-        let h = self.final_mass_fractions.get(&Nuclide::Proton).unwrap_or(&1.0);
+        let d = self
+            .final_mass_fractions
+            .get(&Nuclide::Deuterium)
+            .unwrap_or(&0.0);
+        let h = self
+            .final_mass_fractions
+            .get(&Nuclide::Proton)
+            .unwrap_or(&1.0);
         d / h
     }
 
     /// Helium-3 to hydrogen ratio
     pub fn he3h_ratio(&self) -> f64 {
-        let he3 = self.final_mass_fractions.get(&Nuclide::Helium3).unwrap_or(&0.0);
-        let h = self.final_mass_fractions.get(&Nuclide::Proton).unwrap_or(&1.0);
+        let he3 = self
+            .final_mass_fractions
+            .get(&Nuclide::Helium3)
+            .unwrap_or(&0.0);
+        let h = self
+            .final_mass_fractions
+            .get(&Nuclide::Proton)
+            .unwrap_or(&1.0);
         he3 / h
     }
 
     /// Lithium-7 to hydrogen ratio
     pub fn li7h_ratio(&self) -> f64 {
-        let li7 = self.final_mass_fractions.get(&Nuclide::Lithium7).unwrap_or(&0.0);
-        let h = self.final_mass_fractions.get(&Nuclide::Proton).unwrap_or(&1.0);
+        let li7 = self
+            .final_mass_fractions
+            .get(&Nuclide::Lithium7)
+            .unwrap_or(&0.0);
+        let h = self
+            .final_mass_fractions
+            .get(&Nuclide::Proton)
+            .unwrap_or(&1.0);
         li7 / h
     }
 }
 
 /// Run BBN simulation (simplified analytical approach)
 pub fn run_bbn(params: &BBNParameters) -> BBNResult {
-    use crate::constants::T_CMB;
     use super::freeze_out::freezeout_np_ratio;
+    use crate::constants::T_CMB;
 
     // Calculate photon number density
     // At T_CMB = 2.7255 K, n_γ ≈ 411 cm⁻³
@@ -159,9 +180,14 @@ pub fn run_bbn(params: &BBNParameters) -> BBNResult {
     // Extract final mass fractions
     let mut final_mass_fractions = std::collections::HashMap::new();
     for nuclide in [
-        Nuclide::Neutron, Nuclide::Proton, Nuclide::Deuterium,
-        Nuclide::Tritium, Nuclide::Helium3, Nuclide::Helium4,
-        Nuclide::Lithium7, Nuclide::Beryllium7,
+        Nuclide::Neutron,
+        Nuclide::Proton,
+        Nuclide::Deuterium,
+        Nuclide::Tritium,
+        Nuclide::Helium3,
+        Nuclide::Helium4,
+        Nuclide::Lithium7,
+        Nuclide::Beryllium7,
     ] {
         final_mass_fractions.insert(nuclide, final_state.mass_fraction(nuclide));
     }
@@ -202,15 +228,29 @@ mod tests {
         // Print initial number densities
         println!("\nInitial number densities [cm⁻³]:");
         let initial_state = &result.evolution[0];
-        for nuclide in [Nuclide::Proton, Nuclide::Neutron, Nuclide::Deuterium, Nuclide::Helium4] {
+        for nuclide in [
+            Nuclide::Proton,
+            Nuclide::Neutron,
+            Nuclide::Deuterium,
+            Nuclide::Helium4,
+        ] {
             let n = initial_state.abundances.get(&nuclide).unwrap_or(&0.0);
             println!("  {:?}: {:.6e}", nuclide, n);
         }
 
         // Print initial mass fractions
         println!("\nInitial mass fractions:");
-        for nuclide in [Nuclide::Proton, Nuclide::Neutron, Nuclide::Deuterium, Nuclide::Helium4] {
-            println!("  {:?}: {:.6e}", nuclide, initial_state.mass_fraction(nuclide));
+        for nuclide in [
+            Nuclide::Proton,
+            Nuclide::Neutron,
+            Nuclide::Deuterium,
+            Nuclide::Helium4,
+        ] {
+            println!(
+                "  {:?}: {:.6e}",
+                nuclide,
+                initial_state.mass_fraction(nuclide)
+            );
         }
 
         // Check baryon conservation
@@ -226,15 +266,22 @@ mod tests {
                 let n_he4 = state.abundances.get(&Nuclide::Helium4).unwrap_or(&0.0);
                 let baryons = state.total_baryon_number();
                 let conservation = (baryons / initial_baryons - 1.0) * 100.0;
-                println!("  t={:.1}s: n_p={:.3e}, n_He4={:.3e}, baryon_err={:.2}%",
-                         state.time, n_p, n_he4, conservation);
+                println!(
+                    "  t={:.1}s: n_p={:.3e}, n_He4={:.3e}, baryon_err={:.2}%",
+                    state.time, n_p, n_he4, conservation
+                );
             }
         }
 
         // Print final number densities
         println!("\nFinal number densities [cm⁻³]:");
         let final_state = result.evolution.last().unwrap();
-        for nuclide in [Nuclide::Proton, Nuclide::Neutron, Nuclide::Deuterium, Nuclide::Helium4] {
+        for nuclide in [
+            Nuclide::Proton,
+            Nuclide::Neutron,
+            Nuclide::Deuterium,
+            Nuclide::Helium4,
+        ] {
             let n = final_state.abundances.get(&nuclide).unwrap_or(&0.0);
             println!("  {:?}: {:.6e}", nuclide, n);
         }
@@ -250,7 +297,11 @@ mod tests {
         println!("\nY_p = {:.6}", yp);
 
         // Check that Y_p is in reasonable range
-        assert!(yp > 0.20 && yp < 0.30, "Y_p = {} (should be ~0.24-0.25)", yp);
+        assert!(
+            yp > 0.20 && yp < 0.30,
+            "Y_p = {} (should be ~0.24-0.25)",
+            yp
+        );
     }
 
     #[test]

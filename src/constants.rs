@@ -49,7 +49,7 @@ pub const ALPHA: f64 = 7.2973525693e-3;
 pub const AU: f64 = 1.495978707e11;
 
 /// Parsec \[m\]
-pub const PARSEC: f64 = 3.0856775814913673e16;
+pub const PARSEC: f64 = 3.085_677_581_491_367e16;
 
 /// Solar mass \[kg\]
 pub const M_SUN: f64 = 1.98847e30;

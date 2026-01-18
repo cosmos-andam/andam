@@ -2,8 +2,8 @@
 //!
 //! Implements Friedmann equations and universe evolution
 
-pub mod friedmann;
 pub mod components;
+pub mod friedmann;
 
-pub use friedmann::Universe;
 pub use components::{Component, ComponentType};
+pub use friedmann::Universe;

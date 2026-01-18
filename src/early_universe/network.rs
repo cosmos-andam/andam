@@ -7,8 +7,8 @@ use std::collections::HashMap;
 /// Abundance evolution state
 #[derive(Debug, Clone)]
 pub struct AbundanceState {
-    pub time: f64,           // Time \[s\]
-    pub temperature: f64,    // Temperature \[K\]
+    pub time: f64,                         // Time \[s\]
+    pub temperature: f64,                  // Temperature \[K\]
     pub abundances: HashMap<Nuclide, f64>, // Number densities [cm⁻³]
 }
 
@@ -42,7 +42,8 @@ impl AbundanceState {
 
     /// Total baryon number (should be conserved)
     pub fn total_baryon_number(&self) -> f64 {
-        self.abundances.iter()
+        self.abundances
+            .iter()
             .map(|(nuclide, &n)| n * nuclide.mass_number() as f64)
             .sum()
     }
@@ -52,7 +53,9 @@ impl AbundanceState {
         let n = self.abundances.get(&nuclide).copied().unwrap_or(0.0);
         let a = nuclide.mass_number() as f64;
 
-        let total_mass: f64 = self.abundances.iter()
+        let total_mass: f64 = self
+            .abundances
+            .iter()
             .map(|(nuc, &num)| num * nuc.mass_number() as f64)
             .sum();
 
@@ -100,9 +103,14 @@ impl NetworkSolver {
 
         // Initialize all derivatives to zero
         for nuclide in [
-            Nuclide::Neutron, Nuclide::Proton, Nuclide::Deuterium,
-            Nuclide::Tritium, Nuclide::Helium3, Nuclide::Helium4,
-            Nuclide::Lithium7, Nuclide::Beryllium7,
+            Nuclide::Neutron,
+            Nuclide::Proton,
+            Nuclide::Deuterium,
+            Nuclide::Tritium,
+            Nuclide::Helium3,
+            Nuclide::Helium4,
+            Nuclide::Lithium7,
+            Nuclide::Beryllium7,
         ] {
             dndt.insert(nuclide, 0.0);
         }
@@ -259,8 +267,14 @@ mod tests {
         let evolution = solver.evolve(initial, 0.1, 100.0, 100);
 
         // Should have at least some evolution states
-        assert!(evolution.len() >= 2, "Evolution should have at least initial and final states");
-        assert!(evolution.len() <= 100000, "Evolution should not exceed safety limit");
+        assert!(
+            evolution.len() >= 2,
+            "Evolution should have at least initial and final states"
+        );
+        assert!(
+            evolution.len() <= 100000,
+            "Evolution should not exceed safety limit"
+        );
     }
 
     #[test]

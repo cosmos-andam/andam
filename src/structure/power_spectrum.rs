@@ -12,12 +12,7 @@ use std::f64::consts::PI;
 /// * `amplitude` - A_s (typically ~2.1e-9)
 /// * `spectral_index` - n_s (typically ~0.96)
 /// * `k_pivot` - Pivot scale [h/Mpc] (typically 0.05)
-pub fn primordial_power_spectrum(
-    k: f64,
-    amplitude: f64,
-    spectral_index: f64,
-    k_pivot: f64,
-) -> f64 {
+pub fn primordial_power_spectrum(k: f64, amplitude: f64, spectral_index: f64, k_pivot: f64) -> f64 {
     amplitude * (k / k_pivot).powf(spectral_index - 1.0)
 }
 
@@ -31,20 +26,20 @@ pub fn transfer_function_eh(k: f64, omega_m: f64, omega_b: f64, h: f64) -> f64 {
     let theta_cmb = T_CMB / 2.7;
 
     // Sound horizon (not used in simplified version)
-    let _s = 44.5 * (omega_m_h2 / theta_cmb.powi(4)).ln()
-        / (1.0 + 10.0 * omega_b_h2.powf(0.75)).sqrt();
+    let _s =
+        44.5 * (omega_m_h2 / theta_cmb.powi(4)).ln() / (1.0 + 10.0 * omega_b_h2.powf(0.75)).sqrt();
 
     // Silk damping scale (not used in simplified version)
-    let _k_silk = 1.6 * omega_b_h2.powf(0.52) * omega_m_h2.powf(0.73)
+    let _k_silk = 1.6
+        * omega_b_h2.powf(0.52)
+        * omega_m_h2.powf(0.73)
         * (1.0 + (10.4 * omega_m_h2).powf(-0.95));
 
     let q = k / (13.41 * omega_m_h2.powf(0.5));
-    let l = (2.0 * 2.718 + 1.8 * q).ln();
+    let l = (2.0 * std::f64::consts::E + 1.8 * q).ln();
     let c = 14.2 + 731.0 / (1.0 + 62.5 * q);
 
-    let t = l / (l + c * q * q);
-
-    t
+    l / (l + c * q * q)
 }
 
 /// Linear matter power spectrum P(k)

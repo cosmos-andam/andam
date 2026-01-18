@@ -1,9 +1,9 @@
 //! Weak gravitational lensing calculations
 
-use ndarray::Array2;
+use crate::dynamics::Universe;
 use crate::observations::comoving_distance;
 use crate::structure::power_spectrum::matter_power_spectrum;
-use crate::dynamics::Universe;
+use ndarray::Array2;
 
 /// Convergence field κ
 #[derive(Debug, Clone)]
@@ -73,13 +73,14 @@ pub fn convergence_to_shear(kappa: &Array2<f64>) -> (Array2<f64>, Array2<f64>) {
     let mut gamma2 = Array2::zeros((size, size));
 
     // Simplified version using finite differences
-    for i in 1..size-1 {
-        for j in 1..size-1 {
+    for i in 1..size - 1 {
+        for j in 1..size - 1 {
             // Second derivatives
-            let d2_dx2 = kappa[[i+1, j]] - 2.0 * kappa[[i, j]] + kappa[[i-1, j]];
-            let d2_dy2 = kappa[[i, j+1]] - 2.0 * kappa[[i, j]] + kappa[[i, j-1]];
-            let d2_dxdy = (kappa[[i+1, j+1]] - kappa[[i+1, j-1]]
-                         - kappa[[i-1, j+1]] + kappa[[i-1, j-1]]) / 4.0;
+            let d2_dx2 = kappa[[i + 1, j]] - 2.0 * kappa[[i, j]] + kappa[[i - 1, j]];
+            let d2_dy2 = kappa[[i, j + 1]] - 2.0 * kappa[[i, j]] + kappa[[i, j - 1]];
+            let d2_dxdy = (kappa[[i + 1, j + 1]] - kappa[[i + 1, j - 1]] - kappa[[i - 1, j + 1]]
+                + kappa[[i - 1, j - 1]])
+                / 4.0;
 
             gamma1[[i, j]] = d2_dx2 - d2_dy2;
             gamma2[[i, j]] = 2.0 * d2_dxdy;
@@ -90,11 +91,7 @@ pub fn convergence_to_shear(kappa: &Array2<f64>) -> (Array2<f64>, Array2<f64>) {
 }
 
 /// Lensing power spectrum C_ℓ^κκ (simplified)
-pub fn lensing_power_spectrum(
-    l: usize,
-    source_z: f64,
-    universe: &Universe,
-) -> f64 {
+pub fn lensing_power_spectrum(l: usize, source_z: f64, universe: &Universe) -> f64 {
     let chi_s = comoving_distance(source_z, universe);
 
     // Limber approximation
@@ -123,7 +120,10 @@ mod tests {
 
     #[test]
     fn test_shear_magnitude() {
-        let shear = Shear { gamma1: 0.03, gamma2: 0.04 };
+        let shear = Shear {
+            gamma1: 0.03,
+            gamma2: 0.04,
+        };
         let mag = shear.magnitude();
         assert!((mag - 0.05).abs() < 1e-10);
     }

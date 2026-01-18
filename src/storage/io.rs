@@ -81,7 +81,8 @@ impl DataStore {
         let json_str = serde_json::to_string_pretty(value)?;
 
         // Store as dataset instead of attribute for better compatibility
-        let dataset = metadata.new_dataset::<u8>()
+        let dataset = metadata
+            .new_dataset::<u8>()
             .shape([json_str.len()])
             .create(key)?;
         dataset.write_raw(json_str.as_bytes())?;

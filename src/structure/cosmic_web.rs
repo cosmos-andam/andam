@@ -6,7 +6,7 @@ use rand::Rng;
 /// 3D density field
 pub struct DensityField {
     pub grid: Array3<f64>,
-    pub box_size: f64,  // Mpc/h
+    pub box_size: f64, // Mpc/h
     pub n_grid: usize,
 }
 
@@ -54,7 +54,7 @@ impl DensityField {
                                 let dx = di as f64 - kernel_size as f64 / 2.0;
                                 let dy = dj as f64 - kernel_size as f64 / 2.0;
                                 let dz = dk as f64 - kernel_size as f64 / 2.0;
-                                let r2 = dx*dx + dy*dy + dz*dz;
+                                let r2 = dx * dx + dy * dy + dz * dz;
                                 let weight = (-r2 / (2.0 * sigma * sigma)).exp();
 
                                 let ii = i + di - kernel_size / 2;
@@ -104,6 +104,7 @@ impl DensityField {
     pub fn slice(&self, axis: usize, index: usize) -> Vec<Vec<f64>> {
         let mut slice_data = vec![vec![0.0; self.n_grid]; self.n_grid];
 
+        #[allow(clippy::needless_range_loop)]
         for i in 0..self.n_grid {
             for j in 0..self.n_grid {
                 slice_data[i][j] = match axis {
@@ -157,6 +158,6 @@ mod tests {
 
         let particles = field.extract_particles(0.0);
         // Should have some particles
-        assert!(particles.len() > 0);
+        assert!(!particles.is_empty());
     }
 }

@@ -1,7 +1,7 @@
 //! Example: Plot ionization fraction during recombination
 
-use andam::dynamics::Universe;
 use andam::cmb::recombination::{ionization_fraction, recombination_redshift};
+use andam::dynamics::Universe;
 use andam::visualization::plots_2d::{create_line_plot, PlotConfig};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {

@@ -32,10 +32,8 @@ pub fn growth_factor(a: f64, universe: &Universe) -> f64 {
 
         // Integration step
         let d_next = d_curr + d_prime_curr * da;
-        let d_prime_next = d_prime_curr + (
-            -3.0 * d_prime_curr / a_i
-            + 1.5 * omega_m * d_curr / (a_i * a_i * h * h)
-        ) * da;
+        let d_prime_next = d_prime_curr
+            + (-3.0 * d_prime_curr / a_i + 1.5 * omega_m * d_curr / (a_i * a_i * h * h)) * da;
 
         d.push(d_next);
         d_prime.push(d_prime_next);
@@ -66,10 +64,8 @@ fn growth_factor_at_unity(universe: &Universe) -> f64 {
         let d_prime_curr = *d_prime.last().unwrap();
 
         let d_next = d_curr + d_prime_curr * da;
-        let d_prime_next = d_prime_curr + (
-            -3.0 * d_prime_curr / a_i
-            + 1.5 * omega_m * d_curr / (a_i * a_i * h * h)
-        ) * da;
+        let d_prime_next = d_prime_curr
+            + (-3.0 * d_prime_curr / a_i + 1.5 * omega_m * d_curr / (a_i * a_i * h * h)) * da;
 
         d.push(d_next);
         d_prime.push(d_prime_next);

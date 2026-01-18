@@ -29,19 +29,29 @@ impl<'a> StructureStorage<'a> {
         let ps_group = self.group.create_group(name)?;
 
         // Store k values
-        ps_group.new_dataset::<f64>()
+        ps_group
+            .new_dataset::<f64>()
             .shape([k.len()])
-            .create("k")?.write(k)?;
+            .create("k")?
+            .write(k)?;
 
         // Store P(k) values
-        ps_group.new_dataset::<f64>()
+        ps_group
+            .new_dataset::<f64>()
             .shape([p_k.len()])
             .deflate(6)
-            .create("power_spectrum")?.write(p_k)?;
+            .create("power_spectrum")?
+            .write(p_k)?;
 
         // Metadata
-        ps_group.new_attr::<f64>().create("redshift")?.write_scalar(&z)?;
-        ps_group.new_attr::<bool>().create("linear")?.write_scalar(&linear)?;
+        ps_group
+            .new_attr::<f64>()
+            .create("redshift")?
+            .write_scalar(&z)?;
+        ps_group
+            .new_attr::<bool>()
+            .create("linear")?
+            .write_scalar(&linear)?;
         // Note: Units information can be inferred from context
 
         Ok(())
@@ -55,19 +65,33 @@ impl<'a> StructureStorage<'a> {
         z: f64,
         name: &str,
     ) -> Result<(), StorageError> {
-        let field_dataset = self.group
+        let field_dataset = self
+            .group
             .new_dataset::<f64>()
             .shape(field.dim())
-            .chunk([64.min(field.shape()[0]), 64.min(field.shape()[1]), 64.min(field.shape()[2])]) // Chunk for efficient slicing
+            .chunk([
+                64.min(field.shape()[0]),
+                64.min(field.shape()[1]),
+                64.min(field.shape()[2]),
+            ]) // Chunk for efficient slicing
             .deflate(6)
             .create(name)?;
 
         field_dataset.write(field)?;
 
         // Metadata
-        field_dataset.new_attr::<f64>().create("box_size")?.write_scalar(&box_size)?;
-        field_dataset.new_attr::<f64>().create("redshift")?.write_scalar(&z)?;
-        field_dataset.new_attr::<usize>().create("n_grid")?.write_scalar(&field.shape()[0])?;
+        field_dataset
+            .new_attr::<f64>()
+            .create("box_size")?
+            .write_scalar(&box_size)?;
+        field_dataset
+            .new_attr::<f64>()
+            .create("redshift")?
+            .write_scalar(&z)?;
+        field_dataset
+            .new_attr::<usize>()
+            .create("n_grid")?
+            .write_scalar(&field.shape()[0])?;
 
         Ok(())
     }
@@ -111,41 +135,53 @@ impl<'a> StructureStorage<'a> {
     }
 
     /// Store halo catalog
-    pub fn store_halo_catalog(
-        &self,
-        halos: &HaloCatalog,
-        name: &str,
-    ) -> Result<(), StorageError> {
+    pub fn store_halo_catalog(&self, halos: &HaloCatalog, name: &str) -> Result<(), StorageError> {
         let halo_group = self.group.create_group(name)?;
 
         // Convert positions to flat array
-        let pos_flat: Vec<f64> = halos.positions.iter()
+        let pos_flat: Vec<f64> = halos
+            .positions
+            .iter()
             .flat_map(|p| p.iter().copied())
             .collect();
 
         // Positions
-        halo_group.new_dataset::<f64>()
+        halo_group
+            .new_dataset::<f64>()
             .shape([halos.positions.len(), 3])
-            .create("positions")?.write_raw(&pos_flat)?;
+            .create("positions")?
+            .write_raw(&pos_flat)?;
 
         // Masses
-        halo_group.new_dataset::<f64>()
+        halo_group
+            .new_dataset::<f64>()
             .shape([halos.masses.len()])
-            .create("masses")?.write(&halos.masses)?;
+            .create("masses")?
+            .write(&halos.masses)?;
 
         // Convert velocities to flat array
-        let vel_flat: Vec<f64> = halos.velocities.iter()
+        let vel_flat: Vec<f64> = halos
+            .velocities
+            .iter()
             .flat_map(|v| v.iter().copied())
             .collect();
 
         // Velocities
-        halo_group.new_dataset::<f64>()
+        halo_group
+            .new_dataset::<f64>()
             .shape([halos.velocities.len(), 3])
-            .create("velocities")?.write_raw(&vel_flat)?;
+            .create("velocities")?
+            .write_raw(&vel_flat)?;
 
         // Metadata
-        halo_group.new_attr::<usize>().create("n_halos")?.write_scalar(&halos.masses.len())?;
-        halo_group.new_attr::<f64>().create("redshift")?.write_scalar(&halos.redshift)?;
+        halo_group
+            .new_attr::<usize>()
+            .create("n_halos")?
+            .write_scalar(&halos.masses.len())?;
+        halo_group
+            .new_attr::<f64>()
+            .create("redshift")?
+            .write_scalar(&halos.redshift)?;
 
         Ok(())
     }
@@ -155,14 +191,16 @@ impl<'a> StructureStorage<'a> {
         let halo_group = self.group.group(name)?;
 
         let pos_flat: Vec<f64> = halo_group.dataset("positions")?.read_raw()?;
-        let positions: Vec<[f64; 3]> = pos_flat.chunks_exact(3)
+        let positions: Vec<[f64; 3]> = pos_flat
+            .chunks_exact(3)
             .map(|chunk| [chunk[0], chunk[1], chunk[2]])
             .collect();
 
         let masses: Vec<f64> = halo_group.dataset("masses")?.read_raw()?;
 
         let vel_flat: Vec<f64> = halo_group.dataset("velocities")?.read_raw()?;
-        let velocities: Vec<[f64; 3]> = vel_flat.chunks_exact(3)
+        let velocities: Vec<[f64; 3]> = vel_flat
+            .chunks_exact(3)
             .map(|chunk| [chunk[0], chunk[1], chunk[2]])
             .collect();
 
@@ -200,7 +238,9 @@ mod tests {
         let k: Vec<f64> = (0..100).map(|i| 0.01 * (i as f64 + 1.0)).collect();
         let p_k: Vec<f64> = k.iter().map(|k_val| 100.0 / k_val.powi(2)).collect();
 
-        structure.store_power_spectrum(&k, &p_k, 0.0, true, "test_ps").unwrap();
+        structure
+            .store_power_spectrum(&k, &p_k, 0.0, true, "test_ps")
+            .unwrap();
 
         // Verify by reading the group
         let ps_group = structure.group.group("test_ps").unwrap();
@@ -216,7 +256,9 @@ mod tests {
 
         let field = Array3::from_shape_fn((32, 32, 32), |(i, j, k)| (i + j + k) as f64);
 
-        structure.store_density_field(&field, 100.0, 0.0, "test_field").unwrap();
+        structure
+            .store_density_field(&field, 100.0, 0.0, "test_field")
+            .unwrap();
 
         let read_field = structure.read_density_field("test_field").unwrap();
         assert_eq!(read_field.shape(), &[32, 32, 32]);

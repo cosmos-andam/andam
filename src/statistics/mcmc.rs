@@ -23,28 +23,25 @@ pub struct Chain {
 impl Chain {
     /// Get samples for parameter
     pub fn get_parameter(&self, name: &str) -> Option<Vec<f64>> {
-        self.parameter_names.iter()
+        self.parameter_names
+            .iter()
             .position(|n| n == name)
-            .map(|idx| {
-                self.samples.iter().map(|s| s[idx]).collect()
-            })
+            .map(|idx| self.samples.iter().map(|s| s[idx]).collect())
     }
 
     /// Mean of parameter
     pub fn mean(&self, name: &str) -> Option<f64> {
-        self.get_parameter(name).map(|samples| {
-            samples.iter().sum::<f64>() / samples.len() as f64
-        })
+        self.get_parameter(name)
+            .map(|samples| samples.iter().sum::<f64>() / samples.len() as f64)
     }
 
     /// Standard deviation
     pub fn std(&self, name: &str) -> Option<f64> {
-        self.get_parameter(name).and_then(|samples| {
+        self.get_parameter(name).map(|samples| {
             let mean = samples.iter().sum::<f64>() / samples.len() as f64;
-            let var = samples.iter()
-                .map(|x| (x - mean).powi(2))
-                .sum::<f64>() / samples.len() as f64;
-            Some(var.sqrt())
+            let var =
+                samples.iter().map(|x| (x - mean).powi(2)).sum::<f64>() / samples.len() as f64;
+            var.sqrt()
         })
     }
 
@@ -95,15 +92,15 @@ where
         // Initialize walkers
         let mut walkers: Vec<Vec<f64>> = (0..self.n_walkers)
             .map(|_| {
-                self.parameters.iter()
+                self.parameters
+                    .iter()
                     .map(|p| p.initial + rng.gen_range(-0.1..0.1) * p.proposal_width)
                     .collect()
             })
             .collect();
 
-        let mut walker_log_probs: Vec<f64> = walkers.iter()
-            .map(|w| (self.log_likelihood)(w))
-            .collect();
+        let mut walker_log_probs: Vec<f64> =
+            walkers.iter().map(|w| (self.log_likelihood)(w)).collect();
 
         let mut chain = Chain {
             samples: Vec::new(),
@@ -166,15 +163,13 @@ mod tests {
     #[test]
     fn test_mcmc_gaussian() {
         // Test with simple Gaussian likelihood
-        let params = vec![
-            Parameter {
-                name: "x".to_string(),
-                initial: 0.0,
-                min: -5.0,
-                max: 5.0,
-                proposal_width: 0.5,
-            },
-        ];
+        let params = vec![Parameter {
+            name: "x".to_string(),
+            initial: 0.0,
+            min: -5.0,
+            max: 5.0,
+            proposal_width: 0.5,
+        }];
 
         let log_likelihood = |theta: &[f64]| {
             let x = theta[0];
@@ -185,7 +180,7 @@ mod tests {
         let chain = sampler.run(20);
 
         // Check we got samples
-        assert!(chain.samples.len() > 0);
+        assert!(!chain.samples.is_empty());
 
         // Mean should be close to 0
         let mean = chain.mean("x").unwrap();
@@ -195,13 +190,7 @@ mod tests {
     #[test]
     fn test_chain_statistics() {
         let chain = Chain {
-            samples: vec![
-                vec![1.0],
-                vec![2.0],
-                vec![3.0],
-                vec![4.0],
-                vec![5.0],
-            ],
+            samples: vec![vec![1.0], vec![2.0], vec![3.0], vec![4.0], vec![5.0]],
             log_probs: vec![-1.0, -2.0, -3.0, -4.0, -5.0],
             parameter_names: vec!["x".to_string()],
         };

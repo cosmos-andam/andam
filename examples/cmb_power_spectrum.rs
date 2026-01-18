@@ -1,7 +1,7 @@
 //! Example: Compute and plot CMB angular power spectrum
 
-use andam::dynamics::Universe;
 use andam::cmb::fluctuations::{angular_power_spectrum, dimensionless_power_spectrum};
+use andam::dynamics::Universe;
 use andam::visualization::plotly_plots::create_interactive_plot;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -14,7 +14,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let d_l = dimensionless_power_spectrum(&c_l);
 
     // Convert to plottable data
-    let data: Vec<(f64, f64)> = d_l.iter()
+    let data: Vec<(f64, f64)> = d_l
+        .iter()
         .filter(|(l, _)| *l >= 2)
         .map(|(l, dl)| (*l as f64, *dl))
         .collect();

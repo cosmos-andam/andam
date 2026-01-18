@@ -1,6 +1,6 @@
 //! Example: Plot scale factor evolution for different universe models
 
-use andam::dynamics::{Universe, Component};
+use andam::dynamics::{Component, Universe};
 use andam::visualization::plots_2d::{create_multiline_plot, PlotConfig};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {

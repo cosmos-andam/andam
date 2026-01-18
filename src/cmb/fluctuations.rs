@@ -12,6 +12,7 @@ pub fn angular_power_spectrum(l_max: usize, universe: &Universe) -> Vec<f64> {
     // Acoustic peak positions
     let peaks = acoustic_peak_positions(universe);
 
+    #[allow(clippy::needless_range_loop)]
     for l in 2..=l_max {
         // Base power law from Sachs-Wolfe effect
         let l_f = l as f64;
@@ -22,7 +23,8 @@ pub fn angular_power_spectrum(l_max: usize, universe: &Universe) -> Vec<f64> {
         for (i, &peak_l) in peaks.iter().enumerate() {
             let width = 50.0;
             let amplitude = if i == 0 { 1.0 } else { 0.6 / (i as f64) };
-            let gaussian = amplitude * (-(l_f - peak_l as f64).powi(2) / (2.0 * width * width)).exp();
+            let gaussian =
+                amplitude * (-(l_f - peak_l as f64).powi(2) / (2.0 * width * width)).exp();
             oscillation += gaussian;
         }
 

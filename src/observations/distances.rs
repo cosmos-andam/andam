@@ -6,8 +6,8 @@
 //! - Angular diameter distance
 //! - Distance modulus
 
-use crate::dynamics::Universe;
 use crate::constants::*;
+use crate::dynamics::Universe;
 
 /// Integrand for comoving distance: 1/H(z)
 fn comoving_integrand(z: f64, universe: &Universe) -> f64 {

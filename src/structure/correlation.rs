@@ -36,16 +36,15 @@ pub fn correlation_function(r_mpc: f64, z: f64, omega_m: f64) -> f64 {
 /// Redshift-space distortion parameter β = f/b
 pub fn rsd_parameter(z: f64, omega_m: f64, bias: f64) -> f64 {
     // Linear growth rate f ≈ Ω_m^0.55
-    let omega_m_z = omega_m * (1.0 + z).powi(3) /
-                    (omega_m * (1.0 + z).powi(3) + (1.0 - omega_m));
+    let omega_m_z = omega_m * (1.0 + z).powi(3) / (omega_m * (1.0 + z).powi(3) + (1.0 - omega_m));
     let f = omega_m_z.powf(0.55);
     f / bias
 }
 
 /// Redshift-space correlation function ξ_s(r_parallel, r_perp)
 pub fn correlation_function_rsd(
-    r_parallel: f64,  // π (parallel to line of sight)
-    r_perp: f64,      // r_p (perpendicular to line of sight)
+    r_parallel: f64, // π (parallel to line of sight)
+    r_perp: f64,     // r_p (perpendicular to line of sight)
     z: f64,
     omega_m: f64,
     beta: f64,
@@ -83,7 +82,7 @@ mod tests {
     fn test_correlation_function_positive_at_small_scales() {
         let xi = correlation_function(5.0, 0.0, 0.3);
         // At small scales, correlation should be positive (overdense regions)
-        assert!(xi > 0.0 || xi < 0.0); // Just check it runs
+        assert!(xi != 0.0); // Just check it runs
     }
 
     #[test]

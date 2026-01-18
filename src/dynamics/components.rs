@@ -14,8 +14,8 @@ pub enum ComponentType {
 pub struct Component {
     pub name: String,
     pub component_type: ComponentType,
-    pub omega_0: f64,  // Density parameter today
-    pub w: f64,        // Equation of state parameter
+    pub omega_0: f64, // Density parameter today
+    pub w: f64,       // Equation of state parameter
 }
 
 impl Component {
@@ -80,6 +80,10 @@ mod tests {
     #[test]
     fn test_radiation_scaling() {
         let radiation = Component::radiation(1e-4);
-        assert_relative_eq!(radiation.density_evolution(0.5), 1e-4 * 16.0, epsilon = 1e-14);
+        assert_relative_eq!(
+            radiation.density_evolution(0.5),
+            1e-4 * 16.0,
+            epsilon = 1e-14
+        );
     }
 }

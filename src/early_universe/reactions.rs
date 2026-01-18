@@ -114,39 +114,47 @@ impl Reaction {
                 // n + p → d + γ (dominant at early times)
                 // This is the key bottleneck reaction
                 4.742e-4 * (1.0 / t9)
-            },
+            }
             "d(p,γ)³He" => {
                 // d + p → ³He + γ
-                2.24e3 * t9.powf(-2.0/3.0) * (-3.720 / t9.powf(1.0/3.0)).exp()
+                2.24e3
+                    * t9.powf(-2.0 / 3.0)
+                    * (-3.720 / t9.powf(1.0 / 3.0)).exp()
                     * (1.0 + 0.112 * t9 + 3.38 * t9.powi(2))
-            },
+            }
             "d(d,n)³He" => {
                 // d + d → ³He + n
-                3.95e8 * t9.powf(-2.0/3.0) * (-4.259 / t9.powf(1.0/3.0)).exp()
+                3.95e8
+                    * t9.powf(-2.0 / 3.0)
+                    * (-4.259 / t9.powf(1.0 / 3.0)).exp()
                     * (1.0 + 0.0979 * t9)
-            },
+            }
             "d(d,p)t" => {
                 // d + d → t + p
-                4.17e8 * t9.powf(-2.0/3.0) * (-4.258 / t9.powf(1.0/3.0)).exp()
+                4.17e8
+                    * t9.powf(-2.0 / 3.0)
+                    * (-4.258 / t9.powf(1.0 / 3.0)).exp()
                     * (1.0 + 0.0978 * t9)
-            },
+            }
             "t(d,n)⁴He" => {
                 // t + d → ⁴He + n (produces helium-4)
-                1.63e11 * t9.powf(-2.0/3.0) * (-4.871 / t9.powf(1.0/3.0)).exp()
-            },
+                1.63e11 * t9.powf(-2.0 / 3.0) * (-4.871 / t9.powf(1.0 / 3.0)).exp()
+            }
             "³He(d,p)⁴He" => {
                 // ³He + d → ⁴He + p (produces helium-4)
-                5.59e10 * t9.powf(-2.0/3.0) * (-7.183 / t9.powf(1.0/3.0)).exp()
+                5.59e10
+                    * t9.powf(-2.0 / 3.0)
+                    * (-7.183 / t9.powf(1.0 / 3.0)).exp()
                     * (1.0 + 0.0488 * t9)
-            },
+            }
             "³He(n,p)t" => {
                 // ³He + n → t + p
                 7.21e8 * (1.0 - 0.86 * t9 + 0.429 * t9.powi(2))
-            },
+            }
             "⁴He(t,γ)⁷Li" => {
                 // ⁴He + t → ⁷Li + γ
-                2.39e4 * t9.powf(-2.0/3.0) * (-8.09 / t9.powf(1.0/3.0)).exp()
-            },
+                2.39e4 * t9.powf(-2.0 / 3.0) * (-8.09 / t9.powf(1.0 / 3.0)).exp()
+            }
             _ => 1e-40, // Default very small value
         };
 
@@ -171,12 +179,8 @@ impl Reaction {
 
     /// LaTeX representation of reaction
     pub fn latex_equation(&self) -> String {
-        let reactants_str: Vec<_> = self.reactants.iter()
-            .map(|n| n.latex())
-            .collect();
-        let products_str: Vec<_> = self.products.iter()
-            .map(|n| n.latex())
-            .collect();
+        let reactants_str: Vec<_> = self.reactants.iter().map(|n| n.latex()).collect();
+        let products_str: Vec<_> = self.products.iter().map(|n| n.latex()).collect();
 
         format!(
             "${}\\rightarrow {}$",
@@ -192,42 +196,42 @@ pub fn standard_bbn_reactions() -> Vec<Reaction> {
         Reaction::new(
             vec![Nuclide::Proton, Nuclide::Neutron],
             vec![Nuclide::Deuterium],
-            "p(n,γ)d"
+            "p(n,γ)d",
         ),
         Reaction::new(
             vec![Nuclide::Deuterium, Nuclide::Proton],
             vec![Nuclide::Helium3],
-            "d(p,γ)³He"
+            "d(p,γ)³He",
         ),
         Reaction::new(
             vec![Nuclide::Deuterium, Nuclide::Deuterium],
             vec![Nuclide::Helium3, Nuclide::Neutron],
-            "d(d,n)³He"
+            "d(d,n)³He",
         ),
         Reaction::new(
             vec![Nuclide::Deuterium, Nuclide::Deuterium],
             vec![Nuclide::Tritium, Nuclide::Proton],
-            "d(d,p)t"
+            "d(d,p)t",
         ),
         Reaction::new(
             vec![Nuclide::Tritium, Nuclide::Deuterium],
             vec![Nuclide::Helium4, Nuclide::Neutron],
-            "t(d,n)⁴He"
+            "t(d,n)⁴He",
         ),
         Reaction::new(
             vec![Nuclide::Helium3, Nuclide::Deuterium],
             vec![Nuclide::Helium4, Nuclide::Proton],
-            "³He(d,p)⁴He"
+            "³He(d,p)⁴He",
         ),
         Reaction::new(
             vec![Nuclide::Helium3, Nuclide::Neutron],
             vec![Nuclide::Tritium, Nuclide::Proton],
-            "³He(n,p)t"
+            "³He(n,p)t",
         ),
         Reaction::new(
             vec![Nuclide::Helium4, Nuclide::Tritium],
             vec![Nuclide::Lithium7],
-            "⁴He(t,γ)⁷Li"
+            "⁴He(t,γ)⁷Li",
         ),
     ]
 }
@@ -247,7 +251,7 @@ mod tests {
         let reaction = Reaction::new(
             vec![Nuclide::Proton, Nuclide::Neutron],
             vec![Nuclide::Deuterium],
-            "p(n,γ)d"
+            "p(n,γ)d",
         );
 
         let rate = reaction.rate_coefficient(1e9);

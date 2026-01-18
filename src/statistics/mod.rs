@@ -1,7 +1,7 @@
 //! Statistical analysis tools
 
-pub mod mcmc;
 pub mod fisher;
+pub mod mcmc;
 
-pub use mcmc::{MCMCSampler, Chain, Parameter};
 pub use fisher::FisherMatrix;
+pub use mcmc::{Chain, MCMCSampler, Parameter};

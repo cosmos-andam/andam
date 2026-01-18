@@ -36,7 +36,7 @@ impl HaloMassFunction {
         let sigma_star = self.sigma_8;
 
         // Power law scaling
-        let sigma = sigma_star * (mass_msun / m_star).powf(-1.0/3.0);
+        let sigma = sigma_star * (mass_msun / m_star).powf(-1.0 / 3.0);
 
         // Redshift evolution: σ(z) = σ(0) / D(z)
         // Simplified: D(z) ≈ 1/(1+z) in matter era
@@ -56,7 +56,7 @@ impl HaloMassFunction {
             MassFunctionType::PressSchechter => {
                 // f(ν) = √(2/π) ν exp(-ν²/2)
                 (2.0 / PI).sqrt() * nu * (-nu.powi(2) / 2.0).exp()
-            },
+            }
             MassFunctionType::ShethTormen => {
                 // Sheth-Tormen (1999)
                 let a = 0.707;
@@ -64,9 +64,8 @@ impl HaloMassFunction {
                 let a_nu2 = a * nu.powi(2);
 
                 let a_factor = (2.0 * a / PI).sqrt();
-                a_factor * (1.0 + a_nu2.powf(-p)) * (a_nu2).sqrt()
-                    * (-a_nu2 / 2.0).exp()
-            },
+                a_factor * (1.0 + a_nu2.powf(-p)) * (a_nu2).sqrt() * (-a_nu2 / 2.0).exp()
+            }
             MassFunctionType::Tinker => {
                 // Tinker et al. (2008) - simplified
                 let alpha = 0.368;
@@ -74,9 +73,11 @@ impl HaloMassFunction {
                 let gamma = 0.864;
                 let phi = -0.729;
 
-                alpha * (1.0 + (beta / nu).powf(2.0 * phi))
-                    * nu.powf(2.0 * beta) * (-gamma * nu.powi(2) / 2.0).exp()
-            },
+                alpha
+                    * (1.0 + (beta / nu).powf(2.0 * phi))
+                    * nu.powf(2.0 * beta)
+                    * (-gamma * nu.powi(2) / 2.0).exp()
+            }
         }
     }
 
@@ -123,7 +124,7 @@ impl HaloMassFunction {
             MassFunctionType::PressSchechter => {
                 // b = 1 + (ν² - 1)/δ_c
                 1.0 + (nu.powi(2) - 1.0) / delta_c
-            },
+            }
             MassFunctionType::ShethTormen => {
                 // Sheth-Tormen bias
                 let a = 0.707;
@@ -131,14 +132,13 @@ impl HaloMassFunction {
                 let c = 0.6;
 
                 let a_nu2 = a * nu.powi(2);
-                1.0 + (a_nu2 - 1.0) / delta_c
-                    + 2.0 * b_param / (delta_c * (1.0 + a_nu2.powf(c)))
-            },
+                1.0 + (a_nu2 - 1.0) / delta_c + 2.0 * b_param / (delta_c * (1.0 + a_nu2.powf(c)))
+            }
             MassFunctionType::Tinker => {
                 // Tinker et al. (2010) simplified bias
                 let y = (nu.powi(2)).max(0.01);
                 1.0 + 0.24 * y.ln() + 0.4 * nu.powi(2)
-            },
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ pub enum MassHierarchy {
 
 /// Massive neutrino component
 pub struct MassiveNeutrinos {
-    pub total_mass: f64,  // Sum of masses [eV]
+    pub total_mass: f64, // Sum of masses [eV]
     pub hierarchy: MassHierarchy,
     pub n_species: usize,
 }

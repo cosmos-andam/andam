@@ -6,10 +6,7 @@
 //! - Boost factor B(k) = P_nl(k) / P_lin(k)
 //! - Evolution with redshift
 
-use andam::structure::{
-    matter_power_spectrum,
-    HalofitSpectrum,
-};
+use andam::structure::{matter_power_spectrum, HalofitSpectrum};
 use plotters::prelude::*;
 use std::error::Error;
 
@@ -74,13 +71,14 @@ fn create_power_spectrum_plot(
     h: f64,
     n_s: f64,
 ) -> Result<(), Box<dyn Error>> {
-    let root = BitMapBackend::new("power_spectrum_comparison.png", (1200, 800))
-        .into_drawing_area();
+    let root = BitMapBackend::new("power_spectrum_comparison.png", (1200, 800)).into_drawing_area();
     root.fill(&WHITE)?;
 
     let mut chart = ChartBuilder::on(&root)
-        .caption("Matter Power Spectrum: Linear vs Non-linear (HALOFIT)",
-                 ("sans-serif", 30).into_font())
+        .caption(
+            "Matter Power Spectrum: Linear vs Non-linear (HALOFIT)",
+            ("sans-serif", 30).into_font(),
+        )
         .margin(15)
         .x_label_area_size(50)
         .y_label_area_size(70)
@@ -89,7 +87,8 @@ fn create_power_spectrum_plot(
             (1e-2_f64..1e5_f64).log_scale(),
         )?;
 
-    chart.configure_mesh()
+    chart
+        .configure_mesh()
         .x_desc("Wavenumber k [h/Mpc]")
         .y_desc("Power Spectrum P(k) [(Mpc/h)^3]")
         .draw()?;
@@ -119,23 +118,29 @@ fn create_power_spectrum_plot(
             .collect();
 
         // Plot linear (dashed line)
-        chart.draw_series(LineSeries::new(p_lin, color.stroke_width(2).stroke_width(2)))?
+        chart
+            .draw_series(LineSeries::new(
+                p_lin,
+                color.stroke_width(2).stroke_width(2),
+            ))?
             .label(format!("Linear z={:.1}", z))
             .legend(move |(x, y)| {
                 PathElement::new(vec![(x, y), (x + 20, y)], color.stroke_width(2))
             });
 
         // Plot non-linear (solid line)
-        chart.draw_series(LineSeries::new(p_nl, color.stroke_width(3)))?
+        chart
+            .draw_series(LineSeries::new(p_nl, color.stroke_width(3)))?
             .label(format!("Non-linear z={:.1}", z))
             .legend(move |(x, y)| {
                 PathElement::new(vec![(x, y), (x + 20, y)], color.stroke_width(3))
             });
     }
 
-    chart.configure_series_labels()
-        .background_style(&WHITE.mix(0.8))
-        .border_style(&BLACK)
+    chart
+        .configure_series_labels()
+        .background_style(WHITE.mix(0.8))
+        .border_style(BLACK)
         .draw()?;
 
     root.present()?;
@@ -151,22 +156,21 @@ fn create_boost_factor_plot(
     h: f64,
     n_s: f64,
 ) -> Result<(), Box<dyn Error>> {
-    let root = BitMapBackend::new("boost_factor.png", (1200, 800))
-        .into_drawing_area();
+    let root = BitMapBackend::new("boost_factor.png", (1200, 800)).into_drawing_area();
     root.fill(&WHITE)?;
 
     let mut chart = ChartBuilder::on(&root)
-        .caption("Non-linear Boost Factor B(k) = P_nl(k) / P_lin(k)",
-                 ("sans-serif", 30).into_font())
+        .caption(
+            "Non-linear Boost Factor B(k) = P_nl(k) / P_lin(k)",
+            ("sans-serif", 30).into_font(),
+        )
         .margin(15)
         .x_label_area_size(50)
         .y_label_area_size(70)
-        .build_cartesian_2d(
-            (0.001_f64..10.0_f64).log_scale(),
-            0.8_f64..10.0_f64,
-        )?;
+        .build_cartesian_2d((0.001_f64..10.0_f64).log_scale(), 0.8_f64..10.0_f64)?;
 
-    chart.configure_mesh()
+    chart
+        .configure_mesh()
         .x_desc("Wavenumber k [h/Mpc]")
         .y_desc("Boost Factor B(k)")
         .draw()?;
@@ -193,7 +197,8 @@ fn create_boost_factor_plot(
             })
             .collect();
 
-        chart.draw_series(LineSeries::new(boost, color.stroke_width(3)))?
+        chart
+            .draw_series(LineSeries::new(boost, color.stroke_width(3)))?
             .label(format!("z = {:.1}", z))
             .legend(move |(x, y)| {
                 PathElement::new(vec![(x, y), (x + 20, y)], color.stroke_width(3))
@@ -201,16 +206,13 @@ fn create_boost_factor_plot(
 
         // Mark k_nl
         let k_nl = halofit.k_nonlinear(z);
-        chart.draw_series(std::iter::once(Circle::new(
-            (k_nl, 1.5),
-            5,
-            color.filled(),
-        )))?;
+        chart.draw_series(std::iter::once(Circle::new((k_nl, 1.5), 5, color.filled())))?;
     }
 
-    chart.configure_series_labels()
-        .background_style(&WHITE.mix(0.8))
-        .border_style(&BLACK)
+    chart
+        .configure_series_labels()
+        .background_style(WHITE.mix(0.8))
+        .border_style(BLACK)
         .draw()?;
 
     root.present()?;

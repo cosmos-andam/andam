@@ -31,11 +31,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         ..Default::default()
     };
 
-    plot_abundance_evolution(
-        "bbn_evolution_hires.png",
-        &result.evolution,
-        &config,
-    )?;
+    plot_abundance_evolution("bbn_evolution_hires.png", &result.evolution, &config)?;
 
     println!("\nCreated: bbn_evolution_hires.png");
     Ok(())

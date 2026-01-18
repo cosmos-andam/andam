@@ -2,6 +2,9 @@
 
 use plotters::prelude::*;
 
+/// Type alias for data series with labels and colors
+type DataSeries<'a> = Vec<(&'a [(f64, f64)], &'a str, RGBColor)>;
+
 /// Configuration for publication-quality plots
 pub struct PublicationConfig {
     pub width: u32,
@@ -16,9 +19,9 @@ pub struct PublicationConfig {
 impl Default for PublicationConfig {
     fn default() -> Self {
         PublicationConfig {
-            width: 1920,   // High resolution
+            width: 1920, // High resolution
             height: 1080,
-            dpi: 300,      // Publication quality
+            dpi: 300, // Publication quality
             font_size_title: 48,
             font_size_label: 36,
             font_size_equation: 32,
@@ -30,16 +33,14 @@ impl Default for PublicationConfig {
 /// Create plot with equation overlay
 pub fn create_plot_with_equation(
     filename: &str,
-    data_series: Vec<(&[(f64, f64)], &str, RGBColor)>,
+    data_series: DataSeries,
     title: &str,
     x_label: &str,
     y_label: &str,
     equations: Vec<(String, (f64, f64))>, // (equation string, (x, y) position in data coords)
     config: &PublicationConfig,
 ) -> Result<(), Box<dyn std::error::Error>> {
-
-    let root = BitMapBackend::new(filename, (config.width, config.height))
-        .into_drawing_area();
+    let root = BitMapBackend::new(filename, (config.width, config.height)).into_drawing_area();
     root.fill(&WHITE)?;
 
     // Find data ranges
@@ -72,7 +73,8 @@ pub fn create_plot_with_equation(
         .y_label_area_size(100)
         .build_cartesian_2d(x_min..x_max, y_min..y_max)?;
 
-    chart.configure_mesh()
+    chart
+        .configure_mesh()
         .x_desc(x_label)
         .y_desc(y_label)
         .x_label_style((config.font_family.as_str(), config.font_size_label))
@@ -82,17 +84,21 @@ pub fn create_plot_with_equation(
 
     // Draw data series
     for (data, label, color) in data_series {
-        chart.draw_series(LineSeries::new(
-            data.iter().map(|&(x, y)| (x, y)),
-            color.stroke_width(3),
-        ))?
-        .label(label)
-        .legend(move |(x, y)| PathElement::new(vec![(x, y), (x + 30, y)], color.stroke_width(3)));
+        chart
+            .draw_series(LineSeries::new(
+                data.iter().map(|&(x, y)| (x, y)),
+                color.stroke_width(3),
+            ))?
+            .label(label)
+            .legend(move |(x, y)| {
+                PathElement::new(vec![(x, y), (x + 30, y)], color.stroke_width(3))
+            });
     }
 
-    chart.configure_series_labels()
-        .background_style(&WHITE.mix(0.8))
-        .border_style(&BLACK)
+    chart
+        .configure_series_labels()
+        .background_style(WHITE.mix(0.8))
+        .border_style(BLACK)
         .label_font((config.font_family.as_str(), config.font_size_label))
         .draw()?;
 
@@ -100,8 +106,10 @@ pub fn create_plot_with_equation(
     for (equation_text, (eq_x, eq_y)) in &equations {
         // Draw background box for equation
         chart.draw_series(std::iter::once(Rectangle::new(
-            [(eq_x - 0.02 * (x_max - x_min), eq_y - 0.02 * (y_max - y_min)),
-             (eq_x + 0.15 * (x_max - x_min), eq_y + 0.04 * (y_max - y_min))],
+            [
+                (eq_x - 0.02 * (x_max - x_min), eq_y - 0.02 * (y_max - y_min)),
+                (eq_x + 0.15 * (x_max - x_min), eq_y + 0.04 * (y_max - y_min)),
+            ],
             WHITE.mix(0.95).filled(),
         )))?;
 
@@ -124,7 +132,6 @@ pub fn plot_abundance_evolution(
     evolution: &[crate::early_universe::network::AbundanceState],
     config: &PublicationConfig,
 ) -> Result<(), Box<dyn std::error::Error>> {
-
     use crate::early_universe::reactions::Nuclide;
 
     // Extract data for each nuclide
@@ -139,7 +146,8 @@ pub fn plot_abundance_evolution(
     let mut data_series = Vec::new();
 
     for (nuclide, label, color) in nuclides {
-        let data: Vec<(f64, f64)> = evolution.iter()
+        let data: Vec<(f64, f64)> = evolution
+            .iter()
             .map(|state| {
                 let t = state.time;
                 let x = state.mass_fraction(nuclide);
@@ -154,7 +162,8 @@ pub fn plot_abundance_evolution(
     }
 
     // Convert to references
-    let data_refs: Vec<_> = data_series.iter()
+    let data_refs: Vec<_> = data_series
+        .iter()
         .map(|(data, label, color)| (data.as_slice(), *label, *color))
         .collect();
 

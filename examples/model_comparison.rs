@@ -21,8 +21,20 @@ fn main() -> Result<(), Box<dyn Error>> {
     let models = vec![
         ("ΛCDM (w = -1)", DarkEnergyModel::Lambda),
         ("Constant w = -0.9", DarkEnergyModel::ConstantW(-0.9)),
-        ("CPL (w_0=-0.9, w_a=-0.1)", DarkEnergyModel::CPL { w_0: -0.9, w_a: -0.1 }),
-        ("Early DE", DarkEnergyModel::EarlyDE { w_0: -0.8, omega_e: 0.05 }),
+        (
+            "CPL (w_0=-0.9, w_a=-0.1)",
+            DarkEnergyModel::CPL {
+                w_0: -0.9,
+                w_a: -0.1,
+            },
+        ),
+        (
+            "Early DE",
+            DarkEnergyModel::EarlyDE {
+                w_0: -0.8,
+                omega_e: 0.05,
+            },
+        ),
     ];
 
     println!("Comparing {} models:", models.len());
@@ -49,7 +61,8 @@ fn main() -> Result<(), Box<dyn Error>> {
             .y_label_area_size(100)
             .build_cartesian_2d(0.1..1.0, 0.5..1.8)?;
 
-        chart.configure_mesh()
+        chart
+            .configure_mesh()
             .x_desc("Scale Factor a")
             .y_desc("H(a)/H_0")
             .x_label_style(("sans-serif", 36))
@@ -59,19 +72,21 @@ fn main() -> Result<(), Box<dyn Error>> {
         let colors = [BLUE, RED, GREEN, MAGENTA];
 
         for ((name, data), &color) in results.iter().zip(colors.iter()) {
-            chart.draw_series(LineSeries::new(
-                data.iter().map(|&(a, h)| (a, h)),
-                color.stroke_width(4),
-            ))?
-            .label(name)
-            .legend(move |(x, y)| {
-                PathElement::new(vec![(x, y), (x + 30, y)], color.stroke_width(4))
-            });
+            chart
+                .draw_series(LineSeries::new(
+                    data.iter().map(|&(a, h)| (a, h)),
+                    color.stroke_width(4),
+                ))?
+                .label(name)
+                .legend(move |(x, y)| {
+                    PathElement::new(vec![(x, y), (x + 30, y)], color.stroke_width(4))
+                });
         }
 
-        chart.configure_series_labels()
-            .background_style(&WHITE.mix(0.9))
-            .border_style(&BLACK)
+        chart
+            .configure_series_labels()
+            .background_style(WHITE.mix(0.9))
+            .border_style(BLACK)
             .label_font(("sans-serif", 32))
             .draw()?;
 
@@ -98,7 +113,8 @@ fn main() -> Result<(), Box<dyn Error>> {
             .y_label_area_size(100)
             .build_cartesian_2d(0.1..1.0, -1.1..-0.6)?;
 
-        chart.configure_mesh()
+        chart
+            .configure_mesh()
             .x_desc("Scale Factor a")
             .y_desc("w(a)")
             .x_label_style(("sans-serif", 36))
@@ -117,14 +133,12 @@ fn main() -> Result<(), Box<dyn Error>> {
                 })
                 .collect();
 
-            chart.draw_series(LineSeries::new(
-                w_data,
-                color.stroke_width(4),
-            ))?
-            .label(*name)
-            .legend(move |(x, y)| {
-                PathElement::new(vec![(x, y), (x + 30, y)], color.stroke_width(4))
-            });
+            chart
+                .draw_series(LineSeries::new(w_data, color.stroke_width(4)))?
+                .label(*name)
+                .legend(move |(x, y)| {
+                    PathElement::new(vec![(x, y), (x + 30, y)], color.stroke_width(4))
+                });
         }
 
         // Reference line at w = -1 (cosmological constant)
@@ -133,9 +147,10 @@ fn main() -> Result<(), Box<dyn Error>> {
             BLACK.stroke_width(2),
         ))?;
 
-        chart.configure_series_labels()
-            .background_style(&WHITE.mix(0.9))
-            .border_style(&BLACK)
+        chart
+            .configure_series_labels()
+            .background_style(WHITE.mix(0.9))
+            .border_style(BLACK)
             .label_font(("sans-serif", 32))
             .draw()?;
 
@@ -162,8 +177,10 @@ fn main() -> Result<(), Box<dyn Error>> {
         println!("\n{}", name);
         println!("  w(a=0.5) = {:.3}", model.w(0.5));
         println!("  w(a=1.0) = {:.3}", model.w(1.0));
-        println!("  ρ_DE(a=0.5)/ρ_DE(a=1.0) = {:.3}",
-                 model.rho_de(0.5, 0.7) / model.rho_de(1.0, 0.7));
+        println!(
+            "  ρ_DE(a=0.5)/ρ_DE(a=1.0) = {:.3}",
+            model.rho_de(0.5, 0.7) / model.rho_de(1.0, 0.7)
+        );
     }
 
     println!("\n=== Key Insights ===");

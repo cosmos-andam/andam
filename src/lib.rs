@@ -29,17 +29,17 @@
 //! println!("Luminosity distance to z={}: {:.1} Mpc", z, d_l);
 //! ```
 
-pub mod constants;
-pub mod units;
-pub mod dynamics;
-pub mod observations;
-pub mod cmb;
-pub mod structure;
-pub mod perturbations;
 pub mod advanced;
-pub mod early_universe;
-pub mod statistics;
 pub mod beyond_lcdm;
+pub mod cmb;
+pub mod constants;
+pub mod dynamics;
+pub mod early_universe;
+pub mod observations;
+pub mod perturbations;
+pub mod statistics;
+pub mod structure;
+pub mod units;
 
 #[cfg(feature = "plotting")]
 pub mod visualization;
@@ -48,16 +48,12 @@ pub mod visualization;
 pub mod storage;
 
 // Re-export commonly used items
-pub use constants::*;
-pub use units::{Length, Mass, Time, Energy};
-pub use dynamics::Universe;
-pub use observations::{
-    luminosity_distance,
-    angular_diameter_distance,
-    comoving_distance,
-};
-pub use cmb::recombination::{ionization_fraction, recombination_redshift};
 pub use cmb::fluctuations::{angular_power_spectrum, dimensionless_power_spectrum};
-pub use structure::power_spectrum::matter_power_spectrum;
+pub use cmb::recombination::{ionization_fraction, recombination_redshift};
+pub use constants::*;
+pub use dynamics::Universe;
+pub use early_universe::nucleosynthesis::{helium_abundance, run_bbn, BBNParameters};
+pub use observations::{angular_diameter_distance, comoving_distance, luminosity_distance};
 pub use perturbations::growth::{growth_factor, growth_rate};
-pub use early_universe::nucleosynthesis::{run_bbn, helium_abundance, BBNParameters};
+pub use structure::power_spectrum::matter_power_spectrum;
+pub use units::{Energy, Length, Mass, Time};

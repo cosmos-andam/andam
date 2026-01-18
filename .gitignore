@@ -28,3 +28,16 @@ Cargo.lock
 *_claude_*
 claude_session_*
 .claude_cache/
+
+# CI/CD artifacts
+cobertura.xml
+*.profraw
+*.profdata
+release_notes.md
+
+# Benchmarks
+target/criterion/
+
+# Code coverage
+tarpaulin-report.html
+lcov.info

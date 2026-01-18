@@ -2,8 +2,7 @@
 
 use super::io::{DataStore, StorageError};
 use hdf5::Group;
-use serde::{Serialize, Deserialize};
-
+use serde::{Deserialize, Serialize};
 
 /// CMB data storage
 pub struct CMBStorage<'a> {
@@ -26,7 +25,8 @@ impl<'a> CMBStorage<'a> {
         n_side: usize,
         name: &str,
     ) -> Result<(), StorageError> {
-        let dataset = self.group
+        let dataset = self
+            .group
             .new_dataset::<f64>()
             .shape([map.len()])
             .deflate(6) // Compression level 6
@@ -35,7 +35,10 @@ impl<'a> CMBStorage<'a> {
         dataset.write(map)?;
 
         // Store metadata
-        dataset.new_attr::<usize>().create("n_side")?.write_scalar(&n_side)?;
+        dataset
+            .new_attr::<usize>()
+            .create("n_side")?
+            .write_scalar(&n_side)?;
         // Note: Storing type and units as JSON metadata instead of attributes
         // due to HDF5-rust API limitations with VarLenUnicode
 
@@ -79,7 +82,10 @@ impl<'a> CMBStorage<'a> {
 
         // Metadata
         // Note: Spectrum type stored in group name instead of attribute
-        spec_group.new_attr::<usize>().create("l_max")?.write_scalar(ell.last().unwrap())?;
+        spec_group
+            .new_attr::<usize>()
+            .create("l_max")?
+            .write_scalar(ell.last().unwrap())?;
 
         Ok(())
     }
@@ -127,7 +133,10 @@ impl<'a> CMBStorage<'a> {
         u_dataset.write(u_map)?;
 
         // Metadata
-        pol_group.new_attr::<usize>().create("n_side")?.write_scalar(&n_side)?;
+        pol_group
+            .new_attr::<usize>()
+            .create("n_side")?
+            .write_scalar(&n_side)?;
         // Note: Type information stored in group name
 
         Ok(())

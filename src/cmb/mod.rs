@@ -1,22 +1,13 @@
 //! Cosmic Microwave Background physics
 
-pub mod recombination;
 pub mod fluctuations;
 pub mod polarization;
+pub mod recombination;
 
-pub use recombination::{
-    saha_equation,
-    ionization_fraction,
-    recombination_redshift,
-    optical_depth,
-};
 pub use fluctuations::{
-    angular_power_spectrum,
-    dimensionless_power_spectrum,
-    acoustic_peak_positions,
+    acoustic_peak_positions, angular_power_spectrum, dimensionless_power_spectrum,
 };
-pub use polarization::{
-    StokesParameters,
-    PolarizationSpectrum,
-    decompose_eb,
+pub use polarization::{decompose_eb, PolarizationSpectrum, StokesParameters};
+pub use recombination::{
+    ionization_fraction, optical_depth, recombination_redshift, saha_equation,
 };

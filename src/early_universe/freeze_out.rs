@@ -8,9 +8,7 @@ pub fn weak_interaction_rate(temp_k: f64) -> f64 {
     let t_mev = K_B * temp_k * J_TO_EV * 1e-6; // Temperature in MeV
 
     // Rate proportional to T^5
-    let rate = 1.13 * t_mev.powi(5);
-
-    rate
+    1.13 * t_mev.powi(5)
 }
 
 /// Hubble parameter [s^-1] at temperature T \[K\] in radiation-dominated era
@@ -19,13 +17,10 @@ pub fn hubble_rate_radiation(temp_k: f64) -> f64 {
     // ρ = (π^2/30) g_* k_B^4 T^4 / (ℏ^3 c^5)
     let g_star = 10.75; // Effective degrees of freedom (photons + e± + 3 neutrinos)
 
-    let rho = (std::f64::consts::PI.powi(2) / 30.0) * g_star
-        * K_B.powi(4) * temp_k.powi(4)
+    let rho = (std::f64::consts::PI.powi(2) / 30.0) * g_star * K_B.powi(4) * temp_k.powi(4)
         / (HBAR.powi(3) * C.powi(5));
 
-    let hubble = ((8.0 * std::f64::consts::PI * G * rho) / 3.0).sqrt();
-
-    hubble
+    ((8.0 * std::f64::consts::PI * G * rho) / 3.0).sqrt()
 }
 
 /// Freeze-out temperature \[K\] where weak rate equals Hubble rate
@@ -33,9 +28,7 @@ pub fn freezeout_temperature() -> f64 {
     // Solve Γ_weak(T) = H(T)
     // This occurs at T ~ 0.7 MeV
     let t_freeze_mev = 0.7; // MeV
-    let t_freeze_k = t_freeze_mev * 1e6 / (K_B * J_TO_EV);
-
-    t_freeze_k
+    t_freeze_mev * 1e6 / (K_B * J_TO_EV)
 }
 
 /// Neutron-to-proton ratio at freeze-out

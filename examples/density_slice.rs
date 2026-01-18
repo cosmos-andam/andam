@@ -22,7 +22,10 @@ fn main() -> Result<(), Box<dyn Error>> {
     println!("Field parameters:");
     println!("  Grid size: {}^3 cells", n_grid);
     println!("  Box size: {} Mpc/h", box_size);
-    println!("  Resolution: {:.2} Mpc/h per cell", box_size / n_grid as f64);
+    println!(
+        "  Resolution: {:.2} Mpc/h per cell",
+        box_size / n_grid as f64
+    );
     println!("  Redshift z = {}\n", z);
 
     // Generate density field
@@ -45,9 +48,11 @@ fn main() -> Result<(), Box<dyn Error>> {
     let threshold = 0.3; // Density contrast threshold
     println!("Extracting particles above threshold δ > {}...", threshold);
     let particles = field.extract_particles(threshold);
-    println!("Found {} overdense cells ({:.1}% of volume)\n",
-             particles.len(),
-             100.0 * particles.len() as f64 / (n_grid * n_grid * n_grid) as f64);
+    println!(
+        "Found {} overdense cells ({:.1}% of volume)\n",
+        particles.len(),
+        100.0 * particles.len() as f64 / (n_grid * n_grid * n_grid) as f64
+    );
 
     // Create visualizations
     println!("Creating density maps...");
@@ -56,9 +61,18 @@ fn main() -> Result<(), Box<dyn Error>> {
     create_density_map(&yz_slice, "density_yz.png", "YZ Plane")?;
 
     println!("\nGenerated plots:");
-    println!("  - density_xy.png (z = {:.1} Mpc/h)", slice_index as f64 * box_size / n_grid as f64);
-    println!("  - density_xz.png (y = {:.1} Mpc/h)", slice_index as f64 * box_size / n_grid as f64);
-    println!("  - density_yz.png (x = {:.1} Mpc/h)", slice_index as f64 * box_size / n_grid as f64);
+    println!(
+        "  - density_xy.png (z = {:.1} Mpc/h)",
+        slice_index as f64 * box_size / n_grid as f64
+    );
+    println!(
+        "  - density_xz.png (y = {:.1} Mpc/h)",
+        slice_index as f64 * box_size / n_grid as f64
+    );
+    println!(
+        "  - density_yz.png (x = {:.1} Mpc/h)",
+        slice_index as f64 * box_size / n_grid as f64
+    );
     println!("\nDone!");
 
     Ok(())
@@ -82,22 +96,23 @@ fn create_density_map(
         }
     }
 
-    let root = BitMapBackend::new(filename, (800, 800))
-        .into_drawing_area();
+    let root = BitMapBackend::new(filename, (800, 800)).into_drawing_area();
     root.fill(&WHITE)?;
 
     let mut chart = ChartBuilder::on(&root)
-        .caption(format!("Density Field: {}", title), ("sans-serif", 30).into_font())
+        .caption(
+            format!("Density Field: {}", title),
+            ("sans-serif", 30).into_font(),
+        )
         .margin(15)
         .x_label_area_size(40)
         .y_label_area_size(40)
         .build_cartesian_2d(0..n_grid, 0..n_grid)?;
 
-    chart.configure_mesh()
-        .disable_mesh()
-        .draw()?;
+    chart.configure_mesh().disable_mesh().draw()?;
 
     // Draw density field as colored rectangles
+    #[allow(clippy::needless_range_loop)]
     for i in 0..n_grid {
         for j in 0..n_grid {
             let val = slice_data[i][j];
@@ -113,19 +128,11 @@ fn create_density_map(
             let color = if normalized < 0.5 {
                 // Blue to white
                 let t = normalized * 2.0;
-                RGBColor(
-                    (t * 255.0) as u8,
-                    (t * 255.0) as u8,
-                    255,
-                )
+                RGBColor((t * 255.0) as u8, (t * 255.0) as u8, 255)
             } else {
                 // White to red
                 let t = (normalized - 0.5) * 2.0;
-                RGBColor(
-                    255,
-                    ((1.0 - t) * 255.0) as u8,
-                    ((1.0 - t) * 255.0) as u8,
-                )
+                RGBColor(255, ((1.0 - t) * 255.0) as u8, ((1.0 - t) * 255.0) as u8)
             };
 
             chart.draw_series(std::iter::once(Rectangle::new(

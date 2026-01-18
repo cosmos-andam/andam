@@ -40,14 +40,18 @@ impl FisherMatrix {
         }
 
         // Fisher matrix: F_ij = Σ_α (∂O_α/∂θ_i) C^(-1)_αβ (∂O_β/∂θ_j)
-        let cov_inv = covariance.clone().try_inverse().expect("Covariance not invertible");
+        let cov_inv = covariance
+            .clone()
+            .try_inverse()
+            .expect("Covariance not invertible");
 
         for i in 0..n_params {
             for j in 0..n_params {
                 let mut sum = 0.0;
                 for alpha in 0..derivatives[i].len() {
                     for beta in 0..derivatives[j].len() {
-                        sum += derivatives[i][alpha] * cov_inv[(alpha, beta)] * derivatives[j][beta];
+                        sum +=
+                            derivatives[i][alpha] * cov_inv[(alpha, beta)] * derivatives[j][beta];
                     }
                 }
                 fisher[(i, j)] = sum;
@@ -68,7 +72,10 @@ impl FisherMatrix {
 
     /// Covariance matrix (inverse of Fisher)
     pub fn covariance_matrix(&self) -> DMatrix<f64> {
-        self.matrix.clone().try_inverse().expect("Fisher matrix not invertible")
+        self.matrix
+            .clone()
+            .try_inverse()
+            .expect("Fisher matrix not invertible")
     }
 
     /// Correlation matrix
@@ -98,7 +105,7 @@ mod tests {
         let param_names = vec!["slope".to_string(), "intercept".to_string()];
 
         // Generate mock observables
-        let x_values = vec![1.0, 2.0, 3.0, 4.0, 5.0];
+        let x_values = [1.0, 2.0, 3.0, 4.0, 5.0];
         let observables_fn = |params: &[f64]| {
             let m = params[0];
             let b = params[1];

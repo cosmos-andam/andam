@@ -37,7 +37,7 @@ pub fn saha_equation(temp_k: f64, n_h: f64) -> f64 {
     let discriminant = k * k + 4.0 * k;
     let x_e = (-k + discriminant.sqrt()) / 2.0;
 
-    x_e.min(1.0).max(0.0)
+    x_e.clamp(0.0, 1.0)
 }
 
 /// Ionization fraction as a function of redshift

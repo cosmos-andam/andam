@@ -1,0 +1,40 @@
+name: Test Release (Dry Run)
+
+# This workflow tests the release process WITHOUT publishing
+# Trigger manually from Actions tab
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_version:
+        description: 'Version to test (e.g., 0.1.2)'
+        required: true
+        default: '0.1.2'
+
+env:
+  RUST_BACKTRACE: 1
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test-publish:
+    name: Test Publishing (Dry Run)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Run tests
+        run: cargo test --features plotting --verbose
+
+      - name: Check documentation
+        run: cargo doc --no-deps --features plotting --verbose
+
+      - name: Dry-run publish (does not actually publish)
+        run: cargo publish --dry-run --allow-dirty
+
+      - name: Show what would be published
+        run: |
+          echo "Package contents that would be published:"
+          cargo package --list --allow-dirty

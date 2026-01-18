@@ -65,8 +65,7 @@ impl HalofitSpectrum {
 
     /// Linear power spectrum
     fn linear_power(&self, k: f64, z: f64) -> f64 {
-        matter_power_spectrum(k, z, self.omega_m, self.omega_b,
-                            self.h, 2.1e-9, self.n_s)
+        matter_power_spectrum(k, z, self.omega_m, self.omega_b, self.h, 2.1e-9, self.n_s)
     }
 
     /// HALOFIT non-linear power spectrum (simplified version)
@@ -139,8 +138,12 @@ mod tests {
         let boost_small = halofit.boost_factor(1.0, 0.0);
 
         // Non-linear effects stronger at small scales
-        assert!(boost_small >= boost_large,
-                "boost_small = {}, boost_large = {}", boost_small, boost_large);
+        assert!(
+            boost_small >= boost_large,
+            "boost_small = {}, boost_large = {}",
+            boost_small,
+            boost_large
+        );
     }
 
     #[test]

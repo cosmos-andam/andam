@@ -4,6 +4,13 @@ A comprehensive Rust library for cosmological calculations and visualizations.
 
 **Andam** (அண்டம்) means "universe" in தமிழ் (Tamil).
 
+[![CI](https://github.com/cosmos-andam/andam/workflows/CI/badge.svg)](https://github.com/cosmos-andam/andam/actions/workflows/ci.yml)
+[![Security Audit](https://github.com/cosmos-andam/andam/workflows/Security%20Audit/badge.svg)](https://github.com/cosmos-andam/andam/actions/workflows/security.yml)
+[![Crates.io](https://img.shields.io/crates/v/andam.svg)](https://crates.io/crates/andam)
+[![Documentation](https://docs.rs/andam/badge.svg)](https://docs.rs/andam)
+[![License](https://img.shields.io/crates/l/andam.svg)](https://github.com/cosmos-andam/andam#license)
+[![Downloads](https://img.shields.io/crates/d/andam.svg)](https://crates.io/crates/andam)
+
 ## Features
 
 ### Core Cosmology

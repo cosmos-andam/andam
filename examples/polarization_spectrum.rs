@@ -9,8 +9,8 @@
 use andam::cmb::polarization::*;
 use andam::dynamics::Universe;
 use plotters::prelude::*;
-use std::f64::consts::PI;
 use std::error::Error;
+use std::f64::consts::PI;
 
 fn main() -> Result<(), Box<dyn Error>> {
     println!("=== CMB Polarization Power Spectra ===\n");
@@ -42,7 +42,8 @@ fn main() -> Result<(), Box<dyn Error>> {
             .y_label_area_size(80)
             .build_cartesian_2d(2..l_max, 0.1..100.0)?;
 
-        chart.configure_mesh()
+        chart
+            .configure_mesh()
             .x_desc("Multipole l")
             .y_desc("l(l+1)C_l^EE/2π [μK²]")
             .draw()?;
@@ -55,16 +56,15 @@ fn main() -> Result<(), Box<dyn Error>> {
             })
             .collect();
 
-        chart.draw_series(LineSeries::new(
-            data_ee,
-            BLUE.stroke_width(3),
-        ))?
-        .label("E-mode (scalar perturbations)")
-        .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], BLUE.stroke_width(3)));
+        chart
+            .draw_series(LineSeries::new(data_ee, BLUE.stroke_width(3)))?
+            .label("E-mode (scalar perturbations)")
+            .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], BLUE.stroke_width(3)));
 
-        chart.configure_series_labels()
-            .background_style(&WHITE.mix(0.8))
-            .border_style(&BLACK)
+        chart
+            .configure_series_labels()
+            .background_style(WHITE.mix(0.8))
+            .border_style(BLACK)
             .draw()?;
 
         // Add annotation
@@ -82,12 +82,10 @@ fn main() -> Result<(), Box<dyn Error>> {
             .margin(15)
             .x_label_area_size(60)
             .y_label_area_size(80)
-            .build_cartesian_2d(
-                2..l_max,
-                (0.0001..0.1).log_scale()
-            )?;
+            .build_cartesian_2d(2..l_max, (0.0001..0.1).log_scale())?;
 
-        chart.configure_mesh()
+        chart
+            .configure_mesh()
             .x_desc("Multipole l")
             .y_desc("l(l+1)C_l^BB/2π [μK²]")
             .draw()?;
@@ -104,16 +102,15 @@ fn main() -> Result<(), Box<dyn Error>> {
             })
             .collect();
 
-        chart.draw_series(LineSeries::new(
-            data_bb,
-            RED.stroke_width(3),
-        ))?
-        .label("B-mode (tensor perturbations)")
-        .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], RED.stroke_width(3)));
+        chart
+            .draw_series(LineSeries::new(data_bb, RED.stroke_width(3)))?
+            .label("B-mode (tensor perturbations)")
+            .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], RED.stroke_width(3)));
 
-        chart.configure_series_labels()
-            .background_style(&WHITE.mix(0.8))
-            .border_style(&BLACK)
+        chart
+            .configure_series_labels()
+            .background_style(WHITE.mix(0.8))
+            .border_style(BLACK)
             .draw()?;
 
         // Add annotations
@@ -139,7 +136,8 @@ fn main() -> Result<(), Box<dyn Error>> {
             .y_label_area_size(80)
             .build_cartesian_2d(2..l_max, -15.0..10.0)?;
 
-        chart.configure_mesh()
+        chart
+            .configure_mesh()
             .x_desc("Multipole l")
             .y_desc("l(l+1)C_l^TE/2π [μK²]")
             .draw()?;
@@ -152,12 +150,10 @@ fn main() -> Result<(), Box<dyn Error>> {
             })
             .collect();
 
-        chart.draw_series(LineSeries::new(
-            data_te,
-            GREEN.stroke_width(3),
-        ))?
-        .label("TE cross-correlation")
-        .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], GREEN.stroke_width(3)));
+        chart
+            .draw_series(LineSeries::new(data_te, GREEN.stroke_width(3)))?
+            .label("TE cross-correlation")
+            .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], GREEN.stroke_width(3)));
 
         // Zero line
         chart.draw_series(LineSeries::new(
@@ -165,9 +161,10 @@ fn main() -> Result<(), Box<dyn Error>> {
             BLACK.stroke_width(1),
         ))?;
 
-        chart.configure_series_labels()
-            .background_style(&WHITE.mix(0.8))
-            .border_style(&BLACK)
+        chart
+            .configure_series_labels()
+            .background_style(WHITE.mix(0.8))
+            .border_style(BLACK)
             .draw()?;
 
         // Add annotation
@@ -183,12 +180,18 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     // Print some statistics
     println!("\n=== Polarization Spectrum Statistics ===");
-    println!("E-mode power at l=200: {:.2} μK²",
-             200.0 * 201.0 * pol_spectrum.c_l_ee[200] / (2.0 * PI));
-    println!("B-mode power at l=80:  {:.6} μK²",
-             80.0 * 81.0 * pol_spectrum.c_l_bb[80] / (2.0 * PI));
-    println!("TE power at l=200:     {:.2} μK²",
-             200.0 * 201.0 * pol_spectrum.c_l_te[200] / (2.0 * PI));
+    println!(
+        "E-mode power at l=200: {:.2} μK²",
+        200.0 * 201.0 * pol_spectrum.c_l_ee[200] / (2.0 * PI)
+    );
+    println!(
+        "B-mode power at l=80:  {:.6} μK²",
+        80.0 * 81.0 * pol_spectrum.c_l_bb[80] / (2.0 * PI)
+    );
+    println!(
+        "TE power at l=200:     {:.2} μK²",
+        200.0 * 201.0 * pol_spectrum.c_l_te[200] / (2.0 * PI)
+    );
     println!("\nNote: B-modes are tiny because r << 1 (no primordial GW detection yet)");
 
     Ok(())

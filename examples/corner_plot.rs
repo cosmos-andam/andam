@@ -39,8 +39,8 @@ fn main() -> Result<(), Box<dyn Error>> {
         let truth = [0.315, 0.81];
         let sigma = [0.01, 0.02];
 
-        let chi2 = ((omega_m - truth[0]) / sigma[0]).powi(2)
-                 + ((sigma_8 - truth[1]) / sigma[1]).powi(2);
+        let chi2 =
+            ((omega_m - truth[0]) / sigma[0]).powi(2) + ((sigma_8 - truth[1]) / sigma[1]).powi(2);
 
         -0.5 * chi2
     };
@@ -78,10 +78,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             .y_label_area_size(50)
             .build_cartesian_2d(min_val..max_val, 0u32..200u32)?;
 
-        chart.configure_mesh()
-            .x_desc(name)
-            .y_desc("Count")
-            .draw()?;
+        chart.configure_mesh().x_desc(name).y_desc("Count").draw()?;
 
         // Create histogram
         let n_bins = 50;
@@ -95,28 +92,25 @@ fn main() -> Result<(), Box<dyn Error>> {
             }
         }
 
-        let histogram_data: Vec<_> = bins.iter().enumerate()
+        let histogram_data: Vec<_> = bins
+            .iter()
+            .enumerate()
             .map(|(i, &count)| {
                 let x = min_val + (i as f64 + 0.5) * bin_width;
                 (x, count)
             })
             .collect();
 
-        chart.draw_series(
-            histogram_data.iter().map(|&(x, y)| {
-                Rectangle::new(
-                    [(x - bin_width / 2.0, 0), (x + bin_width / 2.0, y)],
-                    BLUE.mix(0.7).filled(),
-                )
-            })
-        )?;
+        chart.draw_series(histogram_data.iter().map(|&(x, y)| {
+            Rectangle::new(
+                [(x - bin_width / 2.0, 0), (x + bin_width / 2.0, y)],
+                BLUE.mix(0.7).filled(),
+            )
+        }))?;
 
         // Add mean line
         let mean = chain.mean(name).unwrap();
-        chart.draw_series(LineSeries::new(
-            vec![(mean, 0), (mean, 200)],
-            &RED,
-        ))?;
+        chart.draw_series(LineSeries::new(vec![(mean, 0), (mean, 200)], RED))?;
     }
 
     // Empty space (top-right)
@@ -141,15 +135,18 @@ fn main() -> Result<(), Box<dyn Error>> {
             .y_label_area_size(50)
             .build_cartesian_2d(x_min..x_max, y_min..y_max)?;
 
-        chart.configure_mesh()
+        chart
+            .configure_mesh()
             .x_desc(&chain.parameter_names[0])
             .y_desc(&chain.parameter_names[1])
             .draw()?;
 
         // Draw scatter points
         chart.draw_series(
-            samples_x.iter().zip(samples_y.iter())
-                .map(|(&x, &y)| Circle::new((x, y), 2, BLUE.mix(0.3).filled()))
+            samples_x
+                .iter()
+                .zip(samples_y.iter())
+                .map(|(&x, &y)| Circle::new((x, y), 2, BLUE.mix(0.3).filled())),
         )?;
 
         // Add confidence ellipses
@@ -167,10 +164,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                 ellipse.push((x, y));
             }
 
-            chart.draw_series(LineSeries::new(
-                ellipse,
-                &RED,
-            ))?;
+            chart.draw_series(LineSeries::new(ellipse, RED))?;
         }
 
         // Add mean point
@@ -196,10 +190,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             .y_label_area_size(50)
             .build_cartesian_2d(min_val..max_val, 0u32..200u32)?;
 
-        chart.configure_mesh()
-            .x_desc(name)
-            .y_desc("Count")
-            .draw()?;
+        chart.configure_mesh().x_desc(name).y_desc("Count").draw()?;
 
         // Create histogram
         let n_bins = 50;
@@ -213,28 +204,25 @@ fn main() -> Result<(), Box<dyn Error>> {
             }
         }
 
-        let histogram_data: Vec<_> = bins.iter().enumerate()
+        let histogram_data: Vec<_> = bins
+            .iter()
+            .enumerate()
             .map(|(i, &count)| {
                 let x = min_val + (i as f64 + 0.5) * bin_width;
                 (x, count)
             })
             .collect();
 
-        chart.draw_series(
-            histogram_data.iter().map(|&(x, y)| {
-                Rectangle::new(
-                    [(x - bin_width / 2.0, 0), (x + bin_width / 2.0, y)],
-                    BLUE.mix(0.7).filled(),
-                )
-            })
-        )?;
+        chart.draw_series(histogram_data.iter().map(|&(x, y)| {
+            Rectangle::new(
+                [(x - bin_width / 2.0, 0), (x + bin_width / 2.0, y)],
+                BLUE.mix(0.7).filled(),
+            )
+        }))?;
 
         // Add mean line
         let mean = chain.mean(name).unwrap();
-        chart.draw_series(LineSeries::new(
-            vec![(mean, 0), (mean, 200)],
-            &RED,
-        ))?;
+        chart.draw_series(LineSeries::new(vec![(mean, 0), (mean, 200)], RED))?;
     }
 
     root.present()?;
@@ -248,8 +236,10 @@ fn main() -> Result<(), Box<dyn Error>> {
         let p16 = chain.percentile(name, 16.0).unwrap();
         let p84 = chain.percentile(name, 84.0).unwrap();
 
-        println!("{}: {:.4} ± {:.4} [{:.4}, {:.4}]",
-                 name, mean, std, p16, p84);
+        println!(
+            "{}: {:.4} ± {:.4} [{:.4}, {:.4}]",
+            name, mean, std, p16, p84
+        );
     }
 
     Ok(())

@@ -49,10 +49,7 @@ impl Universe {
 
     /// Hubble parameter at scale factor a: H(a) / H_0
     pub fn hubble_normalized(&self, a: f64) -> f64 {
-        let sum: f64 = self.components
-            .iter()
-            .map(|c| c.density_evolution(a))
-            .sum();
+        let sum: f64 = self.components.iter().map(|c| c.density_evolution(a)).sum();
         sum.sqrt()
     }
 

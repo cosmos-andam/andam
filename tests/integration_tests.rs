@@ -9,7 +9,11 @@ fn test_benchmark_universe_age() {
     let age = universe.age_today();
 
     // Planck 2018 gives ~13.8 Gyr
-    assert!(age > 13.0 && age < 14.5, "Age should be around 13.8 Gyr, got {}", age);
+    assert!(
+        age > 13.0 && age < 14.5,
+        "Age should be around 13.8 Gyr, got {}",
+        age
+    );
 }
 
 #[test]

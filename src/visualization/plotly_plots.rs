@@ -21,9 +21,7 @@ pub fn create_interactive_plot(
         let x: Vec<f64> = data.iter().map(|(x, _)| *x).collect();
         let y: Vec<f64> = data.iter().map(|(_, y)| *y).collect();
 
-        let trace = Scatter::new(x, y)
-            .mode(Mode::Lines)
-            .name(name);
+        let trace = Scatter::new(x, y).mode(Mode::Lines).name(name);
 
         plot.add_trace(trace);
     }
@@ -53,21 +51,23 @@ pub fn create_loglog_interactive(
         let x: Vec<f64> = data.iter().map(|(x, _)| *x).collect();
         let y: Vec<f64> = data.iter().map(|(_, y)| *y).collect();
 
-        let trace = Scatter::new(x, y)
-            .mode(Mode::Lines)
-            .name(name);
+        let trace = Scatter::new(x, y).mode(Mode::Lines).name(name);
 
         plot.add_trace(trace);
     }
 
     let layout = Layout::new()
         .title(Title::new(title))
-        .x_axis(Axis::new()
-            .title(Title::new(x_label))
-            .type_(plotly::layout::AxisType::Log))
-        .y_axis(Axis::new()
-            .title(Title::new(y_label))
-            .type_(plotly::layout::AxisType::Log));
+        .x_axis(
+            Axis::new()
+                .title(Title::new(x_label))
+                .type_(plotly::layout::AxisType::Log),
+        )
+        .y_axis(
+            Axis::new()
+                .title(Title::new(y_label))
+                .type_(plotly::layout::AxisType::Log),
+        );
 
     plot.set_layout(layout);
     plot.write_html(filename);

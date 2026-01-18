@@ -1,11 +1,7 @@
 //! Example: Compare different distance measures
 
 use andam::dynamics::Universe;
-use andam::observations::{
-    luminosity_distance,
-    angular_diameter_distance,
-    comoving_distance,
-};
+use andam::observations::{angular_diameter_distance, comoving_distance, luminosity_distance};
 use andam::visualization::plotly_plots::create_interactive_plot;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {

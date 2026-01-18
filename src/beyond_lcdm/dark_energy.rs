@@ -21,9 +21,7 @@ impl DarkEnergyModel {
         match self {
             DarkEnergyModel::Lambda => -1.0,
             DarkEnergyModel::ConstantW(w) => *w,
-            DarkEnergyModel::CPL { w_0, w_a } => {
-                w_0 + w_a * (1.0 - a)
-            },
+            DarkEnergyModel::CPL { w_0, w_a } => w_0 + w_a * (1.0 - a),
             DarkEnergyModel::EarlyDE { w_0, .. } => *w_0,
         }
     }
@@ -32,18 +30,16 @@ impl DarkEnergyModel {
     pub fn rho_de(&self, a: f64, omega_de_0: f64) -> f64 {
         match self {
             DarkEnergyModel::Lambda => omega_de_0,
-            DarkEnergyModel::ConstantW(w) => {
-                omega_de_0 * a.powf(-3.0 * (1.0 + w))
-            },
+            DarkEnergyModel::ConstantW(w) => omega_de_0 * a.powf(-3.0 * (1.0 + w)),
             DarkEnergyModel::CPL { w_0, w_a } => {
                 // ρ_DE ∝ exp(-3∫(1+w(a'))da'/a')
                 let integral = (1.0 + w_0) * a.ln() + w_a * (a - 1.0);
                 omega_de_0 * (-3.0 * integral).exp()
-            },
+            }
             DarkEnergyModel::EarlyDE { w_0, .. } => {
                 // Simplified early DE
                 omega_de_0 * a.powf(-3.0 * (1.0 + w_0))
-            },
+            }
         }
     }
 
@@ -104,7 +100,10 @@ mod tests {
 
     #[test]
     fn test_cpl() {
-        let model = DarkEnergyModel::CPL { w_0: -0.9, w_a: -0.1 };
+        let model = DarkEnergyModel::CPL {
+            w_0: -0.9,
+            w_a: -0.1,
+        };
         let w_at_a = model.w(0.5);
         assert!((w_at_a - (-0.9 - 0.1 * 0.5)).abs() < 1e-10);
     }

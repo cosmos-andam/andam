@@ -6,12 +6,12 @@
 //! - Light element abundance predictions
 //! - Baryon density constraints
 
-pub mod reactions;
+pub mod freeze_out;
 pub mod network;
 pub mod nucleosynthesis;
-pub mod freeze_out;
+pub mod reactions;
 
-pub use reactions::*;
+pub use freeze_out::*;
 pub use network::*;
 pub use nucleosynthesis::*;
-pub use freeze_out::*;
+pub use reactions::*;

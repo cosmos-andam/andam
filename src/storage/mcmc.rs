@@ -46,16 +46,21 @@ impl<'a> MCMCStorage<'a> {
 
         // Store parameter names as JSON dataset
         let names_json = serde_json::to_string(&parameter_names)?;
-        let names_dataset = chain_group.new_dataset::<u8>()
+        let names_dataset = chain_group
+            .new_dataset::<u8>()
             .shape([names_json.len()])
             .create("parameter_names")?;
         names_dataset.write_raw(names_json.as_bytes())?;
 
         // Store chain info
-        chain_group.new_attr::<usize>()
-            .create("n_samples")?.write_scalar(&samples.nrows())?;
-        chain_group.new_attr::<usize>()
-            .create("n_params")?.write_scalar(&samples.ncols())?;
+        chain_group
+            .new_attr::<usize>()
+            .create("n_samples")?
+            .write_scalar(&samples.nrows())?;
+        chain_group
+            .new_attr::<usize>()
+            .create("n_params")?
+            .write_scalar(&samples.ncols())?;
 
         Ok(())
     }
@@ -89,33 +94,38 @@ impl<'a> MCMCStorage<'a> {
         chain_name: &str,
         stats: &ChainStatistics,
     ) -> Result<(), StorageError> {
-        let stats_group = self.group
-            .group(chain_name)?
-            .create_group("statistics")?;
+        let stats_group = self.group.group(chain_name)?.create_group("statistics")?;
 
         // Store means
-        stats_group.new_dataset::<f64>()
+        stats_group
+            .new_dataset::<f64>()
             .shape([stats.means.len()])
             .create("means")?
             .write(&stats.means)?;
 
         // Store std devs
-        stats_group.new_dataset::<f64>()
+        stats_group
+            .new_dataset::<f64>()
             .shape([stats.std_devs.len()])
             .create("std_devs")?
             .write(&stats.std_devs)?;
 
         // Store covariance matrix
-        stats_group.new_dataset::<f64>()
+        stats_group
+            .new_dataset::<f64>()
             .shape(stats.covariance.dim())
             .create("covariance")?
             .write(&stats.covariance)?;
 
         // Convergence diagnostics
-        stats_group.new_attr::<f64>()
-            .create("gelman_rubin")?.write_scalar(&stats.gelman_rubin)?;
-        stats_group.new_attr::<f64>()
-            .create("acceptance_rate")?.write_scalar(&stats.acceptance_rate)?;
+        stats_group
+            .new_attr::<f64>()
+            .create("gelman_rubin")?
+            .write_scalar(&stats.gelman_rubin)?;
+        stats_group
+            .new_attr::<f64>()
+            .create("acceptance_rate")?
+            .write_scalar(&stats.acceptance_rate)?;
 
         Ok(())
     }
@@ -204,7 +214,8 @@ mod tests {
         let log_probs: Vec<f64> = (0..100).map(|i| -0.5 * (i as f64)).collect();
         let param_names = vec!["param1".to_string(), "param2".to_string()];
 
-        mcmc.store_chain("test_chain", &samples, &param_names, &log_probs).unwrap();
+        mcmc.store_chain("test_chain", &samples, &param_names, &log_probs)
+            .unwrap();
 
         let read_chain = mcmc.read_chain("test_chain").unwrap();
         assert_eq!(read_chain.samples.nrows(), 100);

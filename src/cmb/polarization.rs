@@ -3,8 +3,8 @@
 /// Stokes parameters for polarization
 #[derive(Debug, Clone, Copy)]
 pub struct StokesParameters {
-    pub q: f64,  // Linear polarization (Q)
-    pub u: f64,  // Linear polarization (U)
+    pub q: f64, // Linear polarization (Q)
+    pub u: f64, // Linear polarization (U)
 }
 
 impl StokesParameters {
@@ -20,21 +20,15 @@ impl StokesParameters {
 }
 
 /// E and B mode decomposition
-pub fn decompose_eb(
-    q_map: &[f64],
-    u_map: &[f64],
-    _n_side: usize,
-) -> (Vec<f64>, Vec<f64>) {
+pub fn decompose_eb(q_map: &[f64], u_map: &[f64], _n_side: usize) -> (Vec<f64>, Vec<f64>) {
     // In full implementation, use spin-weighted spherical harmonics
     // This is simplified
 
     let mut e_map = vec![0.0; q_map.len()];
     let mut b_map = vec![0.0; u_map.len()];
 
-    for i in 0..q_map.len() {
-        e_map[i] = q_map[i]; // Simplified
-        b_map[i] = u_map[i]; // Simplified
-    }
+    e_map.copy_from_slice(q_map);
+    b_map.copy_from_slice(u_map);
 
     (e_map, b_map)
 }
@@ -42,9 +36,9 @@ pub fn decompose_eb(
 /// E-mode and B-mode power spectra
 pub struct PolarizationSpectrum {
     pub l_max: usize,
-    pub c_l_ee: Vec<f64>,  // E-mode auto
-    pub c_l_bb: Vec<f64>,  // B-mode auto
-    pub c_l_te: Vec<f64>,  // Temperature-E cross
+    pub c_l_ee: Vec<f64>, // E-mode auto
+    pub c_l_bb: Vec<f64>, // B-mode auto
+    pub c_l_te: Vec<f64>, // Temperature-E cross
 }
 
 impl PolarizationSpectrum {
@@ -59,10 +53,7 @@ impl PolarizationSpectrum {
     }
 
     /// Compute from Boltzmann evolution
-    pub fn from_boltzmann(
-        _universe: &crate::dynamics::Universe,
-        l_max: usize,
-    ) -> Self {
+    pub fn from_boltzmann(_universe: &crate::dynamics::Universe, l_max: usize) -> Self {
         let mut spectrum = Self::new(l_max);
 
         // Compute C_l^EE, C_l^BB, C_l^TE
