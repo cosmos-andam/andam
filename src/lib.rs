@@ -42,6 +42,9 @@ pub mod visualization;
 pub mod statistics;
 pub mod beyond_lcdm;
 
+#[cfg(feature = "hdf5-storage")]
+pub mod storage;
+
 // Re-export commonly used items
 pub use constants::*;
 pub use units::{Length, Mass, Time, Energy};
