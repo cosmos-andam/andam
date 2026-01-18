@@ -29,7 +29,7 @@ num-traits = "0.2"
 ode_solvers = "0.4"
 
 # Plotting (optional)
-plotly = { version = "0.8", default-features = false, optional = true }
+plotly = { version = "0.14", default-features = false, optional = true }
 plotters = { version = "0.3", features = ["all_series", "bitmap_encoder"], optional = true }
 plotters-backend = { version = "0.3", optional = true }
 
