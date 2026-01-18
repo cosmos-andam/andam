@@ -92,19 +92,64 @@ fn main() {
 
 ## Installation
 
+### From crates.io
+
 ```bash
-# From source
+# Default installation (includes plotting)
+cargo add andam
+
+# With HDF5 storage support (requires HDF5 1.12 or earlier)
+cargo add andam --features hdf5-storage
+
+# Minimal installation (no plotting or HDF5)
+cargo add andam --no-default-features
+
+# Everything
+cargo add andam --features full
+```
+
+### In Cargo.toml
+
+```toml
+[dependencies]
+# Default (with plotting)
+andam = "0.1.0"
+
+# With HDF5 storage
+andam = { version = "0.1.0", features = ["hdf5-storage"] }
+
+# Minimal
+andam = { version = "0.1.0", default-features = false }
+
+# All features
+andam = { version = "0.1.0", features = ["full"] }
+```
+
+### From source
+
+```bash
 git clone https://github.com/cosmos-andam/andam
 cd andam
 cargo build --release
 cargo test
 ```
 
-Add to `Cargo.toml`:
-```toml
-[dependencies]
-andam = "0.1.0"
-```
+## Feature Flags
+
+| Feature | Description | Default | Dependencies |
+|---------|-------------|---------|--------------|
+| `plotting` | Visualization with plotly and plotters | Yes | plotly, plotters |
+| `hdf5-storage` | HDF5 data storage and retrieval | No | hdf5, flate2, chrono |
+| `full` | All features enabled | No | All of the above |
+
+### Notes on HDF5 Storage
+
+The HDF5 storage feature is optional because:
+- Requires HDF5 system library (1.12 or earlier for crates.io version)
+- Not needed for most users (core functionality works without it)
+- Can be enabled with `--features hdf5-storage`
+
+For HDF5 1.14+ support, see [HDF5 Publishing Notes](docs/HDF5_PUBLISHING_NOTE.md).
 
 ## Documentation
 
@@ -247,10 +292,12 @@ Key results:
 | `early_universe` | BBN, freeze-out | 6 |
 | `statistics` | MCMC, Fisher | 3 |
 | `beyond_lcdm` | Dark energy, neutrinos | 5 |
+| `storage` | HDF5 data storage (optional) | 6 |
+| `visualization` | Plotting (optional, default) | - |
 | `units` | Conversions | 3 |
 | `constants` | Physical constants | 3 |
 
-**Total: 60 tests passing**
+**Total: 66 tests passing**
 
 ## Performance
 
