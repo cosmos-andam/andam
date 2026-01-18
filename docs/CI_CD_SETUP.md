@@ -301,8 +301,16 @@ If you see "fontconfig required by yeslogic-fontconfig-sys was not found" or "Th
 If you see "unexpected-value" or "deprecated" errors from cargo-deny:
 - Ensure deny.toml uses v2 format with `version = 2` in each section
 - Remove deprecated keys like `unlicensed`, `copyleft`, `default`, `allow-osi-fsf-free`
-- Security workflow uses EmbarkStudios/cargo-deny-action@v1 for better compatibility
 - See deny.toml for the correct modern configuration format
+
+### Cargo-Deny CVSS 4.0 Advisory Database Issue
+
+If you see "unsupported CVSS version: 4.0" errors from cargo-deny:
+- This is a known temporary issue with the RustSec advisory database
+- Some advisories now use CVSS 4.0, which cargo-deny doesn't yet support
+- The cargo-deny job is configured as `continue-on-error: true` to allow CI to pass
+- cargo-audit continues to provide vulnerability scanning
+- This will be resolved when cargo-deny is updated to support CVSS 4.0
 
 ### GitHub Pages Deployment Failures
 
